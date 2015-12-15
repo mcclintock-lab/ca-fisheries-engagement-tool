@@ -128,7 +128,7 @@ const Results = React.createClass({
   },
 
   _handleTakeAgain() {
-    window.location = "/intro";
+    window.location = "/";
   },
 
   _handleBookmark() {

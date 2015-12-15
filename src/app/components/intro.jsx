@@ -31,7 +31,7 @@ const Intro = React.createClass({
           title="California Fisheries Stakeholder Engagement Tool"
           avatar={<div />} />
         <CardText expandable={true}>
-        This app will help you determine what methods of stakeholder engagement will be most effective for your process after answer a series of questions about your circumstances.
+        This app will help you determine what methods of stakeholder engagement will be most effective for your process after answer a series of questions.
         </CardText>
         <CardActions>
         <RaisedButton label="Let's get started" primary={true} onTouchTap={this._handleTouchTap} />

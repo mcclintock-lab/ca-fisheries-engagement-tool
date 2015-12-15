@@ -12,7 +12,7 @@ import TimelineStore from './stores/timeline';
 import Characteristics from './components/characteristics';
 import CharacteristicStore from './stores/characteristics';
 import Results from './components/results';
-import qs from 'qs';
+import qs from 'querystring';
 
 import Intro from './components/intro';
 import Dispatcher from './dispatcher';
@@ -31,7 +31,7 @@ TimelineStore.history = history;
 
 if (window.location.toString().indexOf('/results') !== -1) {
   // Okay, we'll marshal state from the query string
-  WorkflowActions.marshalAnswers(qs.parse(window.location.hash.replace('?', '')));
+  WorkflowActions.marshalAnswers(qs.decode(window.location.hash.replace('?', '')));
 } else {
   console.log('nope');
   history.push(...window.location, {
