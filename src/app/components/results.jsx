@@ -6,6 +6,7 @@ const ListDivider = require('material-ui/lib/lists/list-divider');
 const ListItem = require('material-ui/lib/lists/list-item');
 const Avatar = require('material-ui/lib/avatar');
 const Paper = require('material-ui/lib/paper');
+const clone = require('clone');
 import Card from 'material-ui/lib/card/card';
 import CardText from 'material-ui/lib/card/card-text';
 import CardTitle from 'material-ui/lib/card/card-title';
@@ -13,6 +14,7 @@ import CardHeader from 'material-ui/lib/card/card-header';
 import CardActions from 'material-ui/lib/card/card-actions';
 import Colors from 'material-ui/lib/styles/colors';
 import RaisedButton from 'material-ui/lib/raised-button';
+import SelectField from 'material-ui/lib/select-field';
 
 import GoalStore from '../stores/goals';
 import TimelineStore from '../stores/timeline';
@@ -20,7 +22,9 @@ import CharacteristicStore from '../stores/characteristics';
 import {knuthShuffle} from 'knuth-shuffle';
 import WorkflowActions from '../actions/workflowActions';
 
+
 let size = 18;
+
 
 let avatarStyle = {
   height: size - 2,
@@ -35,7 +39,6 @@ let avatarStyle = {
 
 const Results = React.createClass({
 
-
   calculateRecommendedMethods() {
     // Each data structure has a property with user-input
     // for goals, it's goal.priority
@@ -47,56 +50,34 @@ const Results = React.createClass({
 
     // rankings are pulled in as an array of objects representing each row
     let rankings = require('../data/rankings.csv');
-    let scores = require('../data/rankings.csv');
-    //let goalLookups = require('../data/goal_lookups.csv')
-    //let charLookups = require('../data/char_lookups.csv')
+    let scores = clone(rankings);
     
     // Here all are the methods, processed from the input markdown files.
     let methods = require('../methods');
-
-    // Chad's dumb random shuffle and pick 4 method
-    
-    
-    for(let goal of goals){
-      //console.log("goal: ", goal);
-    }
-
-    for(let t of timeliness){
-      //console.log("timeliness: ", t);
-    }
-
-    for(let s of scores){
-      //console.log("score: ", s);
-    }
-
    
     //for each id in the ranking
     //find goal priority using id
     //find lookup val from goalLookups using goal.priority and ranking[id]
     //set new score field to lookup val
 
-
+    let expert_user_lookup=[[1,1,1.5],[2,3,4],[4.5,5,6]]
     for(let tech_method of scores){
-      console.log("============== method id: ", tech_method['ID (do not change)']);
       for(let goal of goals){
-        //console.log("method: ", tech_method)
+
         let expert_score = tech_method[goal.id];
         let user_score = goal.priority;
-        //switch with lookup
-        let final_score = expert_score*user_score;
-        //console.log("score: ", final_score);
+
+        let final_score = expert_user_lookup[expert_score-1][user_score-1]
+        
         //for each id in the ranking
         //for each timeliness id
         //if timeliness.id == "Yes" and ranking[timeless.chosen] == "true" then keep score field
         //else replace score field with 0
         tech_method[goal.id] = 0;
         for(let time of timeliness){
-          //console.log("time id: ", time);
           let techtime = tech_method[time.id];
           //console.log("score time id: ", techtime);
           if((techtime === "Yes") && (time.chosen === true)){
-            //console.log("goal name: ", tech_method[goal.id]);
-            //console.log("setting final score to ", final_score);
             tech_method[goal.id] = tech_method[goal.id]+final_score;
           } 
         }
@@ -131,8 +112,6 @@ const Results = React.createClass({
         let char_score = user_char*expert_char;
         tech_method_score = tech_method_score + char_score
       }
-      //console.log("tech method score: ", tech_method_score);
-      //console.log("norm count: ", norm_count);
 
       let normalized_score = tech_method_score/norm_count;
       tech_method.fishery_score = tech_method_score;
@@ -162,9 +141,14 @@ const Results = React.createClass({
     scores.sort(function(a, b){
       return a.normalized_final_score === b.normalized_final_score ? 0 : +(b.normalized_final_score > a.normalized_final_score) || -1;
     });
-    
+    let numRecs = 10;
+    if(this.state === null || this.state.numRecsToView === null){
+      numRecs = 10;
+    } else {
+      numRecs = this.state.numRecsToView;
+    }
 
-    let top_scores = scores.slice(0, 10);
+    let top_scores = scores.slice(0, numRecs);
 
     //get the methods and set final score
     let final_methods = []
@@ -175,6 +159,7 @@ const Results = React.createClass({
       final_methods.push(method);
     }
 
+
     return final_methods;
 
   },
@@ -182,11 +167,7 @@ const Results = React.createClass({
   getMaxOfArray(numArray) {
       return Math.max.apply(null, numArray);
   },
-  getGoalLookup(){
-    return {
 
-    }
-  },
 
   calculateState() {
     return {
@@ -198,7 +179,9 @@ const Results = React.createClass({
   },
 
   getInitialState() {
-    return this.calculateState();
+    let state = this.calculateState();
+    state.numRecsToView = 10;
+    return state;
   },
 
   render() {
@@ -209,6 +192,14 @@ const Results = React.createClass({
             <CardText>
               These stakeholder engagement methods are recommended based on your responses. Click or tap on methods to see further description including required resources and evaluation criteria.
             </CardText>
+            I<div style={{marginLeft:'15px'}}>
+              <SelectField style={{width:'50%'}} valueMember="payload" displayMember="text" 
+              floatingLabelText="Number of Recommendations to Show" 
+              onChange={this._handleSelectValueChange} 
+              menuItems={[{ payload: 5, text: '5' },{ payload: 10, text: '10' },{ payload: 14, text: '14' }]}  
+              value={this.state.numRecsToView}
+              />
+            </div>
             
               {this.state.recommendations.map(function(rec) {
                 return (
@@ -253,11 +244,20 @@ const Results = React.createClass({
           </List>
           <ListDivider />
           </Paper>
-
         </Tab>
       </Tabs>
     );
   },
+
+  _handleSelectValueChange: function(e) {
+    this.state.numRecsToView = e.target.value;
+    this.setState({
+        numRecsToView: e.target.value,
+        recommendations: this.calculateRecommendedMethods()
+    });
+  },
+
+
 
   _handleTakeAgain() {
     window.location = "/";
