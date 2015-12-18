@@ -47,13 +47,145 @@ const Results = React.createClass({
 
     // rankings are pulled in as an array of objects representing each row
     let rankings = require('../data/rankings.csv');
+    let scores = require('../data/rankings.csv');
+    //let goalLookups = require('../data/goal_lookups.csv')
+    //let charLookups = require('../data/char_lookups.csv')
     
     // Here all are the methods, processed from the input markdown files.
     let methods = require('../methods');
 
     // Chad's dumb random shuffle and pick 4 method
-    let keys = knuthShuffle(Object.keys(methods)).slice(0, 4);
-    return keys.map(function(key) { return methods[key]});
+    
+    
+    for(let goal of goals){
+      //console.log("goal: ", goal);
+    }
+
+    for(let t of timeliness){
+      //console.log("timeliness: ", t);
+    }
+
+    for(let s of scores){
+      //console.log("score: ", s);
+    }
+
+   
+    //for each id in the ranking
+    //find goal priority using id
+    //find lookup val from goalLookups using goal.priority and ranking[id]
+    //set new score field to lookup val
+
+
+    for(let tech_method of scores){
+      console.log("============== method id: ", tech_method['ID (do not change)']);
+      for(let goal of goals){
+        //console.log("method: ", tech_method)
+        let expert_score = tech_method[goal.id];
+        let user_score = goal.priority;
+        //switch with lookup
+        let final_score = expert_score*user_score;
+        //console.log("score: ", final_score);
+        //for each id in the ranking
+        //for each timeliness id
+        //if timeliness.id == "Yes" and ranking[timeless.chosen] == "true" then keep score field
+        //else replace score field with 0
+        tech_method[goal.id] = 0;
+        for(let time of timeliness){
+          //console.log("time id: ", time);
+          let techtime = tech_method[time.id];
+          //console.log("score time id: ", techtime);
+          if((techtime === "Yes") && (time.chosen === true)){
+            //console.log("goal name: ", tech_method[goal.id]);
+            //console.log("setting final score to ", final_score);
+            tech_method[goal.id] = tech_method[goal.id]+final_score;
+          } 
+        }
+      }
+    }
+
+    //sum up goal scores per technology
+    for(let tech_method of scores){
+      let method_total = 0;
+      for(let goal of goals){
+        let tmscore = tech_method[goal.id];
+        method_total = method_total+tmscore;
+      }
+      tech_method.sum_score = method_total;
+    }
+
+    //for all characteristics, per technology
+    //sum score of characteristic, keeping track of all nums where answer != 2
+    //normalize the score
+    for(let tech_method of scores){
+      let tech_method_score = 0;
+      let norm_count = 0;
+      for(let fish_char of characteristics){
+        let fcid = fish_char.id;
+        let user_char = tech_method[fcid];
+        if(user_char !== 2){
+          norm_count+=1;
+        }
+
+        let expert_char = fish_char.answer;
+        //replace this with lookup
+        let char_score = user_char*expert_char;
+        tech_method_score = tech_method_score + char_score
+      }
+      //console.log("tech method score: ", tech_method_score);
+      //console.log("norm count: ", norm_count);
+
+      let normalized_score = tech_method_score/norm_count;
+      tech_method.fishery_score = tech_method_score;
+      tech_method.normalized_score = normalized_score;
+    }
+
+    
+    //for each technology,
+    //multiply normalized characteristic score by summed goal scores per technology
+    for(let tech_method of scores){
+      tech_method.final_score = tech_method.normalized_score*tech_method.sum_score;
+    }
+    let score_values = scores.map(function(key) {return Number(key.final_score);});
+
+    //calculate the max score for normalization
+    let max_score = this.getMaxOfArray(score_values);
+
+    for(let score_val of scores){
+      let fscore = score_val.final_score;
+      if(fscore <= 0){
+        fscore = 0.0;
+      }
+      score_val.normalized_final_score = (fscore/max_score)*100;
+    }
+
+    //sort, and return top 10 for now
+    scores.sort(function(a, b){
+      return a.normalized_final_score === b.normalized_final_score ? 0 : +(b.normalized_final_score > a.normalized_final_score) || -1;
+    });
+    
+
+    let top_scores = scores.slice(0, 10);
+
+    //get the methods and set final score
+    let final_methods = []
+    for(let score of top_scores){
+      let theid = score['ID (do not change)'];
+      let method = methods[theid];
+      method.normalized_final_score = Math.round(score.normalized_final_score);
+      final_methods.push(method);
+    }
+
+    return final_methods;
+
+  },
+
+  getMaxOfArray(numArray) {
+      return Math.max.apply(null, numArray);
+  },
+  getGoalLookup(){
+    return {
+
+    }
   },
 
   calculateState() {
@@ -81,7 +213,7 @@ const Results = React.createClass({
               {this.state.recommendations.map(function(rec) {
                 return (
                   <Card key={rec.heading} initiallyExpanded={false}>
-                    <CardTitle title={rec.heading} actAsExpander={true}
+                    <CardTitle title={rec.heading} subtitle={"Score: "+rec.normalized_final_score} actAsExpander={true}
     showExpandableButton={true}/>
                     <CardText expandable={true} dangerouslySetInnerHTML={{__html: rec.text}} />
                   </Card>
