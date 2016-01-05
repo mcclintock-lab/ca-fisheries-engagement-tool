@@ -60,7 +60,8 @@ const Results = React.createClass({
     //find lookup val from goalLookups using goal.priority and ranking[id]
     //set new score field to lookup val
 
-    let expert_user_lookup=[[1,1,1.5],[2,3,4],[4.5,5,6]]
+    let expert_user_lookup=[[1,1,1],[1,2,3],[1,4,5]];
+    let fish_char_lookup = [[0,-1,0],[1,0,0],[1,0,3],[2,0,4]];
     for(let tech_method of scores){
       for(let goal of goals){
 
@@ -68,7 +69,7 @@ const Results = React.createClass({
         let user_score = goal.priority;
 
         let final_score = expert_user_lookup[expert_score-1][user_score-1]
-        
+
         //for each id in the ranking
         //for each timeliness id
         //if timeliness.id == "Yes" and ranking[timeless.chosen] == "true" then keep score field
@@ -94,23 +95,34 @@ const Results = React.createClass({
       tech_method.sum_score = method_total;
     }
 
+    let no_value = 1;
+    //expert first, then user. expert values are -1,0,1,2
+    //this table is a little odd since a '1' for a user is a No, but a '0' is unknown, which means it should be counted
+    
     //for all characteristics, per technology
-    //sum score of characteristic, keeping track of all nums where answer != 2
+    //sum score of characteristic, keeping track of all nums where answer != 1 (a value for No)
     //normalize the score
     for(let tech_method of scores){
+      console.log("======== tech method: ", tech_method["ID (do not change)"]);
       let tech_method_score = 0;
       let norm_count = 0;
       for(let fish_char of characteristics){
         let fcid = fish_char.id;
-        let user_char = tech_method[fcid];
-        if(user_char !== 2){
+        let expert_char = tech_method[fcid];
+        let user_char = fish_char.answer;
+        if(user_char !== 1){
           norm_count+=1;
         }
 
-        let expert_char = fish_char.answer;
-        //replace this with lookup
-        let char_score = user_char*expert_char;
-        tech_method_score = tech_method_score + char_score
+        let expert_dex = Number(expert_char)+1;
+        let user_dex = Number(user_char);
+        let final_char_score = fish_char_lookup[expert_dex][user_dex];
+        console.log("fisery char: ", fcid);
+        console.log("expert: ", expert_char);
+        console.log("user: ", user_char);
+        console.log("final char lookup score: ", final_char_score);
+        console.log("------");
+        tech_method_score = tech_method_score + final_char_score;
       }
 
       let normalized_score = tech_method_score/norm_count;

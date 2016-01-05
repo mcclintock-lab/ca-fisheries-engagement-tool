@@ -50,18 +50,19 @@ const CharacteristicForm = React.createClass({
         <CardText expandable={true}>
           {this.props.description}
           <RadioButtonGroup style={radioGroupStyle} name="ranking" ref="buttonGroup" defaultSelected={this.props.answer || "0"}>
-            <RadioButton
-              value="0"
-              label="0. Unknown"
-              style={{marginBottom:16}} />
-            <RadioButton
-              value="1"
-              label="1. Yes"
-              style={{marginBottom:16}}/>
+
             <RadioButton
               value="2"
-              label="2. No"
+              label="Yes"
               style={{marginBottom:16}}/>
+            <RadioButton
+              value="1"
+              label="No"
+              style={{marginBottom:16}}/>
+            <RadioButton
+              value="0"
+              label="Unknown"
+              style={{marginBottom:16}} />
           </RadioButtonGroup>
         </CardText>
         <CardActions expandable={true}>
