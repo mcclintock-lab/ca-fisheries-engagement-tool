@@ -19,9 +19,12 @@ import {Container} from 'flux/utils';
 
 let _checkboxes = [];
 
+
+
 const Timeline = React.createClass({
 
   mixins: [Lifecycle],
+  hasValueSet: false,
 
   getInitialState() {
     return this.calculateState();
@@ -44,13 +47,16 @@ const Timeline = React.createClass({
   },
 
   _onChange() {
+    console.log("change...")
     this.setState(this.calculateState());
+
   },
 
   render() {
     return (
       <Card initiallyExpanded={true}>
         <CardHeader
+
           title="Timeliness"
           subtitle="What stages of the process are you planning for?"
           avatar={<div />} />
@@ -68,15 +74,26 @@ const Timeline = React.createClass({
           })}
         </CardText>
         <CardActions expandable={true}>
-          <RaisedButton onTouchTap={this._handleNext} label="Next Step" />
+          <RaisedButton onTouchTap={this._handlePrev} label="Previous Step"/>
+          <RaisedButton onTouchTap={this._handleNext} label="Next Step"/>
         </CardActions>
       </Card>
     );
   },
 
+  _updateState(){
+    let settings = this.getSettings();
+    let any = false;
+    for (let key in settings) {
+      any = any || settings[key];
+    }
+    this.hasValueSet = any;
+  },
+
   componentWillMount() {
     _checkboxes = [];
   },
+
 
   getSettings() {
     let settings = {};
@@ -88,6 +105,10 @@ const Timeline = React.createClass({
 
   _handleNext() {
     WorkflowActions.nextStep(this.props.location, this.props.history);
+  },
+
+  _handlePrev() {
+    WorkflowActions.prevStep(this.props.location, this.props.history);
   },
 
   routerWillLeave() {

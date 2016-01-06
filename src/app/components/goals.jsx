@@ -31,9 +31,19 @@ import WorkflowActions from '../actions/workflowActions';
 const containerStyle = {
 };
 
-const goalItemStyle = {
+const textStyle = {
   textAlign: 'left',
-}
+  height: '120'
+};
+
+const goalItemStyle = {
+  textAlign: 'left'
+};
+
+const buttonDirs = {
+  next: "next",
+  prev: "prev"
+};
 
 const GoalItem = React.createClass({
 
@@ -67,7 +77,9 @@ const GoalForm = React.createClass({
           subtitle={"Question " + this.props.index + " of " + this.props.goalsLength}
           avatar={<div />} />
         <CardText expandable={true}>
+          <div style={textStyle}>
           {this.props.description}
+          </div>
           <RadioButtonGroup style={radioGroupStyle} name="ranking" ref="buttonGroup" defaultSelected={this.props.priority || "1"}>
             <RadioButton
               value="1"
@@ -84,7 +96,8 @@ const GoalForm = React.createClass({
           </RadioButtonGroup>
         </CardText>
         <CardActions expandable={true}>
-          <RaisedButton onTouchTap={this._handleNextQuestion} label={this.props.index === this.props.goalsLength ? "Next Step" : "Next Question"}/>
+          <RaisedButton  onTouchTap={this._handlePrevQuestion} disabled={this.props.index === 1} label="Previous Question"/>
+          <RaisedButton  onTouchTap={this._handleNextQuestion} label={this.props.index === this.props.goalsLength ? "Next Step" : "Next Question"}/>
         </CardActions>
       </Card>
     )
@@ -95,7 +108,11 @@ const GoalForm = React.createClass({
   },
 
   _handleNextQuestion() {
-    this.props.onNext(this.getPriority());
+    this.props.onNext(this.getPriority(), buttonDirs.next);
+  },
+
+  _handlePrevQuestion() {
+    this.props.onNext(this.getPriority(), buttonDirs.prev);
   }
 
 })
@@ -136,14 +153,17 @@ const Goals = React.createClass({
   render() {
     return (
       <div style={containerStyle}>
-        <GoalForm ref="form" onNext={this._handleFormComplete} {...this.state.activeGoal} index={this.state.goals.indexOf(this.state.activeGoal) + 1} goalsLength={this.state.goals.length} key={this.state.activeGoal.id} />
+        <GoalForm ref="form" onNext={this._handleFormComplete}  {...this.state.activeGoal} index={this.state.goals.indexOf(this.state.activeGoal) + 1} goalsLength={this.state.goals.length} key={this.state.activeGoal.id} />
       </div>
     );
   },
 
-
-  _handleFormComplete(priority) {
-    WorkflowActions.nextStep(this.props.location, this.props.history);
+  _handleFormComplete(priority, dir) {
+    if(dir === buttonDirs.next){
+      WorkflowActions.nextStep(this.props.location, this.props.history);
+    } else {
+      WorkflowActions.prevStep(this.props.location, this.props.history);
+    }
   }
 
 });

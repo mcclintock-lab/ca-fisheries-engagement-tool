@@ -19,6 +19,15 @@ let TimelineActions = {
       settings: settings
     });
   },
+
+  SET_TIMELINESS_AND_GOBACK: 'SET_TIMELINESS_AND_GOBACK',
+
+  setTimelinessAndGoBack(settings) {
+    Dispatcher.dispatch({
+      actionType: TimelineActions.SET_TIMELINESS_AND_GOBACK,
+      settings: settings
+    });
+  }
 };
 
 module.exports = TimelineActions;

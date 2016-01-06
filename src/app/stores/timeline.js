@@ -33,6 +33,12 @@ class TimelineStore extends Store {
         this.__emitChange();
         break;
 
+      case TimelineActions.SET_TIMELINESS_AND_GOBACK:
+        setTimeliness(action.settings || {});
+        this.history.push(...window.location, {pathname: '/goals/empower'});
+        this.__emitChange();
+        break;
+
       case WorkflowActions.MARSHAL_ANSWERS:
         let answers = action.answers;
         for (let timeline of _timeline) {

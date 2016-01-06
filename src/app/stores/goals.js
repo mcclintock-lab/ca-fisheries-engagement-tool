@@ -58,6 +58,11 @@ class GoalStore extends Store {
     return _goals[_goals.indexOf(activeGoal) + 1];
   }
 
+  getPrevGoal() {
+    let activeGoal = this.getActiveGoal();
+    return _goals[_goals.indexOf(activeGoal) - 1];
+  }
+
   __onDispatch = function(action) {
 
     switch(action.actionType) {

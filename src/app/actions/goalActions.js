@@ -20,6 +20,16 @@ let GoalActions = {
       id: id,
       priority: priority
     });
+  },
+
+  SET_PRIORITY_AND_GOBACK: 'SET_PRIORITY_AND_GOBACK',
+
+  setPriorityAndGoBack(id, priority) {
+    Dispatcher.dispatch({
+      actionType: GoalActions.SET_PRIORITY_AND_GOBACK,
+      id: id,
+      priority: priority
+    });
   }
 
 };

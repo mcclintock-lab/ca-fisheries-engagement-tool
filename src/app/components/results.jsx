@@ -67,7 +67,6 @@ const Results = React.createClass({
 
         let expert_score = tech_method[goal.id];
         let user_score = goal.priority;
-
         let final_score = expert_user_lookup[expert_score-1][user_score-1]
 
         //for each id in the ranking
