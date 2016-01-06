@@ -19,14 +19,12 @@ import {Container} from 'flux/utils';
 
 let _checkboxes = [];
 
-
-
 const Timeline = React.createClass({
-  _optionIsChosen: false,
   mixins: [Lifecycle],
-  hasValueSet: false,
 
   getInitialState() {
+    
+    
     return this.calculateState();
   },
 
@@ -38,6 +36,7 @@ const Timeline = React.createClass({
 
   componentDidMount() {
     this.storeListener = TimelineStore.addListener(this._onChange);
+    this._handleOptionChange();
   },
 
   componentWillUnmount() {
@@ -47,6 +46,7 @@ const Timeline = React.createClass({
   },
 
   _onChange() {
+    
     this.setState(this.calculateState());
   },
 
@@ -81,7 +81,7 @@ const Timeline = React.createClass({
   },
 
   _handleOptionChange(){
-    let hasOptions = this._hasCheckedOptions()
+    let hasOptions = this._hasCheckedOptions();
     if(hasOptions){
       this._optionIsChosen = hasOptions;
       
@@ -93,14 +93,18 @@ const Timeline = React.createClass({
 
   _hasCheckedOptions(){
     let isChecked = false;
-    for (let checkbox of _checkboxes) {
-      if(checkbox){
-        if(checkbox.isChecked()){
-          isChecked = true;
+    if (_checkboxes ){
+      for (let checkbox of _checkboxes) {
+        if(checkbox !== undefined && checkbox !== null){
+          if(checkbox.isChecked()){
+            isChecked = true;
+          }
         }
       }
+      return isChecked;
+    } else {
+      return false;
     }
-    return isChecked;
   },
 
   componentWillMount() {

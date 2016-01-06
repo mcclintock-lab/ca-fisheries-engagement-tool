@@ -20,7 +20,6 @@ class TimelineStore extends Store {
   }
 
   __onDispatch = function(action) {
-
     switch(action.actionType) {
       case TimelineActions.SET_TIMELINESS:
         setTimeliness(action.settings || {});
