@@ -8,7 +8,10 @@ const CardActions = require('material-ui/lib/card/card-actions');
 
 const containerStyle = {
 };
-
+const textStyle = {
+  textAlign: 'left',
+  height: '120'
+};
 const Intro = React.createClass({
 
   getInitialState() {
@@ -31,7 +34,9 @@ const Intro = React.createClass({
           title="California Fisheries Stakeholder Engagement Tool"
           avatar={<div />} />
         <CardText expandable={true}>
-        This app will help you determine what methods of stakeholder engagement will be most effective for your process after answer a series of questions.
+        <div style={textStyle}>
+          This app will help you determine what methods of stakeholder engagement will be most effective for your process after answer a series of questions.
+        </div>
         </CardText>
         <CardActions>
         <RaisedButton label="Let's get started" primary={true} onTouchTap={this._handleTouchTap} />
