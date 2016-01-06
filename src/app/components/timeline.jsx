@@ -22,7 +22,7 @@ let _checkboxes = [];
 
 
 const Timeline = React.createClass({
-
+  _optionIsChosen: false,
   mixins: [Lifecycle],
   hasValueSet: false,
 
@@ -47,9 +47,7 @@ const Timeline = React.createClass({
   },
 
   _onChange() {
-    console.log("change...")
     this.setState(this.calculateState());
-
   },
 
   render() {
@@ -69,25 +67,40 @@ const Timeline = React.createClass({
                 name={item.id}
                 value={item.id}
                 defaultChecked={item.chosen}
+                onCheck={this._handleOptionChange}
                 label={item.heading}/>
             )
-          })}
+          }, this)}
         </CardText>
         <CardActions expandable={true}>
           <RaisedButton onTouchTap={this._handlePrev} label="Previous Step"/>
-          <RaisedButton onTouchTap={this._handleNext} label="Next Step"/>
+          <RaisedButton disabled={!this._optionIsChosen} onTouchTap={this._handleNext} label="Next Step"/>
         </CardActions>
       </Card>
     );
   },
 
-  _updateState(){
-    let settings = this.getSettings();
-    let any = false;
-    for (let key in settings) {
-      any = any || settings[key];
+  _handleOptionChange(){
+    let hasOptions = this._hasCheckedOptions()
+    if(hasOptions){
+      this._optionIsChosen = hasOptions;
+      
+    } else {
+      this._optionIsChosen = false;
     }
-    this.hasValueSet = any;
+    this.setState(this.calculateState());
+  },
+
+  _hasCheckedOptions(){
+    let isChecked = false;
+    for (let checkbox of _checkboxes) {
+      if(checkbox){
+        if(checkbox.isChecked()){
+          isChecked = true;
+        }
+      }
+    }
+    return isChecked;
   },
 
   componentWillMount() {
@@ -98,7 +111,9 @@ const Timeline = React.createClass({
   getSettings() {
     let settings = {};
     for (let checkbox of _checkboxes) {
-      settings[checkbox.props.name] = checkbox.isChecked();
+      if(checkbox){
+        settings[checkbox.props.name] = checkbox.isChecked();
+      }
     }
     return settings;
   },
@@ -112,18 +127,10 @@ const Timeline = React.createClass({
   },
 
   routerWillLeave() {
-    let settings = this.getSettings();
-    let any = false;
-    for (let key in settings) {
-      any = any || settings[key];
-    }
-    if (!any) {
-      window.alert("You must choose at least one stage");
-      return false
-    } else {
-      TimelineActions.setTimeliness(settings);
-      return true;
-    }
+
+    TimelineActions.setTimeliness(this.getSettings());
+    return true;
+
   },
 });
 
