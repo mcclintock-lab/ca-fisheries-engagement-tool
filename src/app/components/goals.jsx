@@ -83,15 +83,15 @@ const GoalForm = React.createClass({
           <RadioButtonGroup style={radioGroupStyle} name="ranking" ref="buttonGroup" defaultSelected={this.props.priority || "1"}>
             <RadioButton
               value="1"
-              label="Unlikely to achieve goal"
+              label="Not a Priority"
               style={{marginBottom:16}} />
             <RadioButton
               value="2"
-              label="Somewhat likely"
+              label="Somewhat of a Priority"
               style={{marginBottom:16}}/>
             <RadioButton
               value="3"
-              label="Likely"
+              label="High Priority"
               style={{marginBottom:16}}/>
           </RadioButtonGroup>
         </CardText>
