@@ -4,6 +4,7 @@ import {Store} from 'flux/utils';
 import assign from 'object-assign';
 import CharacteristicActions from '../actions/characteristicActions';
 import WorkflowActions from '../actions/workflowActions';
+require("babel-polyfill");
 
 import _characteristics from '../data/fisheryCharacteristics';
 

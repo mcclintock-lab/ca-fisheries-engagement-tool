@@ -4,6 +4,7 @@ import {Store} from 'flux/utils';
 import assign from 'object-assign';
 import GoalActions from '../actions/goalActions';
 import WorkflowActions from '../actions/workflowActions';
+require("babel-polyfill");
 
 import _goals from '../data/goals';
 
