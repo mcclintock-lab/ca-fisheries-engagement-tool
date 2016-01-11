@@ -44,6 +44,11 @@ class CharacteristicStore extends Store {
     return _characteristics[_characteristics.indexOf(active) + 1];
   }
 
+  getPrev() {
+    let active = this.getActive();
+    return _characteristics[_characteristics.indexOf(active) - 1];
+  }
+
   __onDispatch = function(action) {
 
     switch(action.actionType) {

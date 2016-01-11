@@ -31,6 +31,15 @@ import WorkflowActions from '../actions/workflowActions';
 const containerStyle = {
 };
 
+const textStyle = {
+  textAlign: 'left',
+  height: '120'
+};
+
+const buttonDirs = {
+  next: "next",
+  prev: "prev"
+};
 
 let radioGroupStyle = {
   paddingTop: '30px',
@@ -48,23 +57,26 @@ const CharacteristicForm = React.createClass({
           subtitle={"Question " + this.props.index + " of " + this.props.questionLength}
           avatar={<div />} />
         <CardText expandable={true}>
-          {this.props.description}
+          <div style={textStyle}>
+            {this.props.description}
+          </div>
           <RadioButtonGroup style={radioGroupStyle} name="ranking" ref="buttonGroup" defaultSelected={this.props.answer || "0"}>
             <RadioButton
-              value="0"
-              label="0. Unknown"
-              style={{marginBottom:16}} />
+              value="2"
+              label="Yes"
+              style={{marginBottom:16}}/>
             <RadioButton
               value="1"
-              label="1. Yes"
+              label="No"
               style={{marginBottom:16}}/>
             <RadioButton
-              value="2"
-              label="2. No"
-              style={{marginBottom:16}}/>
+              value="0"
+              label="Unknown"
+              style={{marginBottom:16}} />
           </RadioButtonGroup>
         </CardText>
         <CardActions expandable={true}>
+          <RaisedButton onTouchTap={this._handlePrevQuestion} label={this.props.index === 1 ? "Previous Step" : "Previous Question"}/>
           <RaisedButton onTouchTap={this._handleNextQuestion} label={this.props.index === this.props.questionLength ? "Complete" : "Next Question"}/>
         </CardActions>
       </Card>
@@ -76,7 +88,11 @@ const CharacteristicForm = React.createClass({
   },
 
   _handleNextQuestion() {
-    this.props.onNext(this.getAnswer());
+    this.props.onNext(this.getAnswer(), buttonDirs.next);
+  },
+
+  _handlePrevQuestion() {
+    this.props.onNext(this.getAnswer(), buttonDirs.prev);
   }
 
 })
@@ -123,8 +139,12 @@ const Characteristics = React.createClass({
   },
 
 
-  _handleFormComplete(priority) {
-    WorkflowActions.nextStep(this.props.location, this.props.history);
+  _handleFormComplete(priority, dir) {
+    if(dir === buttonDirs.next){
+      WorkflowActions.nextStep(this.props.location, this.props.history);
+    } else {
+      WorkflowActions.prevStep(this.props.location, this.props.history);
+    }
   }
 
 });

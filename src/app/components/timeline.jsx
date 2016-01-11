@@ -20,10 +20,11 @@ import {Container} from 'flux/utils';
 let _checkboxes = [];
 
 const Timeline = React.createClass({
-
   mixins: [Lifecycle],
 
   getInitialState() {
+    
+    
     return this.calculateState();
   },
 
@@ -35,6 +36,7 @@ const Timeline = React.createClass({
 
   componentDidMount() {
     this.storeListener = TimelineStore.addListener(this._onChange);
+    this._handleOptionChange();
   },
 
   componentWillUnmount() {
@@ -44,6 +46,7 @@ const Timeline = React.createClass({
   },
 
   _onChange() {
+    
     this.setState(this.calculateState());
   },
 
@@ -51,6 +54,7 @@ const Timeline = React.createClass({
     return (
       <Card initiallyExpanded={true}>
         <CardHeader
+
           title="Timeliness"
           subtitle="What stages of the process are you planning for?"
           avatar={<div />} />
@@ -63,25 +67,57 @@ const Timeline = React.createClass({
                 name={item.id}
                 value={item.id}
                 defaultChecked={item.chosen}
+                onCheck={this._handleOptionChange}
                 label={item.heading}/>
             )
-          })}
+          }, this)}
         </CardText>
         <CardActions expandable={true}>
-          <RaisedButton onTouchTap={this._handleNext} label="Next Step" />
+          <RaisedButton onTouchTap={this._handlePrev} label="Previous Step"/>
+          <RaisedButton disabled={!this._optionIsChosen} onTouchTap={this._handleNext} label="Next Step"/>
         </CardActions>
       </Card>
     );
+  },
+
+  _handleOptionChange(){
+    let hasOptions = this._hasCheckedOptions();
+    if(hasOptions){
+      this._optionIsChosen = hasOptions;
+      
+    } else {
+      this._optionIsChosen = false;
+    }
+    this.setState(this.calculateState());
+  },
+
+  _hasCheckedOptions(){
+    let isChecked = false;
+    if (_checkboxes ){
+      for (let checkbox of _checkboxes) {
+        if(checkbox !== undefined && checkbox !== null){
+          if(checkbox.isChecked()){
+            isChecked = true;
+          }
+        }
+      }
+      return isChecked;
+    } else {
+      return false;
+    }
   },
 
   componentWillMount() {
     _checkboxes = [];
   },
 
+
   getSettings() {
     let settings = {};
     for (let checkbox of _checkboxes) {
-      settings[checkbox.props.name] = checkbox.isChecked();
+      if(checkbox){
+        settings[checkbox.props.name] = checkbox.isChecked();
+      }
     }
     return settings;
   },
@@ -90,19 +126,15 @@ const Timeline = React.createClass({
     WorkflowActions.nextStep(this.props.location, this.props.history);
   },
 
+  _handlePrev() {
+    WorkflowActions.prevStep(this.props.location, this.props.history);
+  },
+
   routerWillLeave() {
-    let settings = this.getSettings();
-    let any = false;
-    for (let key in settings) {
-      any = any || settings[key];
-    }
-    if (!any) {
-      window.alert("You must choose at least one stage");
-      return false
-    } else {
-      TimelineActions.setTimeliness(settings);
-      return true;
-    }
+
+    TimelineActions.setTimeliness(this.getSettings());
+    return true;
+
   },
 });
 

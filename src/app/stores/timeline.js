@@ -20,7 +20,6 @@ class TimelineStore extends Store {
   }
 
   __onDispatch = function(action) {
-
     switch(action.actionType) {
       case TimelineActions.SET_TIMELINESS:
         setTimeliness(action.settings || {});
@@ -30,6 +29,12 @@ class TimelineStore extends Store {
       case TimelineActions.SET_TIMELINESS_AND_ADVANCE:
         setTimeliness(action.settings || {});
         this.history.push(...window.location, {pathname: '/characteristics/undefined-community'});
+        this.__emitChange();
+        break;
+
+      case TimelineActions.SET_TIMELINESS_AND_GOBACK:
+        setTimeliness(action.settings || {});
+        this.history.push(...window.location, {pathname: '/goals/empower'});
         this.__emitChange();
         break;
 

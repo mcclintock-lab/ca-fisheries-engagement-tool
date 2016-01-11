@@ -34,6 +34,35 @@ let WorkflowActions = {
     }
   },
 
+  prevStep(location, history) {
+    let GoalStore = require('../stores/goals');
+    let info = pathInfo(location);
+    if (info.inGoals) {
+      let prevGoal = GoalStore.getPrevGoal()
+      if (prevGoal) {
+        history.push(
+          ...location, {pathname: "/goals/" + prevGoal.id}
+        );      
+      } else { 
+        console.log("no previous")        
+      }
+    } else if (info.inTimeline) {
+      history.push(...location, {pathname: "/goals/empower"})
+    } else if (info.inCharacteristics) {
+      let CharacteristicStore = require('../stores/characteristics')
+      let prev = CharacteristicStore.getPrev()
+      if (prev) {
+        history.push(
+          ...location, {pathname: "/characteristics/" + prev.id}
+        );      
+      } else {
+        history.push(
+          ...location, {pathname: "/timeline/"}
+        );              
+      }      
+    }
+  },
+
   serializeResultsToUrl(history, location) {
     let GoalStore = require('../stores/goals');
     let CharacteristicStore = require('../stores/characteristics');
