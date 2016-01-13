@@ -60,7 +60,7 @@ const CharacteristicForm = React.createClass({
           <div style={textStyle}>
             {this.props.description}
           </div>
-          <RadioButtonGroup style={radioGroupStyle} name="ranking" ref="buttonGroup" defaultSelected={this.props.answer || "0"}>
+          <RadioButtonGroup style={radioGroupStyle} onChange={this._handleOptionChange} name="ranking" ref="buttonGroup" defaultSelected={this.props.answer}>
             <RadioButton
               value="2"
               label="Yes"
@@ -77,7 +77,7 @@ const CharacteristicForm = React.createClass({
         </CardText>
         <CardActions expandable={true}>
           <RaisedButton onTouchTap={this._handlePrevQuestion} label={this.props.index === 1 ? "Previous Step" : "Previous Question"}/>
-          <RaisedButton onTouchTap={this._handleNextQuestion} label={this.props.index === this.props.questionLength ? "Complete" : "Next Question"}/>
+          <RaisedButton onTouchTap={this._handleNextQuestion} disabled={!this._optionIsChosen()} label={this.props.index === this.props.questionLength ? "Complete" : "Next Question"}/>
         </CardActions>
       </Card>
     )
@@ -85,6 +85,31 @@ const CharacteristicForm = React.createClass({
 
   getAnswer() {
     return this.refs.buttonGroup.getSelectedValue();
+  },
+
+  //we only want to check if *any* option is chosen
+  _optionIsChosen(){
+    let ag = CharacteristicStore.getActive();
+    if(ag){
+      return (ag.answer !== undefined);
+    } else {
+      return false;
+    }
+  },
+
+  _handleOptionChange(event){
+    //fire the change...
+    let ag = CharacteristicStore.getActive();
+    let answer = event.target.value
+    
+    if(ag){
+      if(answer){
+        CharacteristicActions.setAnswer(ag.id, answer);
+      } else {
+        CharacteristicActions.setAnswer(ag.id, ag.answer);  
+      }
+      
+    } 
   },
 
   _handleNextQuestion() {
@@ -102,7 +127,11 @@ const Characteristics = React.createClass({
   mixins: [Lifecycle],
 
   routerWillLeave(a, b) {
-    CharacteristicActions.setAnswer(this.refs.form.props.id, this.refs.form.getAnswer());
+    let answer = this.refs.form.getAnswer();
+    if(answer !== null && answer !== ""){
+      CharacteristicActions.setAnswer(this.refs.form.props.id, answer);
+    } 
+    
   },
 
   calculateState() {

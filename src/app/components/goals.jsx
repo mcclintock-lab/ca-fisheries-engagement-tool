@@ -80,7 +80,7 @@ const GoalForm = React.createClass({
           <div style={textStyle}>
           {this.props.description}
           </div>
-          <RadioButtonGroup style={radioGroupStyle} name="ranking" ref="buttonGroup" defaultSelected={this.props.priority || "1"}>
+          <RadioButtonGroup style={radioGroupStyle} onChange={this._handleOptionChange} name="ranking" ref="buttonGroup" defaultSelected={this.props.priority}>
             <RadioButton
               value="1"
               label="Not a Priority"
@@ -97,14 +97,39 @@ const GoalForm = React.createClass({
         </CardText>
         <CardActions expandable={true}>
           <RaisedButton  onTouchTap={this._handlePrevQuestion} disabled={this.props.index === 1} label="Previous Question"/>
-          <RaisedButton  onTouchTap={this._handleNextQuestion} label={this.props.index === this.props.goalsLength ? "Next Step" : "Next Question"}/>
+          <RaisedButton  onTouchTap={this._handleNextQuestion} disabled={!this._optionIsChosen()} label={this.props.index === this.props.goalsLength ? "Next Step" : "Next Question"}/>
         </CardActions>
       </Card>
     )
   },
 
+
   getPriority() {
     return this.refs.buttonGroup.getSelectedValue();
+  },
+
+  //we only want to check if *any* option is chosen
+  _optionIsChosen(){
+    let ag = GoalStore.getActiveGoal();
+    if(ag){
+      return (ag.priority !== undefined);
+    } else {
+      return false;
+    }
+  },
+
+  _handleOptionChange(event){
+    //fire the change...
+    let ag = GoalStore.getActiveGoal();
+    let priority = this.getPriority();
+    if(ag){
+      if(priority){
+        GoalActions.setPriority(ag.id, priority);
+      } else {
+        GoalActions.setPriority(ag.id, ag.priority);  
+      }
+      
+    } 
   },
 
   _handleNextQuestion() {
@@ -122,7 +147,13 @@ const Goals = React.createClass({
   mixins: [Lifecycle],
 
   routerWillLeave(a, b) {
-    GoalActions.setPriority(this.refs.form.props.id, this.refs.form.getPriority());
+    let id = this.refs.form.props.id;
+    let priority = this.refs.form.getPriority();
+    
+    if(priority !== null && priority !== ""){
+      GoalActions.setPriority(id, priority);  
+    } 
+    
   },
 
   calculateState() {
