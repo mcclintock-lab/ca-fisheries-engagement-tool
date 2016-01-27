@@ -70,7 +70,7 @@ const Intro = React.createClass({
                 If the management process involves tribal consultation, please contact your department’s tribal liaison or the <a target="_blank" href="http://tribalgovtaffairs.ca.gov/">Governor’s Tribal Advisor Office</a>.
               </li>
               <li>
-                Familiarize yourself with the key <a target="_blank" href="principles">Stakeholder Engagement Principles and Implementation Guidance</a>
+                Familiarize yourself with the key <a target="_blank" href="#/principles">Stakeholder Engagement Principles and Implementation Guidance</a>
               </li>
               
             </ul>
