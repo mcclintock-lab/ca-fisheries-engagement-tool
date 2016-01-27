@@ -96,8 +96,8 @@ const GoalForm = React.createClass({
           </RadioButtonGroup>
         </CardText>
         <CardActions expandable={true}>
-          <RaisedButton  onTouchTap={this._handlePrevQuestion} disabled={this.props.index === 1} label="Previous Question"/>
-          <RaisedButton  onTouchTap={this._handleNextQuestion} disabled={!this._optionIsChosen()} label={this.props.index === this.props.goalsLength ? "Next Step" : "Next Question"}/>
+          <RaisedButton  onTouchTap={this._handlePrevQuestion} label={this.props.index === 1 ? "Back to Goal Overview" :"Previous Question"}/>
+          <RaisedButton  primary={true} onTouchTap={this._handleNextQuestion} disabled={!this._optionIsChosen()} label={this.props.index === this.props.goalsLength ? "Go to Timing" : "Next Question"}/>
         </CardActions>
       </Card>
     )

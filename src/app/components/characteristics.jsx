@@ -76,8 +76,8 @@ const CharacteristicForm = React.createClass({
           </RadioButtonGroup>
         </CardText>
         <CardActions expandable={true}>
-          <RaisedButton onTouchTap={this._handlePrevQuestion} label={this.props.index === 1 ? "Previous Step" : "Previous Question"}/>
-          <RaisedButton onTouchTap={this._handleNextQuestion} disabled={!this._optionIsChosen()} label={this.props.index === this.props.questionLength ? "Complete" : "Next Question"}/>
+          <RaisedButton onTouchTap={this._handlePrevQuestion} label={this.props.index === 1 ? "Back to Characteristics Overview" : "Previous Question"}/>
+          <RaisedButton primary={true} onTouchTap={this._handleNextQuestion} disabled={!this._optionIsChosen()} label={this.props.index === this.props.questionLength ? "Complete" : "Next Question"}/>
         </CardActions>
       </Card>
     )

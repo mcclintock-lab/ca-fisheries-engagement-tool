@@ -2,22 +2,22 @@ module.exports = [
 
   {
     id: "early-planning",
-    heading: "Early Planning"
+    heading: "Early planning (the decision-making process has not started)"
   },
 
   {
     id: "late-planning",
-    heading: "Late Planning"
+    heading: "During planning (the decision-making process is underway)"
   },
 
   {
     id: "implementation",
-    heading: "Implementation"
+    heading: "Implementation (a decision has been made and is currently being implemented)"
   },
 
   {
     id: "ongoing-engagement",
-    heading: "Ongoing Engagement Needs"
+    heading: "Ongoing Engagement (stakeholder engagement outside of a specific decision-making process)"
   }
 
 ];

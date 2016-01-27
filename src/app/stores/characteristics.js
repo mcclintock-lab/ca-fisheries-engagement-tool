@@ -70,6 +70,7 @@ class CharacteristicStore extends Store {
         for (let char of _characteristics) {
           if (answers[char.id] && answers[char.id] !== 'undefined') {
             char.answer = answers[char.id];  
+            
           }
         }
         this.__emitChange();

@@ -53,12 +53,17 @@ const Timeline = React.createClass({
   render() {
     return (
       <Card initiallyExpanded={true}>
-        <CardHeader
-
-          title="Timeliness"
-          subtitle="What stages of the process are you planning for?"
+        <CardTitle
+          title="Timing"
           avatar={<div />} />
         <CardText expandable={true} style={{textAlign: 'left', marginLeft: 25}}>
+          <div>
+            Selecting the appropriate stakeholder engagement strategies also depends on the timing of the anticipated engagement in your management process. For example, establishing an Advisory Group with defined membership and a direct role in the decision-making process may be appropriate in the “Early Planning” phase, but would be less appropriate if a decision or final management plan is already before the California Fish and Game Commission for approval. 
+          </div>
+          <br/>
+          <h4>
+            Identify the management phase that most closely aligns to the stage in which you will implement your engagement strategy:
+          </h4>
           {this.state.items.map(function(item) {
             return (
               <Checkbox
@@ -73,8 +78,8 @@ const Timeline = React.createClass({
           }, this)}
         </CardText>
         <CardActions expandable={true}>
-          <RaisedButton onTouchTap={this._handlePrev} label="Previous Step"/>
-          <RaisedButton disabled={!this._optionIsChosen} onTouchTap={this._handleNext} label="Next Step"/>
+          <RaisedButton onTouchTap={this._handlePrev} label="Back to Goals"/>
+          <RaisedButton primary={true} disabled={!this._optionIsChosen} onTouchTap={this._handleNext} label="Go to Characteristics Overview"/>
         </CardActions>
       </Card>
     );
@@ -123,11 +128,11 @@ const Timeline = React.createClass({
   },
 
   _handleNext() {
-    WorkflowActions.nextStep(this.props.location, this.props.history);
+    this.props.history.push(...this.props.location, "/char_overview");
   },
 
   _handlePrev() {
-    WorkflowActions.prevStep(this.props.location, this.props.history);
+    this.props.history.push(...this.props.location, "/goals/empower");
   },
 
   routerWillLeave() {

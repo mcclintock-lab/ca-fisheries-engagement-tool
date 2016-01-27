@@ -12,9 +12,12 @@ import TimelineStore from './stores/timeline';
 import Characteristics from './components/characteristics';
 import CharacteristicStore from './stores/characteristics';
 import Results from './components/results';
+import GoalOverview from './components/goal_overview';
+import CharOverview from './components/char_overview'
 import qs from 'querystring';
 
 import Intro from './components/intro';
+import Principles from './components/principles';
 import Dispatcher from './dispatcher';
 import WorkflowActions from './actions/workflowActions';
 
@@ -33,10 +36,19 @@ if (window.location.toString().indexOf('/results') !== -1) {
   // Okay, we'll marshal state from the query string
   WorkflowActions.marshalAnswers(qs.decode(window.location.hash.replace('?', '')));
 } else {
-  console.log('nope');
-  history.push(...window.location, {
-    pathname: "/intro"
-  });  
+  if(window.location.toString().indexOf('/principles') !== -1 ){
+
+    history.push(...window.location, {
+      pathname: "/principles"
+    }); 
+
+  } else {
+
+    history.push(...window.location, {
+      pathname: "/intro"
+    }); 
+  }
+ 
 }
 
 let unlisten = history.listen(location => {
@@ -70,7 +82,11 @@ render((
       <Route path="timeline" component={Timeline}/>
       <Route path="characteristics/:id" component={Characteristics}/>
       <Route path="results" component={Results}/>
+      <Route path="goal_overview" component={GoalOverview}/>
+      <Route path="char_overview" component={CharOverview}/>
+      <Route path="principles" component={Principles}/>
       <Route path="*" component={Intro}/>
+      
     </Route>
   </Router>
 ), document.getElementById('app'));

@@ -16,6 +16,15 @@ import Colors from 'material-ui/lib/styles/colors';
 import RaisedButton from 'material-ui/lib/raised-button';
 import SelectField from 'material-ui/lib/select-field';
 
+
+import Table from 'material-ui/lib/table/table';
+import TableBody from 'material-ui/lib/table/table-body';
+import TableFooter from 'material-ui/lib/table/table-footer';
+import TableHeader from 'material-ui/lib/table/table-header';
+import TableHeaderColumn from 'material-ui/lib/table/table-header-column';
+import TableRow from 'material-ui/lib/table/table-row';
+import TableRowColumn from 'material-ui/lib/table/table-row-column';
+
 import GoalStore from '../stores/goals';
 import TimelineStore from '../stores/timeline';
 import CharacteristicStore from '../stores/characteristics';
@@ -24,7 +33,9 @@ import WorkflowActions from '../actions/workflowActions';
 
 
 let size = 18;
-
+const goal_text_values = {1:"Not a Priority", 2: "Somewhat of a Priority", 3: "High Priority"};
+const characteristic_text_values = {0:"Unknown", 1: "No", 2: "Yes"};
+const goal_color_values = {1: "#ffcdd2", 2: "#FFECB3", 3: "#80CBC4"};
 
 let avatarStyle = {
   height: size - 2,
@@ -38,7 +49,7 @@ let avatarStyle = {
 
 
 const Results = React.createClass({
-
+  
   calculateRecommendedMethods() {
     // Each data structure has a property with user-input
     // for goals, it's goal.priority
@@ -62,6 +73,11 @@ const Results = React.createClass({
 
     let expert_user_lookup=[[1,1,1],[1,2,3],[1,4,5]];
     let fish_char_lookup = [[0,-1,0],[1,0,0],[1,0,3],[2,0,4]];
+    let tech_method_goal_scores = []
+
+    let user_score_dict = {1:"Not a Priority", 2: "Somewhat of a Priority", 3: "High Priority"};
+   
+    let expert_score_dict = {1:"Not Effective", 2: "Somewhat Effective", 3: "Highly Effective"};
     for(let tech_method of scores){
       for(let goal of goals){
 
@@ -69,6 +85,19 @@ const Results = React.createClass({
         let user_score = goal.priority;
         let final_score = expert_user_lookup[expert_score-1][user_score-1]
 
+        goal.final_goal_score = final_score
+        let tmid = tech_method['ID (do not change)']
+        let is_max = (final_score === 5);
+        let scores = {"goal_id": goal.id, "ttip":goal.description, "name":goal.header, 
+                      "user_score_text": user_score_dict[user_score], "user_score":user_score, 
+                      "expert_score_text": expert_score_dict[expert_score],
+                      "expert_score":expert_score, "is_max":is_max};
+        if(tech_method_goal_scores[tmid] === undefined){
+          tech_method_goal_scores[tmid] = [scores];
+        } else {
+            tech_method_goal_scores[tmid].push(scores);
+        }
+        
         //for each id in the ranking
         //for each timeliness id
         //if timeliness.id == "Yes" and ranking[timeless.chosen] == "true" then keep score field
@@ -76,9 +105,10 @@ const Results = React.createClass({
         tech_method[goal.id] = 0;
         for(let time of timeliness){
           let techtime = tech_method[time.id];
-          //console.log("score time id: ", techtime);
+          
           if((techtime === "Yes") && (time.chosen === true)){
             tech_method[goal.id] = tech_method[goal.id]+final_score;
+
           } 
         }
       }
@@ -102,7 +132,6 @@ const Results = React.createClass({
     //sum score of characteristic, keeping track of all nums where answer != 1 (a value for No)
     //normalize the score
     for(let tech_method of scores){
-      console.log("======== tech method: ", tech_method["ID (do not change)"]);
       let tech_method_score = 0;
       let norm_count = 0;
       for(let fish_char of characteristics){
@@ -116,11 +145,7 @@ const Results = React.createClass({
         let expert_dex = Number(expert_char)+1;
         let user_dex = Number(user_char);
         let final_char_score = fish_char_lookup[expert_dex][user_dex];
-        console.log("fisery char: ", fcid);
-        console.log("expert: ", expert_char);
-        console.log("user: ", user_char);
-        console.log("final char lookup score: ", final_char_score);
-        console.log("------");
+        fish_char.final_characteristics_score = final_char_score;
         tech_method_score = tech_method_score + final_char_score;
       }
 
@@ -161,15 +186,28 @@ const Results = React.createClass({
 
     let top_scores = scores.slice(0, numRecs);
 
+
     //get the methods and set final score
     let final_methods = []
     for(let score of top_scores){
       let theid = score['ID (do not change)'];
+      
       let method = methods[theid];
       method.normalized_final_score = Math.round(score.normalized_final_score);
+      let goal_scores = tech_method_goal_scores[theid]
+      goal_scores.sort(function(a,b){
+        let a_us = a.user_score;
+        let a_ex = a.expert_score;
+        let b_us = b.user_score;
+        let b_ex = b.expert_score;
+        let a_fs = expert_user_lookup[a_ex-1][a_us-1];
+        let b_fs = expert_user_lookup[b_ex-1][b_us-1];
+        return a_fs === b_fs ? 0 : +(b_fs > a_fs) || -1;
+      });
+      method.goal_scores = goal_scores;
       final_methods.push(method);
-    }
 
+    }
 
     return final_methods;
 
@@ -201,7 +239,14 @@ const Results = React.createClass({
         <Tab label="Recommendations" >
           <Card>
             <CardText>
-              These stakeholder engagement methods are recommended based on your responses. Click or tap on methods to see further description including required resources and evaluation criteria.
+              <p>
+                These stakeholder engagement methods are recommended based on your responses. Click or tap on methods to see further description including required resources and evaluation criteria.
+                Remember to keep the <a target="_blank" href="principles">Stakeholder Engagement Principles and Implementation Guidance</a> in mind when assessing the results.
+              </p>
+                <em >
+                  Note: To change a response, select the 'Your Answers' tab and click or tap on the question.
+                </em>
+            
             </CardText>
             I<div style={{marginLeft:'15px'}}>
               <SelectField style={{width:'50%'}} valueMember="payload" displayMember="text" 
@@ -211,13 +256,51 @@ const Results = React.createClass({
               value={this.state.numRecsToView}
               />
             </div>
-            
+              
               {this.state.recommendations.map(function(rec) {
                 return (
                   <Card key={rec.heading} initiallyExpanded={false}>
+                  
                     <CardTitle title={rec.heading} subtitle={"Score: "+rec.normalized_final_score} actAsExpander={true}
-    showExpandableButton={true}/>
-                    <CardText expandable={true} dangerouslySetInnerHTML={{__html: rec.text}} />
+                      showExpandableButton={true}/>
+
+                    <CardText expandable={true}>
+                      <div style={{paddingLeft:"10px", paddingRight:"10px"}}>
+                        <em >
+                          The following table shows how you prioritized each engagement goals and how experts ranked this strategy's efficacy in achieving that goal. Highlighted rows are goals that are a priority for you and are effectively achieved with this engagement strategy, as ranked by experts.
+                        </em>
+               
+                      </div>
+                      <Table>
+                      <TableHeader displaySelectAll={false} adjustForCheckbox={false}> 
+                        <TableRow>
+                          <TableHeaderColumn style={{width:"50%", wordWrap:'break-word', whiteSpace:'normal'}} tooltip='Highlighted goals received the maximum score'>Goal</TableHeaderColumn>
+                          <TableHeaderColumn style={{width:"25%", wordWrap:'break-word', whiteSpace:'normal'}} tooltip='The ranking you selected'>Your Priority</TableHeaderColumn>
+                          <TableHeaderColumn  style={{width:"25%", wordWrap:'break-word', whiteSpace:'normal'}} tooltip='Effectiveness of tech method for the goal, as rated by experts'>Expert Rating</TableHeaderColumn>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody displayRowCheckbox={false}>
+                        {rec.goal_scores.map(function(goal) {
+                          return (
+                            <TableRow tooltip={goal.ttip}  style={{backgroundColor: goal.is_max ? "#C0D9AF" : "white"}}>
+                              <TableRowColumn style={{ width: "50%", wordWrap:'break-word', whiteSpace:'normal'}}>
+                                {goal.name}
+                              </TableRowColumn>
+                              <TableRowColumn style={{width:"25%",wordWrap:'break-word', whiteSpace:'normal'}}>
+                                {goal.user_score_text}
+                              </TableRowColumn>
+                              <TableRowColumn style={{width:"25%", wordWrap:'break-word', whiteSpace:'normal'}}>
+                                {goal.expert_score_text}
+                              </TableRowColumn>
+                            </TableRow>
+                          )
+                        }, this)}
+                        </TableBody>
+                      </Table>
+                      <div dangerouslySetInnerHTML={{__html: rec.text}}>
+                      </div>
+                    </CardText>
+
                   </Card>
                 )
               })}
@@ -230,10 +313,13 @@ const Results = React.createClass({
         </Tab>
         <Tab label="Your Answers" >
           <Paper>
+          <h3 style={{"textAlign":"center"}}>
+            Click on any answer to return to the tool and change your response.
+          </h3>
           <List subheader="Goals">
             {this.state.goals.map(function(goal) {
               return (
-                <ListItem onTouchTap={this._handleGoalTap(goal)} key={goal.id} primaryText={goal.header} rightIcon={<Avatar style={avatarStyle}>{goal.priority || "1"}</Avatar>} />
+                <ListItem onTouchTap={this._handleGoalTap(goal)} key={goal.id} primaryText={goal.header} ><div style={{float:"right", fontSize:'11', color:'gray', textAlign:'left'}}>{this._getGoalText(goal.priority)}</div></ListItem>
               )
             }, this)}
           </List>
@@ -249,7 +335,7 @@ const Results = React.createClass({
           <List subheader="Fishery Characteristics">
             {this.state.characteristics.map(function(characteristic) {
               return (
-                <ListItem onTouchTap={this._handleCharTap(characteristic)} key={characteristic.id} primaryText={characteristic.heading} rightIcon={<Avatar style={avatarStyle}>{characteristic.answer || "0"}</Avatar>} />
+                <ListItem onTouchTap={this._handleCharTap(characteristic)} key={characteristic.id} primaryText={characteristic.heading} ><div style={{float:"right", fontSize:'11', color:'gray', textAlign:'left'}}>{this._getCharacteristicText(characteristic.answer)}</div></ListItem>
               )
             }, this)}
           </List>
@@ -259,7 +345,32 @@ const Results = React.createClass({
       </Tabs>
     );
   },
+  _getGoalText(val){
+    
+    return goal_text_values[val];
+  },
+  _getGoalColor(val){
+    return goal_color_values[val];
+  },
 
+  _getCharacteristicText(val){
+    return characteristic_text_values[val]
+  },
+  _getAvatarStyle(val){
+    let height = 18;
+    let color_val = goal_color_values[val];
+    let avatarStyle = {
+      height: size - 2,
+      width: 42,
+      lineHeight: size + 'px',
+      fontSize: size / 2 ,
+      top: 4,
+      color: 'black',
+      backgroundColor:'white',
+      highlightColor:Colors.green500
+    };
+    return avatarStyle;
+  },
   _handleSelectValueChange: function(e) {
     this.state.numRecsToView = e.target.value;
     this.setState({

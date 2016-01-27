@@ -6,7 +6,9 @@ let WorkflowActions = {
   nextStep(location, history) {
     let GoalStore = require('../stores/goals');
     let info = pathInfo(location);
+    
     if (info.inGoals) {
+
       let nextGoal = GoalStore.getNextGoal();
       if (nextGoal) {
         history.push(
@@ -18,7 +20,7 @@ let WorkflowActions = {
         );              
       }
     } else if (info.inTimeline) {
-      history.push(...location, {pathname: "/characteristics/undefined-community"});
+      history.push(...location, {pathname: "/char_overview"});
     } else if (info.inCharacteristics) {
       let CharacteristicStore = require('../stores/characteristics');
       let next = CharacteristicStore.getNext();
@@ -31,7 +33,7 @@ let WorkflowActions = {
           ...location, {pathname: "/results/"}
         );              
       }      
-    }
+    } 
   },
 
   prevStep(location, history) {
@@ -44,7 +46,9 @@ let WorkflowActions = {
           ...location, {pathname: "/goals/" + prevGoal.id}
         );      
       } else { 
-        console.log("no previous")        
+        history.push(
+          ...location, {pathname: "/goal_overview"}
+        );   
       }
     } else if (info.inTimeline) {
       history.push(...location, {pathname: "/goals/empower"})
@@ -57,7 +61,7 @@ let WorkflowActions = {
         );      
       } else {
         history.push(
-          ...location, {pathname: "/timeline/"}
+          ...location, {pathname: "/char_overview"}
         );              
       }      
     }

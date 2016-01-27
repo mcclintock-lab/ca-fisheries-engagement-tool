@@ -40,16 +40,44 @@ const cardStyle = {
   maxWidth: '600'
 };
 
+const principlesCardStyle = {
+  minWidth: 300,
+  margin: '0 auto',
+  maxWidth: '1000'
+};
+
 const standardActions = [
   {
     text: 'Okay',
   },
 ];
 
-
 const stepListStyle = {
   width: '32%',
   float: 'left'
+};
+
+const selSize = 41;
+const deselSize = 36;
+let selAvatarStyle = {
+  height: selSize - 2,
+  width: selSize - 2,
+  lineHeight: selSize-2 + 'px',
+  fontSize: selSize / 2 + 6,
+  top:8,
+  color: 'white',
+  backgroundColor:Colors.green500
+
+};
+
+let deselAvatarStyle = {
+  height: deselSize - 2,
+  width: deselSize - 2,
+  lineHeight: deselSize + 'px',
+  fontSize: deselSize / 2 + 6,
+  color: Colors.grey300,
+  top: 11,
+  backgroundColor:Colors.grey500
 };
 
 const Main = React.createClass({
@@ -117,11 +145,13 @@ const Main = React.createClass({
 
   calculateProgress() {
     let path = this.props.location.pathname;
+    let all = GoalStore.getAll();
     if (path.indexOf('intro') !== -1) {
       return 0;
+    } else if (path.indexOf('goal_overview') !== -1){
+      return 2;
     } else if (path.indexOf('goals') !== -1) {
       let activeGoal = GoalStore.getActiveGoal();
-      let all = GoalStore.getAll();
       let fraction = all.indexOf(activeGoal) / all.length;
       return (33 * fraction) + 2;
     } else if (path.indexOf('timeline') !== -1) {
@@ -141,24 +171,33 @@ const Main = React.createClass({
     let isCharacteristics = this.props.location.pathname.indexOf('characteristics') !== -1;
     let isIntro = this.props.location.pathname.indexOf('intro') !== -1;
     let isResults = this.props.location.pathname.indexOf('results') !== -1;
-
+    let isPrinciples = this.props.location.pathname.indexOf('principles') !== -1;
+    let isGoalsOverview = this.props.location.pathname.indexOf('goal_overview') !== -1;
+    let isCharOverview = this.props.location.pathname.indexOf('char_overview') !== -1;
     let headerContent = (
       <div>
+        <h3 style={{width:'100%'}, {marginTop:"0px"},{textAlign:"center"}}>Step 1: Quantitative Analysis</h3>
         <List className="navHeader">
-          <ListItem style={stepListStyle} leftAvatar={<Avatar backgroundColor={isGoals ? Colors.green500 : Colors.gray500}>1</Avatar>}>Goals</ListItem>  
-          <ListItem style={stepListStyle} leftAvatar={<Avatar backgroundColor={isTimeline ? Colors.green500 : Colors.gray500}>2</Avatar>}>Timeline</ListItem>  
-          <ListItem style={stepListStyle} leftAvatar={<Avatar backgroundColor={isCharacteristics ? Colors.green500 : Colors.gray500}>3</Avatar>}>Fishery</ListItem>  
+          <ListItem style={stepListStyle} leftAvatar={<Avatar style={(isGoals || isGoalsOverview) ? selAvatarStyle : deselAvatarStyle}>A</Avatar>}>Goals</ListItem>  
+          <ListItem style={stepListStyle} leftAvatar={<Avatar style={isTimeline ? selAvatarStyle : deselAvatarStyle}>B</Avatar>}>Timing</ListItem>  
+          <ListItem style={stepListStyle} leftAvatar={<Avatar style={(isCharacteristics || isCharOverview) ? selAvatarStyle : deselAvatarStyle}>C</Avatar>}>Characteristics</ListItem>  
         </List>
         
         <LinearProgress mode="determinate" color={"#4CAF50"} value={this.calculateProgress()} />
       </div>
     );
 
+    let resultsHeaderContent = (
+      <div>
+        <h3 style={{width:'100%'}, {marginTop:"0px"},{textAlign:"center"}}>Step 2: Qualitative Analysis</h3>
+
+      </div>
+    );
 
     return (
       <div style={containerStyle}>
-        <Card style={cardStyle}>
-          {isIntro || isResults ? null : headerContent}  
+        <Card style={ isPrinciples ? principlesCardStyle: cardStyle}>
+          {isResults ? resultsHeaderContent : (isIntro || isPrinciples) ? null : headerContent}  
           {this.props.children}
         </Card>
       </div>
