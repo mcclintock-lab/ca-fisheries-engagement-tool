@@ -174,9 +174,10 @@ const Main = React.createClass({
     let isPrinciples = this.props.location.pathname.indexOf('principles') !== -1;
     let isGoalsOverview = this.props.location.pathname.indexOf('goal_overview') !== -1;
     let isCharOverview = this.props.location.pathname.indexOf('char_overview') !== -1;
+    let isStep3 = this.props.location.pathname.indexOf('step3') !== -1;
     let headerContent = (
       <div>
-        <h3 style={{width:'100%'}, {marginTop:"0px"},{textAlign:"center"}}>Step 1: Quantitative Analysis</h3>
+        <h3 style={{width:'100%'}, {marginTop:"0px"},{textAlign:"center"}}>Step 1</h3>
         <List className="navHeader">
           <ListItem style={stepListStyle} leftAvatar={<Avatar style={(isGoals || isGoalsOverview) ? selAvatarStyle : deselAvatarStyle}>A</Avatar>}>Goals</ListItem>  
           <ListItem style={stepListStyle} leftAvatar={<Avatar style={isTimeline ? selAvatarStyle : deselAvatarStyle}>B</Avatar>}>Timing</ListItem>  
@@ -189,7 +190,7 @@ const Main = React.createClass({
 
     let resultsHeaderContent = (
       <div>
-        <h3 style={{width:'100%'}, {marginTop:"0px"},{textAlign:"center"}}>Step 2: Qualitative Analysis</h3>
+        <h3 style={{width:'100%'}, {marginTop:"0px"},{textAlign:"center"}}>{isResults ? 'Step 2' : 'Step 3'}</h3>
 
       </div>
     );
@@ -197,7 +198,7 @@ const Main = React.createClass({
     return (
       <div style={containerStyle}>
         <Card style={ isPrinciples ? principlesCardStyle: cardStyle}>
-          {isResults ? resultsHeaderContent : (isIntro || isPrinciples) ? null : headerContent}  
+          {(isResults || isStep3) ? resultsHeaderContent : (isIntro || isPrinciples || isStep3) ? null : headerContent}  
           {this.props.children}
         </Card>
       </div>

@@ -34,7 +34,7 @@ const Intro = React.createClass({
     return (
       <div>
         <CardTitle
-          title="California Fisheries Stakeholder Engagement Tool"
+          title="California Fisheries Stakeholder Engagement Decision Support Tool"
           avatar={<div />} />
         <CardText expandable={true}>
         <div style={textStyle}>
@@ -49,19 +49,19 @@ const Intro = React.createClass({
                 This decision support tool leads the user through a three-step process to best determine which stakeholder engagement strategies are most appropriate for your management process.
               </hX>
                 <ul>
-                  <li><b>Step 1: Quantitative analysis</b> Identify the most appropriate stakeholder engagement strategies, given:</li>
+                  <li><b>Step 1: (Quantitative analysis)</b> Identify the most appropriate stakeholder engagement strategies, given:</li>
                     <ol type="A">
                       <li>Your priority stakeholder engagement goals</li>
                       <li>The timing of your current management process</li>
                       <li>The characteristics of your target stakeholders</li>
                     </ol>
-                  <li> <b>Step 2: Qualitative analysis</b> Weigh the top scoring engagement strategies against additional opportunities and constraints, taking into consideration such factors as:</li>
+                  <li> <b>Step 2: (Qualitative analysis)</b> Weigh the top scoring engagement strategies against additional opportunities and constraints, taking into consideration such factors as:</li>
                     <ul>
                       <li>Whether the resources (funding, staff availability, and necessary skills) are available to implement the project.</li>
                       <li>Whether the legal and regulatory landscape affecting the process may place some constraints on which strategies are appropriate.</li>
                       <li>The history of past experiences associated with the use of specific engagement strategies in the fishery; it the strategy was used in previous efforts and resisted by stakeholders, it may not be appropriate for this management process.</li> 
                     </ul>
-                  <li><b>Step 3: Decision</b> Select your engagement strategy(ies), and prepare a report with rationale.</li>
+                  <li><b>Step 3: (Decision)</b> Select your engagement strategy(ies), and prepare a report with rationale.</li>
                   
                 </ul>
           <h3>Before you start using the decision support tool:</h3>

@@ -14,6 +14,7 @@ import CharacteristicStore from './stores/characteristics';
 import Results from './components/results';
 import GoalOverview from './components/goal_overview';
 import CharOverview from './components/char_overview'
+import Step3 from './components/step3'
 import qs from 'querystring';
 
 import Intro from './components/intro';
@@ -85,6 +86,7 @@ render((
       <Route path="goal_overview" component={GoalOverview}/>
       <Route path="char_overview" component={CharOverview}/>
       <Route path="principles" component={Principles}/>
+      <Route path="step3" component={Step3}/>
       <Route path="*" component={Intro}/>
       
     </Route>

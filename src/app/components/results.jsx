@@ -241,7 +241,7 @@ const Results = React.createClass({
             <CardText>
               <p>
                 These stakeholder engagement methods are recommended based on your responses. Click or tap on methods to see further description including required resources and evaluation criteria.
-                Remember to keep the <a target="_blank" href="principles">Stakeholder Engagement Principles and Implementation Guidance</a> in mind when assessing the results.
+                Remember to keep the <a target="_blank" href="#/principles">Stakeholder Engagement Principles and Implementation Guidance</a> in mind when assessing the results.
               </p>
                 <em >
                   Note: To change a response, select the 'Your Answers' tab and click or tap on the question.
@@ -306,8 +306,9 @@ const Results = React.createClass({
               })}
               <CardActions style={{textAlign:'center'}}>
                 <CardText style={{textAlign:'left'}}>You can save these results by expanding the questions above and using your browser to print this page. You can also save and share a bookmark to these results or take the survey again.</CardText>
-                <RaisedButton onTouchTap={this._handleTakeAgain} label="Take Survey Again" />
-                <RaisedButton onTouchTap={this._handleBookmark} label="Copy a link to these results" />
+                <RaisedButton onTouchTap={this._handleTakeAgain} label="Retake Survey" />
+                <RaisedButton onTouchTap={this._handleBookmark} label="Copy a link to These Results" />
+                <RaisedButton onTouchTap={this._handleStep3} label="Go To Step 3" />
               </CardActions>
           </Card>
         </Tab>
@@ -380,6 +381,9 @@ const Results = React.createClass({
   },
 
 
+   _handleStep3(){
+    this.props.history.push(...this.props.location, "/step3");
+   },
 
   _handleTakeAgain() {
     window.location = "/";
