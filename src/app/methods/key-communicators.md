@@ -8,12 +8,14 @@ pants within their fisheries about management processes, and providing critical 
 -  Key communicators provide a means of engaging hard-to-reach fishery groups: they speak the same language as users; have established, positive relationships within the particular fishing community; and are sometimes seen as being able to speak for the fishery in question.
 
 #### Question 1: How did this strategy perform with regard to your priority goals and the expert ratings?
+-  See table above for your priority goals and expert ratings
 
 #### Question 2: What level of resources, both in terms of staffing and funding, are required for this strategy?
 
 -  Staffing: Low (variable effort: depends on the project and how often communication is needed)
   -  One staffer on point
 -  Budget: Low
+
 #### Question 3: Where are you in your management process (timing)?
 
 #### Question 4: What skills are required by staff to effectively implement this strategy?
