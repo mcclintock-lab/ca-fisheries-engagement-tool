@@ -240,7 +240,7 @@ const Results = React.createClass({
           <Card>
             <CardText>
               <p>
-                These stakeholder engagement methods are recommended based on your responses. Click or tap on methods to see further description including required resources and evaluation criteria.
+                These stakeholder engagement strategies are recommended based on your responses. Click or tap on strategies to see further description including required resources and evaluation criteria.
                 Remember to keep the <a target="_blank" href="#/principles">Stakeholder Engagement Principles and Implementation Guidance</a> in mind when assessing the results.
               </p>
                 <em >
