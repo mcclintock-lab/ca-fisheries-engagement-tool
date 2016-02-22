@@ -7,9 +7,13 @@ import WorkflowActions from '../actions/workflowActions';
 
 import _timeline from '../data/timeliness';
 
-function setTimeliness(settings) {
+function setTimeliness(id) {
   for (let item of _timeline) {
-    item.chosen = !!settings[item.id];
+    if(item.id === id){
+      item.chosen = true;
+    } else {
+      item.chosen = false;
+    }
   }
 }
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import RaisedButton from 'material-ui/lib/raised-button';
-const Checkbox = require('material-ui/lib/checkbox');
+const RadioButtonGroup = require('material-ui/lib/radio-button-group');
+const RadioButton = require('material-ui/lib/radio-button');
 const CardActions = require('material-ui/lib/card/card-actions');
 const CardExpandable = require('material-ui/lib/card/card-expandable');
 const CardMedia = require('material-ui/lib/card/card-media');
@@ -17,16 +18,20 @@ import { Lifecycle, RouteContext } from 'react-router';
 import {Component} from 'react';
 import {Container} from 'flux/utils';
 
-let _checkboxes = [];
+
+let radioGroupStyle = {
+  paddingTop: '30px',
+  color: 'red',
+  textAlign: 'left'
+};
 
 const Timeline = React.createClass({
   mixins: [Lifecycle],
 
   getInitialState() {
-    
-    
     return this.calculateState();
   },
+
 
   calculateState() {
     return {
@@ -64,67 +69,79 @@ const Timeline = React.createClass({
           <h4>
             Identify the management phase that most closely aligns to the stage in which you will implement your engagement strategy:
           </h4>
-          {this.state.items.map(function(item) {
-            return (
-              <Checkbox
-                ref={(function(checkbox) {this.push(checkbox);}).bind(_checkboxes)}
-                key={item.id}
-                name={item.id}
-                value={item.id}
-                defaultChecked={item.chosen}
-                onCheck={this._handleOptionChange}
-                label={item.heading}/>
-            )
-          }, this)}
+
+            <RadioButtonGroup style={radioGroupStyle} onChange={this._handleOptionChange} name="timing" ref="buttonGroup">
+              <RadioButton
+                value="early-planning"
+                label="Early planning (the decision-making process has not started)"
+                id="early-planning"
+                style={{marginBottom:16}} />
+              <RadioButton
+                value="late-planning"
+                label="During planning (the decision-making process is underway)"
+                id="late-planning"
+                style={{marginBottom:16}}/>
+              <RadioButton
+                value="implementation"
+                label="Implementation (a decision has been made and is currently being implemented)"
+                id="implementation"
+                style={{marginBottom:16}}/>
+               <RadioButton
+                value="ongoing-engagement"
+                label="Ongoing Engagement (stakeholder engagement outside of a specific decision-making process)"
+                id="ongoing-engagement"
+                style={{marginBottom:16}}/>       
+            </RadioButtonGroup>
+
         </CardText>
         <CardActions expandable={true}>
           <RaisedButton onTouchTap={this._handlePrev} label="Back to Goals"/>
-          <RaisedButton primary={true} disabled={!this._optionIsChosen} onTouchTap={this._handleNext} label="Go to Characteristics Overview"/>
+          <RaisedButton primary={true} disabled={!this._optionIsChosen()} onTouchTap={this._handleNext} label="Go to Characteristics Overview"/>
         </CardActions>
       </Card>
     );
   },
 
-  _handleOptionChange(){
-    let hasOptions = this._hasCheckedOptions();
-    if(hasOptions){
-      this._optionIsChosen = hasOptions;
-      
+  _handleOptionChange(event){
+    
+    if(event !== undefined && event.target !== undefined){
+      let selectedId = event.target.id;
+      TimelineActions.setTimeliness(selectedId);
+      this.setState(this.calculateState());
     } else {
-      this._optionIsChosen = false;
-    }
-    this.setState(this.calculateState());
-  },
-
-  _hasCheckedOptions(){
-    let isChecked = false;
-    if (_checkboxes ){
-      for (let checkbox of _checkboxes) {
-        if(checkbox !== undefined && checkbox !== null){
-          if(checkbox.isChecked()){
-            isChecked = true;
-          }
-        }
+      //on load, default selected isn't selecting default correctly. setting it here.
+      let selid = this._getSelectedTiming();
+      if(selid){
+        this.refs.buttonGroup.setSelectedValue(selid);  
       }
-      return isChecked;
-    } else {
-      return false;
+      
     }
+
   },
 
   componentWillMount() {
-    _checkboxes = [];
+  },
+
+  _getSelectedTiming(){
+    let chosen = [];
+    let timings = TimelineStore.getAll()
+    for(let item of timings){
+      if(item.chosen){
+        return item.id;
+      }
+    }
+    return undefined;
   },
 
 
-  getSettings() {
-    let settings = {};
-    for (let checkbox of _checkboxes) {
-      if(checkbox){
-        settings[checkbox.props.name] = checkbox.isChecked();
-      }
+  _optionIsChosen(){
+    let timing = this._getSelectedTiming();
+    //console.log("timing is: ", timing);
+    if(timing){
+      return (timing !== undefined);
+    } else {
+      return false;
     }
-    return settings;
   },
 
   _handleNext() {
@@ -136,8 +153,9 @@ const Timeline = React.createClass({
   },
 
   routerWillLeave() {
-
-    TimelineActions.setTimeliness(this.getSettings());
+    //let selectedId = this.refs.buttonGroup.getSelectedValue();
+    //console.log("leaving, setting id to ", selectedId);
+    //TimelineActions.setTimeliness(selectedId);
     return true;
 
   },
