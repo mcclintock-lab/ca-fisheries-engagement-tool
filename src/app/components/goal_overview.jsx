@@ -38,11 +38,16 @@ const GoalOverview = React.createClass({
           avatar={<div />} />
         <CardText expandable={true}>
         <div style={textStyle}>
-          <hX>Selecting the appropriate stakeholder engagement strategy depends on the engagement goals you are trying to achieve. Over the next several pages, you will be asked to provide input on how important the following goals are to your process/decision.</hX>
-            <ul>
+          <hX>
+            Selecting the appropriate stakeholder engagement strategy depends on the engagement goals you are trying to achieve. 
+            Over the next several pages, you will be asked to provide input on how important the following goals are to your process/decision.
+            <em>Note that you may select multiple goals as your priorities!</em>
+          </hX>
+            <ol>
               <li>Building trust between fisheries stakeholders and fisheries managers</li>
               <li>Efficient engagement (due to tight time constraints in your process/decision)</li>
               <li>Educating stakeholders on how to participate in the process</li>
+              <li>Engaging with under represented groups, particularly when they are affected by management of a specific fishery </li>
               <li>Building relationships with key communicators who are well respected in their fishery and/or are able to easily reach out to fisheries users</li>
               <li>Conducting social or biological research in the fishery</li>
               <li>Informing stakeholders about the process or decision</li>
@@ -50,7 +55,7 @@ const GoalOverview = React.createClass({
               <li>Involving stakeholders in the decision-making process</li>
               <li>Collaborating with stakeholders in the development of a new program or regulation</li>
               <li>Empowering stakeholders to co-manage the fishery</li>
-            </ul>
+            </ol>
         </div>
         </CardText>
         <CardActions>

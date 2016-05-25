@@ -39,10 +39,14 @@ const CharOverview = React.createClass({
         <CardText expandable={true}>
         <div style={textStyle}>
           <p>
-            It is also important to identify key characteristics of the fishery stakeholders with whom you will be engaging. These characteristics may vary widely depending on the fishery in question; for example, selecting a stakeholder strategy that works for the commercial salmon fishery may not work for recreational spearfishers. In the following pages, you will identify characteristics that appropriately describe your target fishery stakeholders.
+            It is also important to identify key characteristics of the fishery stakeholders with whom you will be engaging. 
+            These characteristics may vary widely depending on the fishery in question; for example, 
+            selecting a stakeholder strategy that works for the commercial salmon fishery may not work for recreational spearfishers. 
+            In the following pages, you will identify characteristics that appropriately describe your target fishery stakeholders.
+            <em>Note that you may select “yes” for two seemingly contradictory characteristics (i.e., there may be an instance in your fishery where some members of the stakeholder community have a high degree of technological literacy while others rarely use technology- I this case you would select “yes” to both “high level of technological literacy” AND “low level of technological literacy”).</em> 
           </p>
           <hX>The stakeholder characteristics are as follows:</hX>
-          <ul>
+          <ol>
             <li>Undefined Stakeholder Community</li>
             <li>Linguistic Diversity</li>
             <li>Organized Institutions Exist within the Fishery </li>
@@ -55,7 +59,7 @@ const CharOverview = React.createClass({
             <li>Existing Leaders within the Fishery</li>
             <li>No Existing Leaders within the Fishery</li>
             <li>Recent Engagement with Resource Managers</li>
-          </ul>
+          </ol>
         </div>
         </CardText>
         <CardActions>

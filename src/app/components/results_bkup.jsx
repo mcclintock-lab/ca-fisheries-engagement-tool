@@ -7,9 +7,6 @@ const ListItem = require('material-ui/lib/lists/list-item');
 const Avatar = require('material-ui/lib/avatar');
 const Paper = require('material-ui/lib/paper');
 const clone = require('clone');
-const RadioButtonGroup = require('material-ui/lib/radio-button-group');
-const RadioButton = require('material-ui/lib/radio-button');
-
 import Card from 'material-ui/lib/card/card';
 import CardText from 'material-ui/lib/card/card-text';
 import CardTitle from 'material-ui/lib/card/card-title';
@@ -18,6 +15,7 @@ import CardActions from 'material-ui/lib/card/card-actions';
 import Colors from 'material-ui/lib/styles/colors';
 import RaisedButton from 'material-ui/lib/raised-button';
 import SelectField from 'material-ui/lib/select-field';
+
 
 import Table from 'material-ui/lib/table/table';
 import TableBody from 'material-ui/lib/table/table-body';
@@ -30,9 +28,8 @@ import TableRowColumn from 'material-ui/lib/table/table-row-column';
 import GoalStore from '../stores/goals';
 import TimelineStore from '../stores/timeline';
 import CharacteristicStore from '../stores/characteristics';
-import MethodStore from '../stores/methods';
+import {knuthShuffle} from 'knuth-shuffle';
 import WorkflowActions from '../actions/workflowActions';
-import MethodActions from '../actions/methodActions';
 
 
 let size = 18;
@@ -69,8 +66,8 @@ const Results = React.createClass({
     let scores = clone(rankings);
     let ID_STR = 'ID (do not change)';
     // Here all are the methods, processed from the input markdown files.
-    let methods = MethodStore.getAll();
-
+    let methods = require('../methods');
+   
     //for each id in the ranking
     //find goal priority using id
     //find lookup val from goalLookups using goal.priority and ranking[id]
@@ -119,6 +116,7 @@ const Results = React.createClass({
           
           if((techtime === "Yes") && (time.chosen === true)){
             tech_method[goal.id] = tech_method[goal.id]+final_score;
+
           } 
         }
       }
@@ -203,7 +201,6 @@ const Results = React.createClass({
       let theid = score['ID (do not change)'];
       
       let method = methods[theid];
-      console.log("curr method is: ", method);
       method.normalized_final_score = Math.round(score.normalized_final_score);
       let goal_scores = tech_method_goal_scores[theid]
       goal_scores.sort(function(a,b){
@@ -215,10 +212,11 @@ const Results = React.createClass({
         let b_fs = expert_user_lookup[b_ex-1][b_us-1];
         return a_fs === b_fs ? 0 : +(b_fs > a_fs) || -1;
       });
-      method.id = theid;
       method.goal_scores = goal_scores;
       final_methods.push(method);
+
     }
+
     return final_methods;
 
   },
@@ -262,7 +260,7 @@ const Results = React.createClass({
             <CardText>
               <p>
                 These stakeholder engagement strategies are recommended based on your responses. Click or tap on strategies to see further description including required resources and evaluation criteria.
-                Be sure to refer back to the <a target="blank" href="#principles">“Best Practices”</a> listed in the user manual when assessing your results and providing a rationale for your selection. 
+                Remember to keep the <a target="_blank" href="#/principles">Stakeholder Engagement Principles and Implementation Guidance</a> in mind when assessing the results.
               </p>
                 <em >
                   Note: To change a response, select the 'Your Answers' tab and click or tap on the question.
@@ -289,25 +287,49 @@ const Results = React.createClass({
                       showExpandableButton={true}/>
 
                     <CardText expandable={true}>
-                      <div dangerouslySetInnerHTML={{__html: rec.text}}>
+                      <div style={{paddingLeft:"10px", paddingRight:"10px"}}>
+                        <em >
+                          The following table shows how you prioritized each engagement goals and how experts ranked this strategy's efficacy in achieving that goal. Highlighted rows are goals that are a priority for you and are effectively achieved with this engagement strategy, as ranked by experts.
+                        </em>
+               
                       </div>
-                      <div style={{paddingLeft:"10px"}}><h3>Do you plan to use this strategy?</h3>
-                        <RadioButtonGroup recId={rec.id} defaultSelected={rec.selected ? "1" : "0"}>
-                        <RadioButton 
-                            value="1"
-                            label="Yes"
-                            style={{marginBottom:16}} onTouchTap={this._handleSelected(rec.id)} />
-                          <RadioButton
-                            value="0"
-                            label="No"
-                            style={{marginBottom:16}} onTouchTap={this._handleUnselected(rec.id)}/>
-                        </RadioButtonGroup>
+                      <Table >
+                      <TableHeader displaySelectAll={false} adjustForCheckbox={false}> 
+                        <TableRow >
+                          <TableHeaderColumn style={{padding:"12px",width:"26%", wordWrap:'break-word', whiteSpace:'normal'}} tooltip='Highlighted goals received the maximum score'>Goal</TableHeaderColumn>
+                          <TableHeaderColumn style={{padding:"12px",width:"17%", wordWrap:'break-word', whiteSpace:'normal'}} tooltip='The ranking you selected'>Your Priority</TableHeaderColumn>
+                          <TableHeaderColumn  style={{padding:"12px",width:"17%", wordWrap:'break-word', whiteSpace:'normal'}} tooltip='Effectiveness of tech method for the goal, as rated by experts'>Expert Rating</TableHeaderColumn>
+                          <TableHeaderColumn  style={{padding:"12px",width:"40%", wordWrap:'break-word', whiteSpace:'normal'}} tooltip='Rationale for Ranking'>Expert Rationale</TableHeaderColumn>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody style={{padding:"8px"}} displayRowCheckbox={false}>
+                        {rec.goal_scores.map(function(goal) {
+                          return (
+                            <TableRow tooltip={goal.ttip}  style={{backgroundColor: goal.is_max ? "#C0D9AF" : "white"}}>
+                              <TableRowColumn style={{padding:"12px",width: "26%", wordWrap:'break-word', whiteSpace:'normal'}}>
+                                {goal.name}
+                              </TableRowColumn>
+                              <TableRowColumn style={{padding:"12px",width:"16%",wordWrap:'break-word', whiteSpace:'normal'}}>
+                                {goal.user_score_text}
+                              </TableRowColumn>
+                              <TableRowColumn style={{padding:"12px", width:"18%", wordWrap:'break-word', whiteSpace:'normal'}}>
+                                {goal.expert_score_text}
+                              </TableRowColumn>
+                              <TableRowColumn style={{padding:"12px",width:"40%", wordWrap:'break-word', whiteSpace:'normal'}}>
+                                {goal.expert_rationale}
+                              </TableRowColumn>
+                            </TableRow>
+                          )
+                        }, this)}
+                        </TableBody>
+                      </Table>
+                      <div dangerouslySetInnerHTML={{__html: rec.text}}>
                       </div>
                     </CardText>
 
                   </Card>
                 )
-              }, this)}
+              })}
               <CardActions style={{textAlign:'center'}}>
                 <CardText style={{textAlign:'left'}}>You can save these results by expanding the questions above and using your browser to print this page. You can also save and share a bookmark to these results or take the survey again.</CardText>
                 <RaisedButton onTouchTap={this._handleTakeAgain} label="Retake Survey" />
@@ -350,23 +372,10 @@ const Results = React.createClass({
       </Tabs>
     );
   },
-
-  _handleUnselected(recId, event){
-    return (function() {
-      MethodActions.setSelected(recId, false);
-    }).bind(recId);    
-  },
-
-  _handleSelected(recId, event){
-    return (function() {
-      MethodActions.setSelected(recId, true);
-    }).bind(recId);
-  },
-
   _getGoalText(val){
+    
     return goal_text_values[val];
   },
-
   _getGoalColor(val){
     return goal_color_values[val];
   },

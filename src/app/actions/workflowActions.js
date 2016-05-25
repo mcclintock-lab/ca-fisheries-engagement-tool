@@ -64,6 +64,10 @@ let WorkflowActions = {
           ...location, {pathname: "/char_overview"}
         );              
       }      
+    } else if (info.inStep3){
+      history.push(
+        ...location, {pathname: "/results/"}
+      );  
     }
   },
 

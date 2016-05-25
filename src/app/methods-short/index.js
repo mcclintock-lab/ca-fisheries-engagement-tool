@@ -5,7 +5,7 @@ let rankings = require('../data/rankings.csv');
 let ids = rankings.map(function(row) { return row['ID (do not change)'] });
 let templates = {};
 for (let id of ids) {
-  let template = require('html!markdown!../methods/' + id + '.md');
+  let template = require('html!markdown!../methods-short/' + id + '.md');
   let parts = template.split("</h2>", 2);
   templates[id] = {
     heading: parts[0].split(">")[1],
@@ -14,5 +14,5 @@ for (let id of ids) {
     selected:false
   }
 }
-
+console.log("templates:::::", templates);
 module.exports = templates;
