@@ -58,12 +58,6 @@ module.exports = [
     id: "collaborate",
     header: "Collaborate",
     description: "Collaborate with stakeholders to jointly develop alternatives for the decision-making process."
-  },
-
-  {
-    id: "empower",
-    header: "Empower",
-    description: "Empower stakeholders to make decisions about the decision-making process itself."
   }
 
 ];

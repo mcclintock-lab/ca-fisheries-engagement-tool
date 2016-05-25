@@ -190,7 +190,7 @@ const Main = React.createClass({
 
     let resultsHeaderContent = (
       <div>
-        <h3 style={{width:'100%'}, {marginTop:"0px"},{textAlign:"center"}}>{isResults ? 'Step 2 (Qualitative)' : 'Step 3 (Reports)'}</h3>
+        <h3 style={{width:'100%'}, {marginTop:"0px"},{textAlign:"center"}}>{isResults ? 'Step 2 (Qualitative)' : 'Step 3 (Decision)'}</h3>
 
       </div>
     );

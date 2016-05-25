@@ -14,5 +14,5 @@ for (let id of ids) {
     selected:false
   }
 }
-console.log("templates:::::", templates);
+
 module.exports = templates;

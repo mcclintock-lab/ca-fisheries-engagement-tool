@@ -18,6 +18,7 @@ import CardActions from 'material-ui/lib/card/card-actions';
 import Colors from 'material-ui/lib/styles/colors';
 import RaisedButton from 'material-ui/lib/raised-button';
 import SelectField from 'material-ui/lib/select-field';
+import TextField from 'material-ui/lib/text-field';
 
 import Table from 'material-ui/lib/table/table';
 import TableBody from 'material-ui/lib/table/table-body';
@@ -203,7 +204,6 @@ const Results = React.createClass({
       let theid = score['ID (do not change)'];
       
       let method = methods[theid];
-      console.log("curr method is: ", method);
       method.normalized_final_score = Math.round(score.normalized_final_score);
       let goal_scores = tech_method_goal_scores[theid]
       goal_scores.sort(function(a,b){
@@ -285,7 +285,7 @@ const Results = React.createClass({
                 return (
                   <Card key={rec.heading} initiallyExpanded={false}>
                   
-                    <CardTitle title={rec.heading} subtitle={"Score: "+rec.normalized_final_score} actAsExpander={true}
+                    <CardTitle title={rec.heading} subtitle={this._getSubtitleText(rec)} actAsExpander={true}
                       showExpandableButton={true}/>
 
                     <CardText expandable={true}>
@@ -296,12 +296,13 @@ const Results = React.createClass({
                         <RadioButton 
                             value="1"
                             label="Yes"
-                            style={{marginBottom:16}} onTouchTap={this._handleSelected(rec.id)} />
+                            style={{marginBottom:8}} onTouchTap={this._handleSelected(rec.id)} />
                           <RadioButton
                             value="0"
                             label="No"
-                            style={{marginBottom:16}} onTouchTap={this._handleUnselected(rec.id)}/>
+                            style={{marginBottom:4}} onTouchTap={this._handleUnselected(rec.id)}/>
                         </RadioButtonGroup>
+                        <TextField style={{width:"80%", paddingLeft:"40px"}} onChange={this._handleReasonChange(rec.id)} hintText={rec.reason !== undefined ? rec.reason : "Please enter the reason you -will- or -will not- use the strategy. "}></TextField>
                       </div>
                     </CardText>
 
@@ -309,7 +310,10 @@ const Results = React.createClass({
                 )
               }, this)}
               <CardActions style={{textAlign:'center'}}>
-                <CardText style={{textAlign:'left'}}>You can save these results by expanding the questions above and using your browser to print this page. You can also save and share a bookmark to these results or take the survey again.</CardText>
+                <CardText style={{textAlign:'left'}}>
+                  To generate a detailed report of the strategies that you have selected, select or tap the 'Go to Step 3' button. 
+                  <br/><br/><b>Note: to include a strategy in the report, please choose the 'Yes' button at the end of each strategy description shown above</b>
+                </CardText>
                 <RaisedButton onTouchTap={this._handleTakeAgain} label="Retake Survey" />
                 <RaisedButton onTouchTap={this._handleBookmark} label="Copy a link to These Results" />
                 <RaisedButton onTouchTap={this._handleStep3} label="Go To Step 3" />
@@ -350,7 +354,10 @@ const Results = React.createClass({
       </Tabs>
     );
   },
-
+  _getSubtitleText(rec){
+    let sel_text = rec.selected ? "Yes" : "No"
+    return "Score: "+rec.normalized_final_score
+  },
   _handleUnselected(recId, event){
     return (function() {
       MethodActions.setSelected(recId, false);
@@ -361,6 +368,12 @@ const Results = React.createClass({
     return (function() {
       MethodActions.setSelected(recId, true);
     }).bind(recId);
+  },
+
+  _handleReasonChange(recId, event){
+    return (function(event) {
+      MethodActions.setReason(recId, event.target.value);
+    }).bind(this);
   },
 
   _getGoalText(val){
@@ -374,6 +387,7 @@ const Results = React.createClass({
   _getCharacteristicText(val){
     return characteristic_text_values[val]
   },
+
   _getAvatarStyle(val){
     let height = 18;
     let color_val = goal_color_values[val];

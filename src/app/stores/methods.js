@@ -8,9 +8,11 @@ require("babel-polyfill");
 let _methods = require('../methods-short');
 
 function setSelected(id, selected) {
-  console.log('selected: ', selected)
   _methods[id].selected = selected;
+}
 
+function setReason(id, reason) {
+  _methods[id].reason = reason;
 }
 
 class MethodStore extends Store {
@@ -43,6 +45,10 @@ class MethodStore extends Store {
     switch(action.actionType) {
       case MethodActions.SET_SELECTED:
         setSelected(action.id, action.selected || 0);
+        this.__emitChange();
+        break;
+      case MethodActions.SET_REASON:
+        setReason(action.id, action.reason || 0);
         this.__emitChange();
         break;
       default:

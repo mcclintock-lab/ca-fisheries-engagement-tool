@@ -52,7 +52,6 @@ const Step3 = React.createClass({
   
   calculateRecommendedMethods() {
     let methods = MethodStore.getSelectedMethods();
-    console.log('recomended methods ????', methods);
     return methods;
   },
 
@@ -71,6 +70,7 @@ const Step3 = React.createClass({
     state.numRecsToView = 10;
     return state;
   },
+
   render() {
     return (
       <Tabs>
@@ -78,7 +78,7 @@ const Step3 = React.createClass({
           <Card>
             <CardText>
               <p>
-                These are the stakeholder engagement strategies that you selected:
+                <b>{this._hasSelected() ? 'You have chosen to use the following '+this._numSelected()+" To save a copy of this report, choose 'Print' and Save as a PDF." : 'You did not select any stakeholder engagement strategies. Please return to step 2 and select a set of strategies to include in the reports.'}</b>
               </p>
             
             </CardText>
@@ -86,7 +86,7 @@ const Step3 = React.createClass({
                 return (
                   <Card key={rec.heading} initiallyExpanded={false}>
                   
-                    <CardTitle title={rec.heading} subtitle={"Score: "+rec.normalized_final_score}/>
+                    <CardTitle title={rec.heading} subtitle={this._getSubtitleText(rec)}/>
 
                     <CardText expandable={false}>
                       <div style={{paddingLeft:"10px", paddingRight:"10px"}}>
@@ -127,19 +127,35 @@ const Step3 = React.createClass({
                       </Table>
                       <div dangerouslySetInnerHTML={{__html: rec.text}}>
                       </div>
+                      <div>
+                        <h3>Reason for selecting the strategy:</h3>
+                        <div style={{paddingLeft:"5%", paddingRight:"5%", width:"90%"}}>{rec.reason === undefined ? "No reason was given": rec.reason}</div>
+                      </div>
                     </CardText>
 
                   </Card>
                 )
-              })}
+              }, this)}
               <CardActions style={{textAlign:'center'}}>
-                <RaisedButton onTouchTap={this._handleStep2} label="Return to Step 2" />
+                <RaisedButton onTouchTap={this._handleStep2} label="Return to Step 2 (Results)" />
                 <RaisedButton onTouchTap={this._handleTakeAgain} label="Retake Survey" />
               </CardActions>
           </Card>
         </Tab>
       </Tabs>
     );
+  },
+  _getSubtitleText(rec){
+    let sel_text = rec.selected ? "Yes" : "No"
+    return "Score: "+rec.normalized_final_score;
+  },
+  _numSelected(){
+    let sel_methods = MethodStore.getSelectedMethods()
+    return (sel_methods.length === 1 ? " strategy." : sel_methods.length+" strategies.");
+  },
+  _hasSelected(){
+    let sel_methods = MethodStore.getSelectedMethods()
+    return (sel_methods !== undefined && sel_methods.length > 0);
   },
   _getGoalText(val){
     
@@ -177,7 +193,6 @@ const Step3 = React.createClass({
 
 
    _handleStep2(){
-    console.log("going to step 2!!!");
     this.props.history.push(...this.props.location, "/results");
    },
 

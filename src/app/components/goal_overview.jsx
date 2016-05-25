@@ -54,8 +54,8 @@ const GoalOverview = React.createClass({
               <li>Soliciting input from stakeholders directly</li>
               <li>Involving stakeholders in the decision-making process</li>
               <li>Collaborating with stakeholders in the development of a new program or regulation</li>
-              <li>Empowering stakeholders to co-manage the fishery</li>
             </ol>
+            <p style={{textAlign:"center", marginLeft:"8%", marginRight:"8%"}}>One additional goal is empowering stakeholders to manage the fishery- either directly alone or in partnership with fisheries managers. Two tools for achieving this goal include co-management regimes and collaborative fisheries research. </p>
         </div>
         </CardText>
         <CardActions>

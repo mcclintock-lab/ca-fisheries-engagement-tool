@@ -43,7 +43,7 @@ const CharOverview = React.createClass({
             These characteristics may vary widely depending on the fishery in question; for example, 
             selecting a stakeholder strategy that works for the commercial salmon fishery may not work for recreational spearfishers. 
             In the following pages, you will identify characteristics that appropriately describe your target fishery stakeholders.
-            <em>Note that you may select “yes” for two seemingly contradictory characteristics (i.e., there may be an instance in your fishery where some members of the stakeholder community have a high degree of technological literacy while others rarely use technology- I this case you would select “yes” to both “high level of technological literacy” AND “low level of technological literacy”).</em> 
+            <br/><br/>Note that you may select “yes” for two seemingly contradictory characteristics (i.e., there may be an instance in your fishery where some members of the stakeholder community have a high degree of technological literacy while others rarely use technology- In this case you would select “yes” to both “high level of technological literacy” AND “low level of technological literacy”). 
           </p>
           <hX>The stakeholder characteristics are as follows:</hX>
           <ol>
