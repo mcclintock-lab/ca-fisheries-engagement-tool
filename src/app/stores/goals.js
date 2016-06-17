@@ -39,7 +39,14 @@ class GoalStore extends Store {
   }
 
   getActiveGoal() {
-    return _goals.find( (goal) => goal.active );
+    let active_goal = _goals.find( (goal) => goal.active );
+    if(active_goal === undefined){
+      let activeId = _goals[_goals.length - 1].id;
+      this.setActiveGoal(activeId);
+      return activeId;
+    } else{
+      return active_goal;
+    }
   }
 
   canProceedToGoal(goalID) {

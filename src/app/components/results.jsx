@@ -181,7 +181,13 @@ const Results = React.createClass({
       if(fscore <= 0){
         fscore = 0.0;
       }
-      score_val.normalized_final_score = (fscore/max_score)*100;
+      if(max_score === 0){
+        
+        score_val.normalized_final_score = fscore;
+      } else {
+        score_val.normalized_final_score = (fscore/max_score)*100;
+      }
+      
     }
 
     //sort, and return top 10 for now

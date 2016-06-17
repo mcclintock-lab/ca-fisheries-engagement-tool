@@ -1,23 +1,19 @@
 ## Tackle Shops and Fuel Dock Information Sharing
+#### Description: 
+-  Tackle shops are private businesses that may be frequented by both recreational and commercial fishermen. They are located throughout the California coast. Management information in the form of flyers or brochures can be placed at the check-out counter or storefront of tackle shops to disseminate details to stakeholders that are not electronically connected. : Fuel docks are private businesses that are commonly frequented by both recreational and commercial fishermen. They are located at ports and marinas along the California coast. Management information in the form of flyers or brochures can be posted and disseminated at fuel docks to reach stakeholders that may not be electronically connected.
 
-    a.  *Description*: Tackle shops are private businesses that may be
-        frequented by both recreational and commercial fishermen. They
-        are located throughout the California coast. Management
-        information in the form of flyers or brochures can be placed at
-        the check-out counter or storefront of tackle shops to
-        disseminate details to stakeholders that are not
-        electronically connected. : Fuel docks are private businesses
-        that are commonly frequented by both recreational and
-        commercial fishermen. They are located at ports and marinas
-        along the California coast. Management information in the form
-        of flyers or brochures can be posted and disseminated at fuel
-        docks to reach stakeholders that may not be
-        electronically connected.
+#### Purpose:
+-   Distribute timely information efficiently to a broad stakeholder audience. Sharing messages in this fashion is particularly helpful when the stakeholder groups are undefined, speak a different language, or are difficult to reach using electronic methods.
 
-    b.  *Purpose*:
+#### Question 1: What level of resources, both in terms of staffing and funding, are required for this strategy?
+-   Staffing: Low
+  -   1-5% staff FTE to develop, vet and distribute flyers.
+-   Budget: Low
+  -   $100-1,000 to print flyers.
 
--   Distribute timely information efficiently to a broad
-    stakeholder audience. Sharing messages in this fashion is
-    particularly helpful when the stakeholder groups are undefined,
-    speak a different language, or are difficult to reach using
-    electronic methods.
+#### Question 2: What skills are required by staff to effectively implement this strategy?
+-   Agency staff must have the ability to design and post timely messages that reflect agency perspectives and values. 
+-   Visual and graphic design skills.
+-   Clear and concise written communication skills.
+
+
