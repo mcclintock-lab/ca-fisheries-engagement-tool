@@ -55,13 +55,19 @@ const Step3 = React.createClass({
     return methods;
   },
 
+  calculateMethodsNotChosen() {
+    let methods = MethodStore.getMethodsNotChosen();
+    return methods;
+  },
+
 
   calculateState() {
     return {
       goals: GoalStore.getAll(),
       timeliness: TimelineStore.getAll(),
       characteristics: CharacteristicStore.getAll(),
-      recommendations: this.calculateRecommendedMethods()
+      recommendations: this.calculateRecommendedMethods(),
+      recs_not_picked: this.calculateMethodsNotChosen()
     }
   },
 
@@ -88,12 +94,15 @@ const Step3 = React.createClass({
                   
                     <CardTitle title={rec.heading} subtitle={this._getSubtitleText(rec)}/>
 
-                    <CardText expandable={false}>
-                      <div style={{paddingLeft:"10px", paddingRight:"10px"}}>
-                        <em >
+                    <CardText style={{marginTop:'0px', paddingTop:'0px'}} expandable={false}>
+                      <div>
+                        <div style={{lineHeight:'12px', paddingLeft:'5px', fontSize:'1.2em'}}>Reason for selecting the strategy:</div>
+                        <div style={{ paddingLeft:"15px", paddingRight:"5px", width:"90%", paddingBottom:'10px', paddingTop:'5px'}}>{rec.reason === undefined ? "No reason was given": rec.reason}</div>
+                      </div>
+
+                      <div style={{lineHeight:'12px', paddingTop: '5px', paddingLeft:'5px', paddingBottom:'10px', fontSize:'1.2em'}}>User Priorities and Expert Rankings:</div>
+                      <div style={{paddingLeft:"15px", paddingRight:"10px"}}>
                           The following table shows how you prioritized each engagement goals and how experts ranked this strategy's efficacy in achieving that goal. Highlighted rows are goals that are a priority for you and are effectively achieved with this engagement strategy, as ranked by experts.
-                        </em>
-               
                       </div>
                       <Table >
                       <TableHeader displaySelectAll={false} adjustForCheckbox={false}> 
@@ -127,15 +136,36 @@ const Step3 = React.createClass({
                       </Table>
                       <div dangerouslySetInnerHTML={{__html: rec.text}}>
                       </div>
+
+                    </CardText>
+
+                  </Card>
+                )
+              }, this)}
+              <br/>
+              <div style={{paddingLeft:"10px", paddingRight:"10px"}}>
+              <h3>
+                The following strategies were not selected:
+              </h3>
+               </div>
+              {this.state.recs_not_picked.map(function(rec) {
+                return (
+                  <Card key={rec.heading} initiallyExpanded={false}>
+                  
+                    <CardTitle title={rec.heading} subtitle={this._getSubtitleText(rec)}/>
+
+                    <CardText style={{marginTop:'0px', paddingTop:'0px'}}  expandable={false}>
                       <div>
-                        <h3>Reason for selecting the strategy:</h3>
-                        <div style={{paddingLeft:"5%", paddingRight:"5%", width:"90%"}}>{rec.reason === undefined ? "No reason was given": rec.reason}</div>
+                      <div style={{lineHeight:'12px', paddingLeft:'5px', fontSize:'1.2em'}}>Reason for <b>NOT</b> selecting the strategy:</div>
+                      <div style={{ paddingLeft:"15px", paddingRight:"5px", width:"90%", paddingBottom:'10px', paddingTop:'5px'}}>{rec.reason === undefined ? "No reason was given": rec.reason}</div>
                       </div>
                     </CardText>
 
                   </Card>
                 )
               }, this)}
+
+
               <CardActions style={{textAlign:'center'}}>
                 <RaisedButton onTouchTap={this._handleStep2} label="Return to Step 2 (Results)" />
                 <RaisedButton onTouchTap={this._handleTakeAgain} label="Retake Survey" />

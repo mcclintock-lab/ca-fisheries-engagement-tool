@@ -37,6 +37,23 @@ class MethodStore extends Store {
     
   }
 
+  getMethodsNotChosen() {
+    
+    let sel_methods = [];
+    
+    let keys = Object.keys(_methods);
+    for(let meth_id of keys){
+      let curr_method = _methods[meth_id];
+      if(!curr_method.selected && curr_method.reason !== undefined){
+        sel_methods.push(curr_method);
+      }
+    }
+    sel_methods.sort(function(a, b){return b.normalized_final_score - a.normalized_final_score})
+    return sel_methods;
+    
+  }
+
+
   getUnselectedMethods() {
     return _methods.filter( (meth) => !meth.selected );
   }
