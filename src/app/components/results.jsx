@@ -19,6 +19,8 @@ import Colors from 'material-ui/lib/styles/colors';
 import RaisedButton from 'material-ui/lib/raised-button';
 import SelectField from 'material-ui/lib/select-field';
 import TextField from 'material-ui/lib/text-field';
+import {GridList, GridTile} from 'material-ui/lib/grid-list';
+import Badge from 'material-ui/lib/badge';
 
 import Table from 'material-ui/lib/table/table';
 import TableBody from 'material-ui/lib/table/table-body';
@@ -34,7 +36,9 @@ import CharacteristicStore from '../stores/characteristics';
 import MethodStore from '../stores/methods';
 import WorkflowActions from '../actions/workflowActions';
 import MethodActions from '../actions/methodActions';
-
+import GoodStrategy from 'material-ui/lib/svg-icons/action/grade';
+import OKStrategy from 'material-ui/lib/svg-icons/image/brightness-1';
+import BadStrategy from 'material-ui/lib/svg-icons/navigation/arrow-drop-down';
 
 let size = 18;
 const goal_text_values = {1:"Not a Priority", 2: "Somewhat of a Priority", 3: "High Priority"};
@@ -50,7 +54,68 @@ let avatarStyle = {
   color: 'white',
   backgroundColor:Colors.cyan500
 };
+const gridStyles = {
+  nameCol:{
+    width:'120px',
+    paddingLeft:5,
+    paddingTop:0,
+    paddingRight:5,
+    paddingBottom:0,
+    fontSize:'14px',
+    whiteSpace:'normal'
 
+  },
+  headerNameCol:{
+    width:'120px',
+    height:'65px',
+    paddingLeft:5,
+    paddingTop:0,
+    paddingRight:0,
+    paddingBottom:2,
+    fontSize:'8px',
+    verticalAlign:'bottom'
+  },
+
+  scoreCol:{
+    width:'32px',
+    height:'32px',
+    textAlign:'center',
+    padding:'2px 1px 0px 0px'
+  },
+
+  goalHeader:{
+    fontSize:'8px',
+    padding:'0px 0px 0px 0px',
+    textAlign:'left',
+    verticalAlign:'middle',
+    color:'black',
+    width:'32px',
+    whiteSpace:'normal',
+    lineHeight:'8px',
+    transform:'rotate(270deg)',
+    height:'60px',
+    fontWeight:500
+  },
+
+  goalTTipHeader: {
+    fontSize:'14px',
+    zIndex:100000
+  },
+
+  headerRow: {
+    width:'100%',
+    whiteSpace:'normal',
+    height:'60px'
+  },
+  footerCell: {
+    width:'200px',
+    textAlign:'left',
+    padding:0,
+    whiteSpace:'normal',
+    fontSize:'8px',
+    verticalAlign:'top'
+  }
+};
 
 const Results = React.createClass({
   
@@ -89,25 +154,23 @@ const Results = React.createClass({
 
         let expert_score = tech_method[goal.id];
         let user_score = goal.priority;
-        let final_score = expert_user_lookup[expert_score-1][user_score-1]
+        let final_score = expert_user_lookup[expert_score-1][user_score-1];
 
-        goal.final_goal_score = final_score
-
+        goal.final_goal_score = final_score;
         let tmid = tech_method[ID_STR];
-        
-        let rationale = this.getExpertRationale(rankings_details, tmid, goal.id)
-
-        
+        let rationale = this.getExpertRationale(rankings_details, tmid, goal.id);
 
         let is_max = (final_score === 5);
+        let is_min = (final_score === 1);
         let scores = {"goal_id": goal.id, "ttip":goal.description, "name":goal.header, 
                       "user_score_text": user_score_dict[user_score], "user_score":user_score, 
                       "expert_score_text": expert_score_dict[expert_score],
-                      "expert_score":expert_score, "is_max":is_max, "expert_rationale": rationale};
+                      "expert_score":expert_score, "is_max":is_max, "expert_rationale": rationale,
+                      "is_min": is_min};
         if(tech_method_goal_scores[tmid] === undefined){
           tech_method_goal_scores[tmid] = [scores];
         } else {
-            tech_method_goal_scores[tmid].push(scores);
+          tech_method_goal_scores[tmid].push(scores);
         }
         
         //for each id in the ranking
@@ -165,13 +228,13 @@ const Results = React.createClass({
       tech_method.normalized_score = normalized_score;
     }
 
-    
     //for each technology,
     //multiply normalized characteristic score by summed goal scores per technology
     for(let tech_method of scores){
       tech_method.final_score = tech_method.normalized_score*tech_method.sum_score;
     }
     let score_values = scores.map(function(key) {return Number(key.final_score);});
+
 
     //calculate the max score for normalization
     let max_score = this.getMaxOfArray(score_values);
@@ -182,7 +245,6 @@ const Results = React.createClass({
         fscore = 0.0;
       }
       if(max_score === 0){
-        
         score_val.normalized_final_score = fscore;
       } else {
         score_val.normalized_final_score = (fscore/max_score)*100;
@@ -223,8 +285,32 @@ const Results = React.createClass({
       });
       method.id = theid;
       method.goal_scores = goal_scores;
+
+
+
+      let imgs = [, , "", "social-media", ""];
+      //gross. get rid of this when you get real images
+      if(method.id === "key-communicators"){
+        method.img = require('./key-communicators.png');
+        method.hasImg = true;
+      } else if(method.id === "fishery-association-meetings"){
+        method.img = require('./fishery-association-meetings.png');
+        method.hasImg = true;
+      } else if(method.id === "informal-meetings"){
+        method.img = require('./informal-meetings.png');
+        method.hasImg = true;
+      } else if(method.id === "social-media"){
+        method.img = require('./social-media.png');
+        method.hasImg = true;
+      } else if(method.id === "stakeholder-advisory-groups"){
+        method.img = require('./stakeholder-advisory-groups.png');
+        method.hasImg = true;
+      } else {
+        method.hasImg = false;
+      }
       final_methods.push(method);
     }
+
     return final_methods;
 
   },
@@ -275,27 +361,36 @@ const Results = React.createClass({
                 </em>
             
             </CardText>
-            <span style={{align:'right', marginLeft:'15px', fontSize:'150%', display:'block', width:'100%'}}>
-            <span style={{verticalAlign:'middle'}}><i>Number of Recommendations To Show:</i></span>
+            <span style={{textAlign:'center', marginLeft:'15px', fontSize:'150%', display:'block', width:'100%'}}>
+            <span style={{verticalAlign:'middle', textAlign:'center'}}>Number of Recommended Strategies To Show:</span>
               <span>
-                <SelectField style={{color:'#ff0000', marginLeft:'15px', marginTop:'2px', verticalAlign:'middle', width:'10%', fontSize:'125%'}} valueMember="payload" displayMember="text" 
+                <SelectField style={{textAlign:'left', color:'#ff0000', marginLeft:'15px', marginTop:'2px', verticalAlign:'middle', width:'10%', fontSize:'125%'}} valueMember="payload" displayMember="text" 
                 onChange={this._handleSelectValueChange} 
                 iconStyle={{fill:'black'}}
-                menuItems={[{ payload: 5, text: '5' },{ payload: 10, text: '10' },{ payload: 15, text: '15' },{ payload: 20, text: '20' },{ payload: 25, text: '25' },{ payload: 29, text: '29' }]}  
+                menuItems={[{ payload: 5, text: '5' },{ payload: 10, text: '10' },{ payload: 15, text: '15' },{ payload: 20, text: '20' },{ payload: 25, text: '25' },{ payload: 28, text: 'All' }]}  
                 value={this.state.numRecsToView}
                 />
               </span>
-              
             </span>
+            <div style={gridStyles.root}>
+              <Card key={"comparisonMatrix"} initiallyExpanded={true}>
+                <CardTitle title="Strategy Effectiveness:" style={{textAlign:'center'}} actAsExpanded={true} showExpandableButton={true}/>
+                <CardText expandable={true}>        
+                {(this._getGoalsForRecommendations(this.state.recommendations))}
+                </CardText>
+              </Card>
+            </div>
+            <div><Card><CardTitle style={{textAlign:'center'}} title="Details of Each Strategy:"/></Card></div>
               {this.state.recommendations.map(function(rec) {
                 return (
                   <Card key={rec.heading} initiallyExpanded={false}>
                   
                     <CardTitle title={rec.heading} subtitle={this._getSubtitleText(rec)} actAsExpander={true}
                       showExpandableButton={true}/>
-
-                    <CardText expandable={true}>
-                      <div dangerouslySetInnerHTML={{__html: rec.text}}>
+                    
+                    <CardText expandable={true}> 
+                      <div><img style={{width:"98%", paddingLeft:"5px", paddingRight:"5px"}} src={rec.img}/></div>
+                      <div dangerouslySetInnerHTML={{__html: this._getRecText(rec)}}>
                       </div>
                       <div style={{paddingLeft:"10px"}}><h3>Do you plan to use this strategy?</h3>
                         <RadioButtonGroup recId={rec.id} defaultSelected={rec.selected ? "1" : "0"}>
@@ -311,7 +406,6 @@ const Results = React.createClass({
                         <TextField style={{width:"80%", paddingLeft:"40px"}} onChange={this._handleReasonChange(rec.id)} hintText={rec.reason !== undefined ? rec.reason : "Please enter the reason you -will- or -will not- use the strategy. "}></TextField>
                       </div>
                     </CardText>
-
                   </Card>
                 )
               }, this)}
@@ -360,6 +454,93 @@ const Results = React.createClass({
       </Tabs>
     );
   },
+
+  _getGoalHeaders(recs){
+    let vals = [];
+    for(let rec of recs){
+      let nameCol = <TableHeaderColumn style={gridStyles.headerNameCol} tooltip={"Strategy Name"} key={"namecol"}>Name</TableHeaderColumn>
+      let scoreCol = <TableHeaderColumn style={gridStyles.goalHeader} tooltip={"Strategy Score"} key={"scorecol"}>Score</TableHeaderColumn>
+      vals.push(nameCol);
+      vals.push(scoreCol);
+
+      for(let score of rec.goal_scores){
+        let short_name = score.name.split(" ");
+        let disp_name = short_name[0];
+        if(short_name.length > 1){
+          disp_name = short_name[0]+" "+short_name[1];
+        }
+        if(short_name.length > 2){
+          disp_name = disp_name+"..."
+        }
+        let curr = <TableHeaderColumn style={gridStyles.goalHeader} key={score.goal_id}><span style={{ display:'inline-block', wordWrap:"break-word", width:'60px', textAlign:'left'}} >{disp_name}</span></TableHeaderColumn>
+        vals.push(curr);
+      }
+      
+      let row = <TableRow style={gridStyles.headerRow} children={vals}></TableRow>
+      return row;
+    }
+  },
+  _getGoalsForRecommendations(recs){
+    let good_color = "#388E3C";
+    let bad_color = "#e57373";
+    let ok_color = "#BDBDBD";
+    let all_rows = [];
+    for(let rec of recs){
+      let cols = [];
+      let nameCol = <TableRowColumn style={gridStyles.nameCol} key={rec.id+"_name"}> {rec.heading}</TableRowColumn>
+      let scoreCol = <TableRowColumn style={gridStyles.scoreCol} key={rec.id+"_score"}> {rec.normalized_final_score}</TableRowColumn>
+      cols.push(nameCol);
+      cols.push(scoreCol);
+      for(let score of rec.goal_scores){
+        let svg = null;
+        if(score.is_max){
+          let color=
+          svg = <GoodStrategy color={good_color}></GoodStrategy>
+        } else if(score.is_min){
+          let color=
+          svg = <BadStrategy color={bad_color}></BadStrategy>
+        } else {
+          svg = <OKStrategy color={ok_color}></OKStrategy>
+        }
+        let curr = <TableRowColumn style={gridStyles.scoreCol} key={rec.id+"_"+score.goal_id}> {svg}</TableRowColumn>
+        cols.push(curr);
+      }
+      let trow = <TableRow style={{width:'100%'}} children={cols}></TableRow>
+      all_rows.push(trow);
+    } 
+
+    let tbody = <TableBody  displayRowCheckbox={false} children={all_rows}></TableBody>
+    console.log("tbody: ", tbody);
+    let thead = <TableHeader displaySelectAll={false} adjustForCheckbox={false} children = {this._getGoalHeaders(recs)}></TableHeader>
+    let tfoot = this._getMatrixLegend(good_color, ok_color, bad_color);
+    let table = <Table>{thead}{tbody}{tfoot}</Table>
+    return table;
+  },
+  _getMatrixLegend(good_color, ok_color, bad_color){
+    let good = <GoodStrategy color={good_color}/>
+    let ok = <OKStrategy color={ok_color}/>
+    let bad = <BadStrategy color={bad_color}/>
+    let goodCol = <TableRowColumn style={gridStyles.footerCell} colSpan={3}><span style={{paddingLeft:'10px'}}>{good}</span>{"High Priority, Highly Effective"}</TableRowColumn>
+    let okCol = <TableRowColumn style={gridStyles.footerCell} colSpan={5}><span>{ok}</span>{"Somewhat of a Priority, Somewhat Effective"}</TableRowColumn>
+    let badCol = <TableRowColumn style={gridStyles.footerCell} colSpan={4}><span>{bad}</span>{"Not a Priority, Not Effective"}</TableRowColumn>
+    let trow = <TableRow children={[goodCol, okCol, badCol]}/>
+    let footer = <TableFooter displaySelectAll={false} adjustForCheckbox={false} children={trow}></TableFooter>
+    return footer
+  },
+  _getRecText(rec){
+    let el = document.createElement( 'html' );
+    el.innerHTML = rec.text;
+    let subsections = el.getElementsByTagName( 'h4' );
+    let lists = el.getElementsByTagName("ul")
+    let full_details = "";
+    
+    if(rec.hasImg){
+      return subsections[0].outerHTML+lists[0].outerHTML+subsections[1].outerHTML+lists[1].outerHTML;
+    } else {
+      return rec.text
+    }
+  },
+
   _getSubtitleText(rec){
     let sel_text = rec.selected ? "Yes" : "No"
     return "Score: "+rec.normalized_final_score

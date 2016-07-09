@@ -84,7 +84,10 @@ const Step3 = React.createClass({
           <Card>
             <CardText>
               <p>
-                <b>{this._hasSelected() ? 'You have chosen to use the following '+this._numSelected()+" To save a copy of this report, choose 'Print' and Save as a PDF." : 'You did not select any stakeholder engagement strategies. Please return to step 2 and select a set of strategies to include in the reports.'}</b>
+              The following report includes additional information for the strategies selected during Step 2. In it, you will find rationale for the scoring of the selected strategies, keys to successful implementation, and methods for evaluating how effective the strategy has been at achieving desired outcomes. In addition, the report contains user-entered information for why recommended strategies were or were not chosen by the user during Step 2.  
+              </p>
+              <p>
+                <b>{this._hasSelected() ? "To save a copy of this report, choose 'Print' and Save as a PDF." : 'You did not select any stakeholder engagement strategies. Please return to step 2 and select a set of strategies to include in the reports.'}</b>
               </p>
             
             </CardText>
@@ -100,7 +103,7 @@ const Step3 = React.createClass({
                         <div style={{ paddingLeft:"15px", paddingRight:"5px", width:"90%", paddingBottom:'10px', paddingTop:'5px'}}>{rec.reason === undefined ? "No reason was given": rec.reason}</div>
                       </div>
 
-                      <div style={{lineHeight:'12px', paddingTop: '5px', paddingLeft:'5px', paddingBottom:'10px', fontSize:'1.2em'}}>User Priorities and Expert Rankings:</div>
+                      <div style={{lineHeight:'12px', paddingTop: '5px', paddingLeft:'5px', paddingBottom:'10px', fontSize:'1.1em'}}>User Priorities and Expert Rankings:</div>
                       <div style={{paddingLeft:"15px", paddingRight:"10px"}}>
                           The following table shows how you prioritized each engagement goals and how experts ranked this strategy's efficacy in achieving that goal. Highlighted rows are goals that are a priority for you and are effectively achieved with this engagement strategy, as ranked by experts.
                       </div>
@@ -134,11 +137,10 @@ const Step3 = React.createClass({
                         }, this)}
                         </TableBody>
                       </Table>
-                      <div dangerouslySetInnerHTML={{__html: rec.text}}>
+                      <div><img style={{width:"98%", paddingLeft:"5px", paddingRight:"5px"}} src={rec.img}/></div>
+                      <div dangerouslySetInnerHTML={{__html: this._getRecText(rec)}}>
                       </div>
-
                     </CardText>
-
                   </Card>
                 )
               }, this)}
@@ -174,6 +176,22 @@ const Step3 = React.createClass({
         </Tab>
       </Tabs>
     );
+  },
+  _getRecText(rec){
+    let el = document.createElement( 'html' );
+    el.innerHTML = rec.text;
+    let subsections = el.getElementsByTagName( 'h4' );
+    let lists = el.getElementsByTagName("ul")
+    let full_details = "";
+    
+    let t = "";
+    if(rec.hasImg){
+      t = subsections[0].outerHTML+lists[0].outerHTML+subsections[1].outerHTML+lists[1].outerHTML;
+    } else {
+      t = rec.text
+    }
+    t = t+rec.details;
+    return t
   },
   _getSubtitleText(rec){
     let sel_text = rec.selected ? "Yes" : "No"

@@ -17,7 +17,6 @@ function setPriority(id, priority) {
   }
 }
 
-
 class GoalStore extends Store {
 
   getAll() {

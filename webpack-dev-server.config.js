@@ -13,7 +13,7 @@ var config = {
   ],
   //Config options on how to interpret requires imports
   resolve: {
-    extensions: ["", ".js", ".jsx"]
+    extensions: ["", ".js", ".jsx", ".png"]
     //node_modules: ["web_modules", "node_modules"]  (Default Settings)
   },
   //Server Configuration options
@@ -59,6 +59,11 @@ var config = {
         exclude: [nodeModulesPath]
       },
       {test: /\.csv?$/, loader: 'dsv-loader'},
+      {
+        test: /\.(jpg|png)$/,
+        loader: 'url?limit=25000',
+        include: [path.resolve(__dirname, "src/app")]
+      }
     ]
   },
   //eslint config options. Part of the eslint-loader package

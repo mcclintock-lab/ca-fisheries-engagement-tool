@@ -8,7 +8,7 @@ var config = {
   entry: [path.join(__dirname, '/src/app/app.jsx')],
   resolve: {
     //When require, do not have to add these extensions to file's name
-    extensions: ["", ".js", ".jsx"]
+    extensions: ["", ".js", ".jsx", ".png"]
     //node_modules: ["web_modules", "node_modules"]  (Default Settings)
   },
   //Render source-map file for final build
@@ -48,7 +48,12 @@ var config = {
         loader: 'babel-loader?optional=runtime&stage=0', //react-hot is like browser sync and babel loads jsx and es6-7
         exclude: [nodeModulesPath]
       },
-      {test: /\.csv?$/, loader: 'dsv-loader'}
+      {test: /\.csv?$/, loader: 'dsv-loader'},
+      {
+        test: /\.(jpg|png)$/,
+        loader: 'url?limit=250000',
+        include: [path.resolve(__dirname, "src/app")]
+      }
     ]
   },
   //Eslint config

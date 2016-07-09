@@ -79,7 +79,7 @@ let unlisten = history.listen(location => {
 });
 
 render((
-  <Router history={history}>
+  <Router history={history} onUpdate={() => window.scrollTo(0, 0)}>
     <Route path="/" component={Main}>
       <Route path="goals/:id" component={Goals}/>
       <Route path="timeline" component={Timeline}/>
@@ -88,7 +88,7 @@ render((
       <Route path="goal_overview" component={GoalOverview}/>
       <Route path="char_overview" component={CharOverview}/>
       <Route path="principles" component={Principles}/>
-      <Route path="step3" component={Step3}/>
+      <Route path="step3" component={Step3} />
       <Route path="*" component={Intro}/>
       
     </Route>
