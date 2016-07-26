@@ -31,7 +31,8 @@ let GoalActions = {
       priority: priority
     });
   }
+}
 
-};
+
 
 module.exports = GoalActions;

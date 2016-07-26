@@ -12,6 +12,7 @@ let CharacteristicActions = {
     });
   }
 
+
 };
 
 module.exports = CharacteristicActions;

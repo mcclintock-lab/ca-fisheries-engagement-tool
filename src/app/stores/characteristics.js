@@ -7,18 +7,63 @@ import WorkflowActions from '../actions/workflowActions';
 require("babel-polyfill");
 
 import _characteristics from '../data/fisheryCharacteristics';
-
+import _all_characteristics from '../data/allFisheryCharacteristics'
+const _alternatives = {"high-capacity-for-engagement":"low-capacity-for-engagement",
+                      "high-tech-literacy": "low-tech-literacy",
+                      "large-geographic-size":"small-geographic-size",
+                      "existing-leaders":"no-existing-leaders"}
+                      
 function setAnswer(id, answer) {
   let characteristic = _characteristics.find((char) => char.id === id);
-  if (characteristic) {
-    characteristic.answer = answer;
-  }
+
+  characteristic.answer = answer;
+}
+
+function _getAlternative(id){
+  let characteristic = _all_characteristics.find((char) => char.id === id);
+  return characteristic;
+}
+function _getOriginal(id){
+  let characteristic = _characteristics.find((char) => char.id === id);
+  return characteristic;
 }
 
 class CharacteristicStore extends Store {
 
-  getAll() {
+  getAllSettable() {
     return _characteristics;
+  }
+
+  getAllWithSpecialCases() {
+  
+    for (let char of _all_characteristics) {
+        let alternative_id = _alternatives[char.id];
+        let original_char = _getOriginal(char.id);
+
+        if(alternative_id !== undefined){
+          let alt_characteristic = _getAlternative(alternative_id);
+
+          if(char.answer === 3){
+            char.answer = 2;
+            alt_characteristic.answer = 2;
+          } else if(char.answer === 2){
+            char.answer = 2;
+            alt_characteristic.answer = 1;
+          } else if(char.answer === 1){
+            char.answer = 1;
+            alt_characteristic.answer = 2;
+          } else {
+            char.answer = 0;
+            alt_characteristic.answer = 0
+          }
+        } else {
+          if(original_char !== undefined){
+            char.answer = original_char.answer
+          }
+        }
+    }
+    
+    return _all_characteristics;
   }
 
   setActiveQuestion(id) {
@@ -41,7 +86,8 @@ class CharacteristicStore extends Store {
 
   getNext() {
     let active = this.getActive();
-    return _characteristics[_characteristics.indexOf(active) + 1];
+    let next = _characteristics[_characteristics.indexOf(active) + 1];
+    return next;
   }
 
   getPrev() {

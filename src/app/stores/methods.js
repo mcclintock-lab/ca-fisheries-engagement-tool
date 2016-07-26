@@ -33,7 +33,6 @@ class MethodStore extends Store {
       
       if(curr_method.selected){
         let details = _method_details[meth_id];
-        console.log("feeee::::", details);
         if(details.id === meth_id){
           curr_method.details = details.text;
         }

@@ -50,14 +50,10 @@ const CharOverview = React.createClass({
             <li>Undefined Stakeholder Community</li>
             <li>Linguistic Diversity</li>
             <li>Organized Institutions Exist within the Fishery </li>
-            <li>High Capacity for Engagement</li>
-            <li>Low Capacity for Engagement</li>
-            <li>High Level of Technological Literacy</li>
-            <li>Low Level of Technological Literacy</li>
-            <li>Large Geographic Size</li>
-            <li>Small Geographic Size</li>
-            <li>Existing Leaders within the Fishery</li>
-            <li>No Existing Leaders within the Fishery</li>
+            <li>Capacity for Engagement (High or Low)</li>
+            <li>Level of Technological Literacy (High or Low)</li>
+            <li>Geographic Size (Large or Small)</li>
+            <li>Leaders within the Fishery (Existing or Not)</li>
             <li>Recent Engagement with Resource Managers</li>
           </ol>
         </div>

@@ -31,6 +31,7 @@ import CharacteristicStore from '../stores/characteristics';
 import {knuthShuffle} from 'knuth-shuffle';
 import WorkflowActions from '../actions/workflowActions';
 import MethodStore from '../stores/methods';
+import DescriptionStore from '../stores/description';
 
 let size = 18;
 const goal_text_values = {1:"Not a Priority", 2: "Somewhat of a Priority", 3: "High Priority"};
@@ -65,7 +66,7 @@ const Step3 = React.createClass({
     return {
       goals: GoalStore.getAll(),
       timeliness: TimelineStore.getAll(),
-      characteristics: CharacteristicStore.getAll(),
+      characteristics: CharacteristicStore.getAllWithSpecialCases(),
       recommendations: this.calculateRecommendedMethods(),
       recs_not_picked: this.calculateMethodsNotChosen()
     }
@@ -77,10 +78,24 @@ const Step3 = React.createClass({
     return state;
   },
 
+  getFishery(){
+    let fishery = DescriptionStore.getFishery();
+    if(fishery === undefined || fishery.length === 0){
+      return "unnamed";
+    }
+    return fishery;
+  },
+  getStakeholders(){
+    let stakeholders = DescriptionStore.getStakeholders();
+    if(stakeholders === undefined || stakeholders.length === 0){
+      return "unnamed";
+    }
+    return stakeholders;
+  },
   render() {
     return (
       <Tabs>
-        <Tab label="Selected Stakeholder Engagement Strategies" >
+        <Tab label={"Selected stakeholder engagement strategies for the '"+this.getFishery()+"' fishery "+" and the '"+this.getStakeholders()+"' stakeholders." } >
           <Card>
             <CardText>
               <p>

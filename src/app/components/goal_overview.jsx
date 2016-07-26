@@ -22,7 +22,7 @@ const GoalOverview = React.createClass({
   },
 
   _handlePrev() {
-    this.props.history.push(...this.props.location, "/intro");
+    this.props.history.push(...this.props.location, "/fishery_description");
   },
 
   _handleNext() {
@@ -59,7 +59,7 @@ const GoalOverview = React.createClass({
         </div>
         </CardText>
         <CardActions>
-        <RaisedButton label="Back to Intro" onTouchTap={this._handlePrev} />
+        <RaisedButton label="Back to Fishery Description" onTouchTap={this._handlePrev} />
         <RaisedButton label="Go to Goals" primary={true} onTouchTap={this._handleNext} />
         </CardActions>
       </div>

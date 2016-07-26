@@ -60,20 +60,8 @@ const CharacteristicForm = React.createClass({
           <div style={textStyle}>
             {this.props.description}
           </div>
-          <RadioButtonGroup style={radioGroupStyle} onChange={this._handleOptionChange} name="ranking" ref="buttonGroup" defaultSelected={this.props.answer}>
-            <RadioButton
-              value="2"
-              label="Yes"
-              style={{marginBottom:16}}/>
-            <RadioButton
-              value="1"
-              label="No"
-              style={{marginBottom:16}}/>
-            <RadioButton
-              value="0"
-              label="Unknown"
-              style={{marginBottom:16}} />
-          </RadioButtonGroup>
+          {this._getRadioButtons(CharacteristicStore.getActive())}
+
         </CardText>
         <CardActions expandable={true}>
           <RaisedButton onTouchTap={this._handlePrevQuestion} label={this.props.index === 1 ? "Back to Characteristics Overview" : "Previous Question"}/>
@@ -81,6 +69,55 @@ const CharacteristicForm = React.createClass({
         </CardActions>
       </Card>
     )
+  },
+
+  _isSpecialCase(char_id){
+    return (char_id === "high-capacity-for-engagement" || 
+        char_id === "high-tech-literacy" || 
+        char_id === "large-geographic-size" || 
+        char_id === "existing-leaders");
+  },
+
+  _getRadioButtons(active_char){
+    let buttons = null;
+    let active_char_id = active_char.id;
+    if(this._isSpecialCase(active_char_id)){
+      buttons = <RadioButtonGroup style={radioGroupStyle} onChange={this._handleOptionChange} name="ranking" ref="buttonGroup" defaultSelected={this.props.answer}>
+          <RadioButton
+            value="2"
+            label={active_char.yesbutton}
+            style={{marginBottom:16}}/>
+          <RadioButton
+            value="1"
+            label={active_char.nobutton}
+            style={{marginBottom:16}}/>
+          <RadioButton
+            value="3"
+            label="Both"
+            style={{marginBottom:16}}/>
+          <RadioButton
+            value="0"
+            label="Unknown"
+            style={{marginBottom:16}} />
+        </RadioButtonGroup>
+    } else {
+      buttons = <RadioButtonGroup style={radioGroupStyle} onChange={this._handleOptionChange} name="ranking" ref="buttonGroup" defaultSelected={this.props.answer}>
+          <RadioButton
+            value="2"
+            label="Yes"
+            style={{marginBottom:16}}/>
+          <RadioButton
+            value="1"
+            label="No"
+            style={{marginBottom:16}}/>
+          <RadioButton
+            value="0"
+            label="Unknown"
+            style={{marginBottom:16}} />
+        </RadioButtonGroup>
+    }
+      return buttons;
+
   },
 
   getAnswer() {
@@ -136,7 +173,7 @@ const Characteristics = React.createClass({
 
   calculateState() {
     return {
-      characteristics: CharacteristicStore.getAll(),
+      characteristics: CharacteristicStore.getAllSettable(),
       activeQuestion: CharacteristicStore.getActive()
     };
   },

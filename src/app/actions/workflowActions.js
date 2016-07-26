@@ -75,6 +75,7 @@ let WorkflowActions = {
     let GoalStore = require('../stores/goals');
     let CharacteristicStore = require('../stores/characteristics');
     let TimelineStore = require('../stores/timeline');
+    let DescriptionStore = require('../stores/description');
     let answers = {};
     for (let goal of GoalStore.getAll()) {
       answers[goal.id] = goal.priority;
@@ -82,13 +83,24 @@ let WorkflowActions = {
     for (let timeline of TimelineStore.getAll()) {
       answers[timeline.id] = timeline.chosen;
     }
-    for (let char of CharacteristicStore.getAll()) {
+    for (let char of CharacteristicStore.getAllSettable()) {
       answers[char.id] = char.answer;
     }
+    let fishery = encodeURIComponent(DescriptionStore.getFishery());
+    if(fishery === undefined || fishery.length === 0){
+      fishery = "Unnamed";
+    }
+    let stakeholders = encodeURIComponent(DescriptionStore.getStakeholders());
+    if(stakeholders === undefined || stakeholders.length === 0){
+      stakeholders = "Unnamed";
+    }
+    answers['fishery_description'] = fishery;
+    answers['fishery_stakeholders'] = stakeholders;
     let queryString = "?"
     for (let key in answers) {
       queryString = queryString + "&" + key + "=" + answers[key];
     }
+
     history.push({pathname: '/results', search: "?" + queryString.substring(2)});
   },
 

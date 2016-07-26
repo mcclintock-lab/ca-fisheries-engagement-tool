@@ -42,7 +42,7 @@ import BadStrategy from 'material-ui/lib/svg-icons/navigation/arrow-drop-down';
 
 let size = 18;
 const goal_text_values = {1:"Not a Priority", 2: "Somewhat of a Priority", 3: "High Priority"};
-const characteristic_text_values = {0:"Unknown", 1: "No", 2: "Yes"};
+const characteristic_text_values = {0:"Unknown", 1: "No", 2: "Yes", 3: "Both"};
 const goal_color_values = {1: "#ffcdd2", 2: "#FFECB3", 3: "#80CBC4"};
 
 let avatarStyle = {
@@ -54,6 +54,7 @@ let avatarStyle = {
   color: 'white',
   backgroundColor:Colors.cyan500
 };
+
 const gridStyles = {
   nameCol:{
     width:'120px',
@@ -62,12 +63,13 @@ const gridStyles = {
     paddingRight:5,
     paddingBottom:0,
     fontSize:'14px',
-    whiteSpace:'normal'
-
+    whiteSpace:'normal',
+    textAlign:'left'
   },
+
   headerNameCol:{
     width:'120px',
-    height:'65px',
+    height:'90px',
     paddingLeft:5,
     paddingTop:0,
     paddingRight:0,
@@ -84,35 +86,38 @@ const gridStyles = {
   },
 
   goalHeader:{
-    fontSize:'8px',
+    fontSize:'11px',
     padding:'0px 0px 0px 0px',
     textAlign:'left',
     verticalAlign:'middle',
     color:'black',
     width:'32px',
     whiteSpace:'normal',
-    lineHeight:'8px',
+    lineHeight:'11px',
     transform:'rotate(270deg)',
-    height:'60px',
+    height:'80px',
     fontWeight:500
   },
 
-  goalTTipHeader: {
-    fontSize:'14px',
-    zIndex:100000
+  tooltipStyles: {
+    whitespace: 'normal',
+    wordWrap: 'break-word',
+    width:'80px',
+    height:'40px'
   },
 
   headerRow: {
     width:'100%',
-    whiteSpace:'normal',
-    height:'60px'
+    whiteSpace:'normal'
   },
+
   footerCell: {
     width:'200px',
-    textAlign:'left',
-    padding:0,
+    textAlign:'middle',
+    paddingLeft:'5px',
+    paddingTop:'5px',
     whiteSpace:'normal',
-    fontSize:'8px',
+    fontSize:'12px',
     verticalAlign:'top'
   }
 };
@@ -126,7 +131,7 @@ const Results = React.createClass({
     // for timeliness, it's time.chosen
     let timeliness = TimelineStore.getAll();
     // for fishery characteristics, it's char.answer
-    let characteristics = CharacteristicStore.getAll();
+    let characteristics = CharacteristicStore.getAllWithSpecialCases();
 
     // rankings are pulled in as an array of objects representing each row
     let rankings = require('../data/rankings.csv');
@@ -160,6 +165,7 @@ const Results = React.createClass({
         let tmid = tech_method[ID_STR];
         let rationale = this.getExpertRationale(rankings_details, tmid, goal.id);
 
+        
         let is_max = (final_score === 5);
         let is_min = (final_score === 1);
         let scores = {"goal_id": goal.id, "ttip":goal.description, "name":goal.header, 
@@ -330,12 +336,11 @@ const Results = React.createClass({
       return Math.max.apply(null, numArray);
   },
 
-
   calculateState() {
     return {
       goals: GoalStore.getAll(),
       timeliness: TimelineStore.getAll(),
-      characteristics: CharacteristicStore.getAll(),
+      characteristics: CharacteristicStore.getAllSettable(),
       recommendations: this.calculateRecommendedMethods()
     }
   },
@@ -349,16 +354,13 @@ const Results = React.createClass({
   render() {
     return (
       <Tabs>
-        <Tab label="Recommendations" >
+        <Tab label="Recommendations" style={{textAlign:"left", verticalAlign: "middle", paddingLeft:"15px"}}>
           <Card>
             <CardText>
               <p>
                 These stakeholder engagement strategies are recommended based on your responses. Click or tap on strategies to see further description including required resources and evaluation criteria.
                 Be sure to refer back to the <a target="blank" href="#principles">“Best Practices”</a> listed in the user manual when assessing your results and providing a rationale for your selection. 
               </p>
-                <em >
-                  Note: To change a response, select the 'Your Answers' tab and click or tap on the question.
-                </em>
             
             </CardText>
             <span style={{textAlign:'center', marginLeft:'15px', fontSize:'150%', display:'block', width:'100%'}}>
@@ -374,7 +376,7 @@ const Results = React.createClass({
             </span>
             <div style={gridStyles.root}>
               <Card key={"comparisonMatrix"} initiallyExpanded={true}>
-                <CardTitle title="Strategy Effectiveness:" style={{textAlign:'center'}} actAsExpanded={true} showExpandableButton={true}/>
+                <CardTitle title="Strategy Effectiveness:" style={{textAlign:'center', paddingBottom:'0px'}} actAsExpanded={true} showExpandableButton={true}/>
                 <CardText expandable={true}>        
                 {(this._getGoalsForRecommendations(this.state.recommendations))}
                 </CardText>
@@ -383,16 +385,16 @@ const Results = React.createClass({
             <div><Card><CardTitle style={{textAlign:'center'}} title="Details of Each Strategy:"/></Card></div>
               {this.state.recommendations.map(function(rec) {
                 return (
-                  <Card key={rec.heading} initiallyExpanded={false}>
+                  <Card style={{textAlign:'left'}} key={rec.heading} initiallyExpanded={false}>
                   
-                    <CardTitle title={rec.heading} subtitle={this._getSubtitleText(rec)} actAsExpander={true}
+                    <CardTitle style={{textAlign:'left'}} title={rec.heading} subtitle={this._getSubtitleText(rec)} actAsExpander={true}
                       showExpandableButton={true}/>
                     
-                    <CardText expandable={true}> 
+                    <CardText style={{textAlign:'left'}} expandable={true}> 
                       <div><img style={{width:"98%", paddingLeft:"5px", paddingRight:"5px"}} src={rec.img}/></div>
                       <div dangerouslySetInnerHTML={{__html: this._getRecText(rec)}}>
                       </div>
-                      <div style={{paddingLeft:"10px"}}><h3>Do you plan to use this strategy?</h3>
+                      <div style={{textAlign:'left', paddingLeft:"10px"}}><h3>Do you plan to use this strategy?</h3>
                         <RadioButtonGroup recId={rec.id} defaultSelected={rec.selected ? "1" : "0"}>
                         <RadioButton 
                             value="1"
@@ -420,7 +422,7 @@ const Results = React.createClass({
               </CardActions>
           </Card>
         </Tab>
-        <Tab label="Your Answers" >
+        <Tab label="Review or Change Your Answers" >
           <Paper>
           <h3 style={{"textAlign":"center"}}>
             Click on any answer to return to the tool and change your response.
@@ -444,7 +446,7 @@ const Results = React.createClass({
           <List subheader="Fishery Characteristics">
             {this.state.characteristics.map(function(characteristic) {
               return (
-                <ListItem onTouchTap={this._handleCharTap(characteristic)} key={characteristic.id} primaryText={characteristic.heading} ><div style={{float:"right", fontSize:'11', color:'gray', textAlign:'left'}}>{this._getCharacteristicText(characteristic.answer)}</div></ListItem>
+                <ListItem onTouchTap={this._handleCharTap(characteristic)} key={characteristic.id} primaryText={characteristic.heading} ><div style={{float:"right", fontSize:'11', color:'gray', textAlign:'left'}}>{this._getCharacteristicText(characteristic)}</div></ListItem>
               )
             }, this)}
           </List>
@@ -472,7 +474,7 @@ const Results = React.createClass({
         if(short_name.length > 2){
           disp_name = disp_name+"..."
         }
-        let curr = <TableHeaderColumn style={gridStyles.goalHeader} key={score.goal_id}><span style={{ display:'inline-block', wordWrap:"break-word", width:'60px', textAlign:'left'}} >{disp_name}</span></TableHeaderColumn>
+        let curr = <TableHeaderColumn  style={gridStyles.goalHeader} key={score.goal_id}><span style={{ display:'inline-block', wordWrap:"break-word", width:'100px', textAlign:'left'}} >{disp_name}</span></TableHeaderColumn>
         vals.push(curr);
       }
       
@@ -480,6 +482,7 @@ const Results = React.createClass({
       return row;
     }
   },
+
   _getGoalsForRecommendations(recs){
     let good_color = "#388E3C";
     let bad_color = "#e57373";
@@ -510,20 +513,22 @@ const Results = React.createClass({
     } 
 
     let tbody = <TableBody  displayRowCheckbox={false} children={all_rows}></TableBody>
-    console.log("tbody: ", tbody);
-    let thead = <TableHeader displaySelectAll={false} adjustForCheckbox={false} children = {this._getGoalHeaders(recs)}></TableHeader>
+    
+    let thead = <TableHeader style={{height:"80px"}} displaySelectAll={false} adjustForCheckbox={false} children = {this._getGoalHeaders(recs)}></TableHeader>
     let tfoot = this._getMatrixLegend(good_color, ok_color, bad_color);
     let table = <Table>{thead}{tbody}{tfoot}</Table>
     return table;
   },
+
   _getMatrixLegend(good_color, ok_color, bad_color){
-    let good = <GoodStrategy color={good_color}/>
-    let ok = <OKStrategy color={ok_color}/>
-    let bad = <BadStrategy color={bad_color}/>
-    let goodCol = <TableRowColumn style={gridStyles.footerCell} colSpan={3}><span style={{paddingLeft:'10px'}}>{good}</span>{"High Priority, Highly Effective"}</TableRowColumn>
-    let okCol = <TableRowColumn style={gridStyles.footerCell} colSpan={5}><span>{ok}</span>{"Somewhat of a Priority, Somewhat Effective"}</TableRowColumn>
-    let badCol = <TableRowColumn style={gridStyles.footerCell} colSpan={4}><span>{bad}</span>{"Not a Priority, Not Effective"}</TableRowColumn>
-    let trow = <TableRow children={[goodCol, okCol, badCol]}/>
+    let good = <GoodStrategy color={good_color} style={{verticalAlign:'bottom'}}/>
+    let ok = <OKStrategy color={ok_color} style={{verticalAlign:'bottom'}}/>
+    let bad = <BadStrategy color={bad_color} style={{verticalAlign:'bottom'}}/>
+    let blankCol = <TableRowColumn colSpan={1}></TableRowColumn>
+    let goodCol = <TableRowColumn style={gridStyles.footerCell} colSpan={3}>{good}{"High Priority, Highly Effective"}</TableRowColumn>
+    let okCol = <TableRowColumn style={gridStyles.footerCell} colSpan={4}><span>{ok}</span>{"Mixed Priority & Effectiveness"}</TableRowColumn>
+    let badCol = <TableRowColumn style={gridStyles.footerCell} colSpan={4}><span>{bad}</span>{"Not a Priority OR Not Effective"}</TableRowColumn>
+    let trow = <TableRow children={[blankCol, goodCol, okCol, badCol]}/>
     let footer = <TableFooter displaySelectAll={false} adjustForCheckbox={false} children={trow}></TableFooter>
     return footer
   },
@@ -571,10 +576,50 @@ const Results = React.createClass({
     return goal_color_values[val];
   },
 
-  _getCharacteristicText(val){
-    return characteristic_text_values[val]
+  _getCharacteristicText(characteristic){
+    let val = characteristic.answer;
+    let char_id = characteristic.id;
+    if(char_id === "high-capacity-for-engagement" || char_id === "high-tech-literacy"){
+      if(val === "3"){
+        return "High and Low";
+      } else if(val === "2"){
+        return "High";
+      } else if(val === "1"){
+        return "Low";
+      } else {
+        return "Unknown";
+      }
+    } else if(char_id === "large-geographic-size"){
+      if(val === "3"){
+        return "Large and Small";
+      } else if(val === "2"){
+        return "Large";
+      } else if(val === "1"){
+        return "Small";
+      } else {
+        return "Unknown";
+      }
+    } else if(char_id === "existing-leaders"){
+      if(val === "3"){
+        return "Both";
+      } else if(val === "2"){
+        return "Existing";
+      } else if(val === "1"){
+        return "No Existing";
+      } else {
+        return "Unknown";
+      }
+    } else {
+      return characteristic_text_values[val]
+    }
+    
   },
-
+  _isSpecialCase(char_id){
+    return (char_id === "high-capacity-for-engagement" || 
+        char_id === "high-tech-literacy" || 
+        char_id === "large-geographic-size" || 
+        char_id === "existing-leaders");
+  },
   _getAvatarStyle(val){
     let height = 18;
     let color_val = goal_color_values[val];

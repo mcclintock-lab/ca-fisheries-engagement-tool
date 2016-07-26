@@ -1,0 +1,42 @@
+html {
+  font-family: 'Roboto', sans-serif;
+}
+
+body {
+  font-size: 13px;
+  line-height: 20px;
+  background-color:#518FB3;
+}
+
+.navHeader a > div > div > span {
+  white-space:nowrap;
+}
+
+
+@media screen and (max-width: 420px) {
+    .navHeader a > div > div > span {
+        font-size:16px;
+        text-overflow: hidden;
+        white-space: nowrap;
+        display: block;
+        overflow: hidden;
+        word-spacing: 30px;
+        width:70px;
+        text-align:left;
+    }
+}
+
+
+@media screen and (max-width: 375px) {
+    .navHeader a > div > div > span {
+        font-size:12px;
+        text-overflow: hidden;
+        white-space: nowrap;
+        margin-left: -10px;
+        width: 50px;
+        display: block;
+        overflow: hidden;
+        word-spacing: 30px;
+        text-align:left;
+    }
+}

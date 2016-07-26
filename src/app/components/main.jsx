@@ -10,6 +10,11 @@ import Card from 'material-ui/lib/card/card';
 import CardText from 'material-ui/lib/card/card-text';
 import CardTitle from 'material-ui/lib/card/card-title';
 import CardHeader from 'material-ui/lib/card/card-header';
+import Menu from 'material-ui/lib/menu/menu';
+import MenuItem from 'material-ui/lib/menu/menu-item';
+import DropDownMenu from 'material-ui/lib/drop-down-menu';
+import Popover from 'material-ui/lib/popover/popover'
+
 const Checkbox = require('material-ui/lib/checkbox');
 const RadioButton = require('material-ui/lib/radio-button');
 const RadioButtonGroup = require('material-ui/lib/radio-button-group');
@@ -23,11 +28,13 @@ import List from 'material-ui/lib/lists/list';
 import ListDivider from 'material-ui/lib/lists/list-divider';
 import ListItem from 'material-ui/lib/lists/list-item';
 import GoalStore from '../stores/goals';
+import CharacteristicStore from '../stores/characteristics';
+
 import {Component} from 'react';
 import {Container} from 'flux/utils';
 import { Lifecycle, RouteContext } from 'react-router';
 import reactMixin from 'react-mixin';
-import CharacteristicStore from '../stores/characteristics';
+
 
 const containerStyle = {
   textAlign: 'center',
@@ -37,7 +44,7 @@ const containerStyle = {
 const cardStyle = {
   minWidth: 300,
   margin: '0 auto',
-  maxWidth: '600'
+  maxWidth: '800'
 };
 
 const principlesCardStyle = {
@@ -53,8 +60,13 @@ const standardActions = [
 ];
 
 const stepListStyle = {
-  width: '32%',
+  width: '33%',
   float: 'left'
+};
+
+const menuStyle = {
+  display: 'inline-block',
+  margin: '16px 32px 16px 0',
 };
 
 const selSize = 41;
@@ -80,6 +92,7 @@ let deselAvatarStyle = {
   backgroundColor:Colors.grey500
 };
 
+
 const Main = React.createClass({
 
   childContextTypes: {
@@ -89,14 +102,34 @@ const Main = React.createClass({
   mixins: [RouteContext],
 
   calculateState() {
+    let alltabs = {
+      goals:{
+        id: "Goals",
+        values: GoalStore.getAll()
+      },
+      timing: { 
+        id: "Timing",
+        values: []
+      },
+      characteristics:{ 
+        id: "Characteristics",
+        values: CharacteristicStore.getAllSettable()
+      }
+    };
+
     return {
       activeGoal: GoalStore.getActiveGoal(),
-      muiTheme: ThemeManager.getMuiTheme(LightRawTheme)
+      alltabs: alltabs,
+      muiTheme: ThemeManager.getMuiTheme(LightRawTheme),
+      goalsOpen: false,
+      open: false
     };
   },
 
   getInitialState() {
-    return this.calculateState();
+    let state = this.calculateState();
+    console.log('state: ', state);
+    return state;
   },
 
   componentDidMount() {
@@ -131,23 +164,14 @@ const Main = React.createClass({
     }
   },
 
-  _handleRequestClose() {
-    this.setState({
-      open: false,
-    });
-  },
-
-  _handleTouchTap() {
-    this.setState({
-      open: true,
-    });
-  },
 
   calculateProgress() {
     let path = this.props.location.pathname;
     let all = GoalStore.getAll();
     if (path.indexOf('intro') !== -1) {
       return 0;
+    } else if(path.indexOf('fishery_description') !== -1){
+      return 1;
     } else if (path.indexOf('goal_overview') !== -1){
       return 2;
     } else if (path.indexOf('goals') !== -1) {
@@ -158,10 +182,67 @@ const Main = React.createClass({
       return 45;
     } else {
       let active = CharacteristicStore.getActive();
-      let all = CharacteristicStore.getAll();
+      let all = CharacteristicStore.getAllSettable();
       let fraction = all.indexOf(active) / all.length;
       return (30 * fraction) + 70;
     }
+  },
+
+  _goalsTouch(event){
+    event.preventDefault();
+    console.log('event: ', event.currentTarget);
+    return (function() {
+      this.setState({
+        goalsOpen:true,
+        charAnchorEl: event.currentTarget,
+      });
+    }).bind(this, event);  
+  },
+
+  _timingTouch(){
+    return (function() {
+      console.log("timing!!")
+    }).bind(this);  
+  },
+
+  _characteristicsTouch(event){
+    event.preventDefault();
+    
+    let target = event.currentTarget;
+    console.log("targ: ", target);
+    this.setState({
+        charAnchorEl: target,
+        open:true
+    });
+
+
+    
+  },
+
+  _handleGoalsClose(){
+    return (function() {
+      this.setState({goalsOpen:false});
+    }).bind(this);  
+  },
+
+  _handleCharacteristicsClose(){
+    return (function() {
+      this.setState({open:false});
+    }).bind(this);  
+  },
+
+  _getCharacteristicMenuItems(){
+    let mis = [];
+    let chars = CharacteristicStore.getAllSettable();
+    let i=0;
+    for(let char of chars){
+
+      let mi = <MenuItem value={"foobar"} style={{width:'120px'}} primaryText={"charsssssss"} index={i} key={i}>{"beep"}</MenuItem>
+      mis.push(mi);
+      i+=1;
+    }
+    console.log("mis", mis);
+    return mis;
   },
 
   render() {
@@ -175,15 +256,20 @@ const Main = React.createClass({
     let isGoalsOverview = this.props.location.pathname.indexOf('goal_overview') !== -1;
     let isCharOverview = this.props.location.pathname.indexOf('char_overview') !== -1;
     let isStep3 = this.props.location.pathname.indexOf('step3') !== -1;
+    let tabs = Object.keys(this.state.alltabs);
+    let menu_items = [<MenuItem primaryText={"blarp"}>"blarp"</MenuItem>]
+    console.log("rendering!!!!!");
     let headerContent = (
       <div>
         <h3 style={{width:'100%'}, {marginTop:"0px"},{textAlign:"center"}}>Step 1 (Quantitative)</h3>
+
         <List className="navHeader">
           <ListItem style={stepListStyle} leftAvatar={<Avatar style={(isGoals || isGoalsOverview) ? selAvatarStyle : deselAvatarStyle}>A</Avatar>}>Goals</ListItem>  
+
           <ListItem style={stepListStyle} leftAvatar={<Avatar style={isTimeline ? selAvatarStyle : deselAvatarStyle}>B</Avatar>}>Timing</ListItem>  
           <ListItem style={stepListStyle} leftAvatar={<Avatar style={(isCharacteristics || isCharOverview) ? selAvatarStyle : deselAvatarStyle}>C</Avatar>}>Characteristics</ListItem>  
         </List>
-        
+
         <LinearProgress mode="determinate" color={"#4CAF50"} value={this.calculateProgress()} />
       </div>
     );

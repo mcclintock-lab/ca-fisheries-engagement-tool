@@ -40,3 +40,9 @@ body {
         text-align:left;
     }
 }
+
+.matrix-tooltip{
+    display:none;
+    text-align:middle;
+    width:100%;
+}

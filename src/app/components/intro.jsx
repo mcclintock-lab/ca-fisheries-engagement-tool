@@ -24,7 +24,7 @@ const Intro = React.createClass({
   },
 
   _handleTouchTap() {
-    this.props.history.push(...this.props.location, "/goal_overview");
+    this.props.history.push(...this.props.location, "/fishery_description");
   },
   _showPrinciplesDialog(){
       this.refs.dialog.open=true;

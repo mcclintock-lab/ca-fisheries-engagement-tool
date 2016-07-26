@@ -17,12 +17,15 @@ import Results from './components/results';
 import GoalOverview from './components/goal_overview';
 import CharOverview from './components/char_overview'
 import Step3 from './components/step3'
+import FisheryDescription from './components/fishery_description'
+
 import qs from 'querystring';
 
 import Intro from './components/intro';
 import Principles from './components/principles';
 import Dispatcher from './dispatcher';
 import WorkflowActions from './actions/workflowActions';
+
 
 
 //Needed for onTouchTap
@@ -40,18 +43,14 @@ if (window.location.toString().indexOf('/results') !== -1) {
   WorkflowActions.marshalAnswers(qs.decode(window.location.hash.replace('?', '')));
 } else {
   if(window.location.toString().indexOf('/principles') !== -1 ){
-
     history.push(...window.location, {
       pathname: "/principles"
     }); 
-
   } else {
-
     history.push(...window.location, {
       pathname: "/intro"
     }); 
   }
- 
 }
 
 let unlisten = history.listen(location => {
@@ -87,6 +86,7 @@ render((
       <Route path="results" component={Results}/>
       <Route path="goal_overview" component={GoalOverview}/>
       <Route path="char_overview" component={CharOverview}/>
+      <Route path="fishery_description" component={FisheryDescription}/>
       <Route path="principles" component={Principles}/>
       <Route path="step3" component={Step3} />
       <Route path="*" component={Intro}/>
