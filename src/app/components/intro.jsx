@@ -1,12 +1,9 @@
 import React from 'react';
 import RaisedButton from 'material-ui/lib/raised-button';
-import { Router, Route, Link } from 'react-router';
 import CardText from 'material-ui/lib/card/card-text';
-import CardHeader from 'material-ui/lib/card/card-header';
 import CardTitle from 'material-ui/lib/card/card-title';
-const CardActions = require('material-ui/lib/card/card-actions');
-import Dialog from 'material-ui/lib/dialog';
-import PrinciplesDialog from '../components/principles.jsx'
+import CardActions  from 'material-ui/lib/card/card-actions';
+
 const containerStyle = {
 };
 const textStyle = {
@@ -25,9 +22,6 @@ const Intro = React.createClass({
 
   _handleTouchTap() {
     this.props.history.push(...this.props.location, "/fishery_description");
-  },
-  _showPrinciplesDialog(){
-      this.refs.dialog.open=true;
   },
 
   render() {

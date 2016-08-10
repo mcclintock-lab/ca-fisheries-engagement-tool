@@ -22,7 +22,7 @@
     "eslint-loader": "^1.0.0",
     "eslint-plugin-react": "^3.2.2",
     "flux": "^2.1.1",
-    "history": "1.13.x",
+    "history": "1.17.0",
     "html-loader": "^0.4.0",
     "html-webpack-plugin": "^1.6.1",
     "knuth-shuffle": "^1.0.1",

@@ -136,7 +136,6 @@ const Timeline = React.createClass({
 
   _optionIsChosen(){
     let timing = this._getSelectedTiming();
-    //console.log("timing is: ", timing);
     if(timing){
       return (timing !== undefined);
     } else {
@@ -154,7 +153,6 @@ const Timeline = React.createClass({
 
   routerWillLeave() {
     //let selectedId = this.refs.buttonGroup.getSelectedValue();
-    //console.log("leaving, setting id to ", selectedId);
     //TimelineActions.setTimeliness(selectedId);
     return true;
 

@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { render } from 'react-dom'
 import { Router, Route, Link } from 'react-router';
@@ -11,7 +12,8 @@ import Timeline from './components/timeline';
 import TimelineStore from './stores/timeline';
 import Characteristics from './components/characteristics';
 import CharacteristicStore from './stores/characteristics';
-import MethodStore from './stores/methods'
+import MethodStore from './stores/methods';
+
 
 import Results from './components/results';
 import GoalOverview from './components/goal_overview';

@@ -1,6 +1,9 @@
 /** In this file, we create a React component which incorporates components provided by material-ui */
 
 import React from 'react';
+import { Lifecycle, RouteContext } from 'react-router';
+import reactMixin from 'react-mixin';
+
 import RaisedButton from 'material-ui/lib/raised-button';
 import Dialog from 'material-ui/lib/dialog';
 import ThemeManager from 'material-ui/lib/styles/theme-manager';
@@ -10,9 +13,6 @@ import Card from 'material-ui/lib/card/card';
 import CardText from 'material-ui/lib/card/card-text';
 import CardTitle from 'material-ui/lib/card/card-title';
 import CardHeader from 'material-ui/lib/card/card-header';
-import Menu from 'material-ui/lib/menu/menu';
-import MenuItem from 'material-ui/lib/menu/menu-item';
-import DropDownMenu from 'material-ui/lib/drop-down-menu';
 import Popover from 'material-ui/lib/popover/popover'
 
 const Checkbox = require('material-ui/lib/checkbox');
@@ -32,8 +32,7 @@ import CharacteristicStore from '../stores/characteristics';
 
 import {Component} from 'react';
 import {Container} from 'flux/utils';
-import { Lifecycle, RouteContext } from 'react-router';
-import reactMixin from 'react-mixin';
+
 
 
 const containerStyle = {
@@ -64,10 +63,6 @@ const stepListStyle = {
   float: 'left'
 };
 
-const menuStyle = {
-  display: 'inline-block',
-  margin: '16px 32px 16px 0',
-};
 
 const selSize = 41;
 const deselSize = 36;
@@ -128,7 +123,6 @@ const Main = React.createClass({
 
   getInitialState() {
     let state = this.calculateState();
-    console.log('state: ', state);
     return state;
   },
 
@@ -190,7 +184,7 @@ const Main = React.createClass({
 
   _goalsTouch(event){
     event.preventDefault();
-    console.log('event: ', event.currentTarget);
+
     return (function() {
       this.setState({
         goalsOpen:true,
@@ -201,7 +195,7 @@ const Main = React.createClass({
 
   _timingTouch(){
     return (function() {
-      console.log("timing!!")
+
     }).bind(this);  
   },
 
@@ -209,7 +203,6 @@ const Main = React.createClass({
     event.preventDefault();
     
     let target = event.currentTarget;
-    console.log("targ: ", target);
     this.setState({
         charAnchorEl: target,
         open:true
@@ -231,19 +224,6 @@ const Main = React.createClass({
     }).bind(this);  
   },
 
-  _getCharacteristicMenuItems(){
-    let mis = [];
-    let chars = CharacteristicStore.getAllSettable();
-    let i=0;
-    for(let char of chars){
-
-      let mi = <MenuItem value={"foobar"} style={{width:'120px'}} primaryText={"charsssssss"} index={i} key={i}>{"beep"}</MenuItem>
-      mis.push(mi);
-      i+=1;
-    }
-    console.log("mis", mis);
-    return mis;
-  },
 
   render() {
 
@@ -257,8 +237,6 @@ const Main = React.createClass({
     let isCharOverview = this.props.location.pathname.indexOf('char_overview') !== -1;
     let isStep3 = this.props.location.pathname.indexOf('step3') !== -1;
     let tabs = Object.keys(this.state.alltabs);
-    let menu_items = [<MenuItem primaryText={"blarp"}>"blarp"</MenuItem>]
-    console.log("rendering!!!!!");
     let headerContent = (
       <div>
         <h3 style={{width:'100%'}, {marginTop:"0px"},{textAlign:"center"}}>Step 1 (Quantitative)</h3>

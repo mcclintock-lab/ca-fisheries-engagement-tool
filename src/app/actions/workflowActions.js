@@ -94,8 +94,25 @@ let WorkflowActions = {
     if(stakeholders === undefined || stakeholders.length === 0){
       stakeholders = "Unnamed";
     }
+    let userName = encodeURIComponent(DescriptionStore.getUserName());
+    if(userName === undefined || userName.length === 0){
+      userName = "Unnamed";
+    }
+    let projectName = encodeURIComponent(DescriptionStore.getProjectName());
+    if(projectName === undefined || projectName.length === 0){
+      projectName = "Unnamed";
+    }
+    let projectRationale = encodeURIComponent(DescriptionStore.getProjectRationale());
+    if(projectRationale === undefined || projectRationale.length === 0){
+      projectRationale = "Unnamed";
+    }
+
     answers['fishery_description'] = fishery;
     answers['fishery_stakeholders'] = stakeholders;
+    answers['userName'] = userName;
+    answers['projectName'] = projectName;
+    answers['projectRationale'] = projectRationale;
+
     let queryString = "?"
     for (let key in answers) {
       queryString = queryString + "&" + key + "=" + answers[key];
