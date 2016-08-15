@@ -3,37 +3,37 @@ module.exports = [
   {
     id: "build-trust",
     header: "Build Trust",
-    description: "If stakeholders have significant concerns over fishery regulation, or if fishery managers have not interacted with an affected community in the past, building trust is an important goal in any engagement effort."
+    description: "If stakeholders have significant concerns over resource regulation, or if resource managers have not interacted with an affected community in the past, building trust is an important goal in any engagement effort."
   },
 
   {
     id: "efficient",
     header: "Engage Stakeholders Efficiently",
-    description: "If the fishery is geographically diverse, or if fisheries managers and the affected community have limited resources to participate in a stakeholder process, a variety of engagement strategies can be employed to ensure stakeholders are kept informed of and engaged in the process in an efficient manner."
+    description: "If the resource is geographically diverse, or if resource managers and the affected community have limited resources to participate in a stakeholder process, a variety of engagement strategies can be employed to ensure stakeholders are kept informed of and engaged in the process in an efficient manner."
   },
 
   {
     id: "educate",
     header: "Educate Stakeholders about the Decision-Making Process",
-    description: "Often stakeholders are not aware of how decisions are made for fisheries management. Educating stakeholders about the decision-making process boosts their capacity to inform management, minimizes confusion or misinformation about the regulatory process, and leads to cross-cutting, sustained trust building between stakeholders and managers."
+    description: "Often stakeholders are not aware of how decisions are made for resource management. Educating stakeholders about the decision-making process boosts their capacity to inform management, minimizes confusion or misinformation about the regulatory process, and leads to cross-cutting, sustained trust building between stakeholders and managers."
   },
 
   {
     id: "build-relationships",
     header: "Build Relationships with Key Communicators",
-    description: "Particularly in the case of well-established fisheries with a history of management needs, engaging local communicators and community thought leaders can be a priority engagement goal."
+    description: "Particularly in the case of well-known marine resources with a history of management needs, engaging local communicators and community thought leaders can be a priority engagement goal."
   },
 
   {
     id: "engage-under-represented",
     header: "Engage Under-Represented Groups",
-    description: "In some instances, the stakeholders and communities significantly impacted by a management decision may be underrepresented in the decision-making process or reluctant to participate in formal engagement activities. Working directly with these stakeholders, particularly when they are affected by management of a specific fishery (such as subsistence fishers) is critical."
+    description: "In some instances, the stakeholders and communities significantly impacted by a management decision may be underrepresented in the decision-making process or reluctant to participate in formal engagement activities. Working directly with these stakeholders, particularly when they are affected by management of a specific resource (such as subsistence fishers) is critical."
   },
 
   {
     id: "social-research-on-fishery",
-    header: "Support Social Research on the Fishery",
-    description: "New and emerging fisheries develop with regularity in California. In some cases, particularly with respect to small fisheries, little information on fishery users may be available. Likewise, even for established fisheries, fisheries managers may not have the information necessary to conduct effective outreach. Conducting social research through direct engagement can produce essential fishery information such as stakeholder definition, market value of the fishery, and user trends."
+    header: "Support Social Research on the Resource",
+    description: "New and emerging resources develop with regularity in California. In some cases, particularly with respect to small fisheries, little information on resource users may be available. Likewise, even for established resources, resource managers may not have the information necessary to conduct effective outreach. Conducting social research through direct engagement can produce essential resource information such as stakeholder definition, market value of a resource, and user trends."
   },
 
   {

@@ -8,7 +8,7 @@
 
 #### Question 1: What level of resources, both in terms of staffing and funding, are required for this strategy?
 -	Staffing: Low
-  -	Minimal staff capacity (1-5% FTE) to draft relevant notifications and maintain app.
+  -	Minimal staff capacity (1-5% PY) to draft relevant notifications and maintain app.
 -	Budget: Medium
   -	$5,000-25,000 upfront costs to create the app, possibly using other state management agency apps as a template.
   -	Likely will require use of external contractors.

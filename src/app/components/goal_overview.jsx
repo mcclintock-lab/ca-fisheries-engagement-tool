@@ -44,22 +44,22 @@ const GoalOverview = React.createClass({
             <em>Note that you may select multiple goals as your priorities!</em>
           </hX>
             <ol>
-              <li>Building trust between fisheries stakeholders and fisheries managers</li>
+              <li>Building trust between resource stakeholders and resource managers</li>
               <li>Efficient engagement (due to tight time constraints in your process/decision)</li>
               <li>Educating stakeholders on how to participate in the process</li>
-              <li>Engaging with under represented groups, particularly when they are affected by management of a specific fishery </li>
-              <li>Building relationships with key communicators who are well respected in their fishery and/or are able to easily reach out to fisheries users</li>
-              <li>Conducting social or biological research in the fishery</li>
+              <li>Engaging with under represented groups, particularly when they are affected by management of a specific resource </li>
+              <li>Building relationships with key communicators who are well respected in their resource and/or are able to easily reach out to resource users</li>
+              <li>Conducting social or biological research in the resource</li>
               <li>Informing stakeholders about the process or decision</li>
               <li>Soliciting input from stakeholders directly</li>
               <li>Involving stakeholders in the decision-making process</li>
               <li>Collaborating with stakeholders in the development of a new program or regulation</li>
             </ol>
-            <p style={{textAlign:"center", marginLeft:"8%", marginRight:"8%"}}>One additional goal is empowering stakeholders to manage the fishery- either directly alone or in partnership with fisheries managers. Two tools for achieving this goal include co-management regimes and collaborative fisheries research. </p>
+            <p style={{textAlign:"center", marginLeft:"8%", marginRight:"8%"}}>One additional goal is empowering stakeholders to manage the resource- either directly alone or in partnership with resource managers. Two tools for achieving this goal include co-management regimes and collaborative fisheries research. </p>
         </div>
         </CardText>
         <CardActions>
-        <RaisedButton label="Back to Fishery Description" onTouchTap={this._handlePrev} />
+        <RaisedButton label="Back to Resource Description" onTouchTap={this._handlePrev} />
         <RaisedButton label="Go to Goals" primary={true} onTouchTap={this._handleNext} />
         </CardActions>
       </div>

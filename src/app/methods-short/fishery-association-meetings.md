@@ -11,7 +11,7 @@
 
 #### Question 1: What level of resources, both in terms of staffing and funding, are required for this strategy?
 -   Staffing: Low
-  -   2-3% FTE depending on the number of meetings, including presentation development and attendance. 
+  -   2-3% PY depending on the number of meetings, including presentation development and attendance. 
   -   Fishery association meetings are often 1-3 hours and take place close to the docks.
 -   Budget: Low
 

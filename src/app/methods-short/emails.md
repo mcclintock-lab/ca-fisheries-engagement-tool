@@ -9,7 +9,7 @@
 
 #### Question 1: What level of resources, both in terms of staffing and funding, are required for this strategy?
 -	Staffing: Low
-  - 	Less than 1% FTE.
+  - 	Less than 1% PY.
   - 	At a minimum, one staff person required to convene and lead the calls, with additional staff support as needed.
 -	Budget: Low
   - 	Varies depending on the content of the email and the incoming stakeholder requests.

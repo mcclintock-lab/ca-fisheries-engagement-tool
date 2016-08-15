@@ -7,7 +7,7 @@
 
 #### Question 1: What level of resources, both in terms of staffing and funding, are required for this strategy?
 -	Staffing: Low
-  - 	5-10% staff FTE to draft, vet, and send newsletters on a consistent, as-needed basis, and to maintain and update the newsletter list serve contacts.  
+  - 	5-10% staff PY to draft, vet, and send newsletters on a consistent, as-needed basis, and to maintain and update the newsletter list serve contacts.  
 -	Budget: Low
 
 #### Question 2: What skills are required by staff to effectively implement this strategy?

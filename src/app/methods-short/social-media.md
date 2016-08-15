@@ -7,7 +7,7 @@
 
 #### Question 1: What level of resources, both in terms of staffing and funding, are required for this strategy?
 -	Staffing: Low
-  - 	1-5% staff FTE to maintain social media accounts, respond to comments, and manage dialogue. 
+  - 	1-5% staff PY to maintain social media accounts, respond to comments, and manage dialogue. 
 -	Budget: Low
 
 #### Question 2: What skills are required by staff to effectively implement this strategy?

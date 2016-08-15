@@ -8,7 +8,7 @@
 #### Question 1: What level of resources, both in terms of staffing and funding, are required for this strategy?
 -	 Staffing: Low
   - 	At least 1 full-time staff member to develop, implement and manage the educational aspects of agency decision-making processes.
-  - 	More than 30% staff FTE to support and co-facilitate the full-time lead staff member.
+  - 	More than 30% staff PY to support and co-facilitate the full-time lead staff member.
 - 	Budget: Low
   - 	$5,000-100,000 depending on facility needs, curriculum development, and scholarship opportunities offered to participants. 
 

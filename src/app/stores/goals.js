@@ -30,15 +30,19 @@ class GoalStore extends Store {
   }
 
   getCompletedGoals() {
-    return _goals.filter( (goal) => goal.priority );
+    return _goals.filter( (goal) => goal.priority);
   }
 
   getIncompleteGoals() {
     return _goals.filter( (goal) => !goal.priority );
   }
-
+  getUnsafeActiveGoal(){
+    //this doesn't set a default -- its used in the tab header
+    return _goals.find( (goal) => goal.active );
+  }
   getActiveGoal() {
     let active_goal = _goals.find( (goal) => goal.active );
+    
     if(active_goal === undefined){
       let activeId = _goals[_goals.length - 1].id;
       this.setActiveGoal(activeId);
@@ -46,6 +50,7 @@ class GoalStore extends Store {
     } else{
       return active_goal;
     }
+    
   }
 
   canProceedToGoal(goalID) {

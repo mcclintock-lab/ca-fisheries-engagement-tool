@@ -7,7 +7,7 @@
 
 #### Question 1: What level of resources, both in terms of staffing and funding, are required for this strategy?
 -	Staffing: Low
-  - 	5% staff FTE to design, market, and manage a quarterly webinar, plus staff time for individual presentation development and implementation per webinar. 
+  - 	5% staff PY to design, market, and manage a quarterly webinar, plus staff time for individual presentation development and implementation per webinar. 
 -	Budget: Low
   - 	$300-1,000 for webinar software program subscriptions 
 

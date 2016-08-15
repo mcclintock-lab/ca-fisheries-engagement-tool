@@ -3,7 +3,7 @@ module.exports = [
   {
     id: "undefined-community",
     heading: "Undefined Stakeholder Community",
-    description: "Does agency staff know the stakeholders within the geographic range of the fishery? Indicators of an undefined stakeholder community include staff not being able to identify individuals or institutions that have a stake in the management of the fishery."
+    description: "Does agency staff know the stakeholders within the geographic range of the resource? Indicators of an undefined stakeholder community include staff not being able to identify individuals or institutions that have a stake in the management of the resource."
   },
 
   {
@@ -15,7 +15,7 @@ module.exports = [
   {
     id: "organized-institutions-exist",
     heading: "Organized Institutions Exist within the Fishery ",
-    description: "Does the fishery have trusted and validated institutions (e.g., fishery associations, community groups, etc.) that are generally viewed by the members of that fishery to be active and effective as mechanisms for communicating with stakeholders? These institutions have the organizational capacity and resources to actively engage in the management process and communicate with their constituents in such a way that is more influential than an individual stakeholder’s efforts."
+    description: "Does the resource have trusted and validated institutions (e.g., resource associations, community groups, etc.) that are generally viewed by the members of that resource to be active and effective as mechanisms for communicating with stakeholders? These institutions have the organizational capacity and resources to actively engage in the management process and communicate with their constituents in such a way that is more influential than an individual stakeholder’s efforts."
   },
 
   {
@@ -40,22 +40,22 @@ module.exports = [
     heading: "Geographic Size",
     yesbutton: "Large Geographic Size",
     nobutton: "Small Geographic Size",
-    description: "Is the fishery and/or fishery stakeholders dispersed throughout the state or exist in multiple regions in the state?"
+    description: "Is the resource and/or resource stakeholders dispersed throughout the state or exist in multiple regions in the state?"
   },
 
   {
     id: "existing-leaders",
     heading: "Leaders within the fishery",
-    yesbutton: "Existing leaders within the fishery",
-    nobutton: "No existing leaders within the fishery",
-    description: "Are there  key individuals who are viewed by others in the fishery as having participated in and/or legitimately represented the fishery in past stakeholder engagement efforts or professional associations?"
+    yesbutton: "Existing leaders within the resource",
+    nobutton: "No existing leaders within the resource",
+    description: "Are there  key individuals who are viewed by others in the resource as having participated in and/or legitimately represented the resource in past stakeholder engagement efforts or professional associations?"
   },
 
 
   {
     id: "no-recent-engagement",
     heading: "Recent Engagement with Resource Managers",
-    description: "Have stakeholders engaged with resource managers in planning, policy, or regulatory decision-making processes affecting their fishery within the past five years?"
+    description: "Have stakeholders engaged with resource managers in planning, policy, or regulatory decision-making processes affecting their resource within the past five years?"
   }
 
 ];

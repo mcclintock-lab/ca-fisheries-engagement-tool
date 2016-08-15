@@ -81,7 +81,14 @@ class CharacteristicStore extends Store {
   }
 
   getActive() {
-    return _characteristics.find( (char) => char.active );
+    let active = _characteristics.find( (char) => char.active );
+    if(active === undefined){
+      let activeId = _characteristics[_characteristics.length - 1].id;
+      this.setActiveQuestion(activeId);
+      return activeId;
+    } else{
+      return active;
+    }
   }
 
   getNext() {
@@ -105,9 +112,12 @@ class CharacteristicStore extends Store {
 
       case 'URL_UPDATE':
         let id = action.id;
-        for (let char of _characteristics) {
-          char.active = char.id === id;
+        if(id){
+          for (let char of _characteristics) {
+            char.active = char.id === id;
+          }          
         }
+
         this.__emitChange();
         break;
 

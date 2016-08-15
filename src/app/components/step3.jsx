@@ -209,9 +209,7 @@ const Step3 = React.createClass({
               {this.state.recommendations.map(function(rec) {
                 return (
                   <Card key={rec.heading} initiallyExpanded={false}>
-                  
                     <CardTitle title={rec.heading} subtitle={this._getSubtitleText(rec)}/>
-
                     <CardText style={{marginTop:'0px', paddingTop:'0px'}} expandable={false}>
                       <div>
                         <div style={{lineHeight:'12px', paddingLeft:'5px', fontSize:'1.2em'}}>Reason for selecting the strategy:</div>
@@ -248,8 +246,6 @@ const Step3 = React.createClass({
                   </Card>
                 )
               }, this)}
-
-
               <CardActions style={{textAlign:'center'}}>
                 <RaisedButton onTouchTap={this._handleStep2} label="Return to Step 2 (Results)" />
                 <RaisedButton onTouchTap={this._handleTakeAgain} label="Retake Survey" />

@@ -7,7 +7,7 @@
 
 #### Question 1: What level of resources, both in terms of staffing and funding, are required for this strategy?
 -	Staffing: Low
-  -	1-10% staff FTE depending on forum activity.
+  -	1-10% staff PY depending on forum activity.
 -	Budget: Low
 
 #### Question 2: What skills are required by staff to effectively implement this strategy?

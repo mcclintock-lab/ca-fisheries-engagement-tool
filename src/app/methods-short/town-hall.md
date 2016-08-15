@@ -7,7 +7,7 @@
 
 #### Question 1: What level of resources, both in terms of staffing and funding, are required for this strategy?
 -	Staffing: Low
-  - 	5% staff FTE to plan and implement the town hall.
+  - 	5% staff PY to plan and implement the town hall.
   - 	1-2 additional staff to participate in the event itself.
 -	Budget: Low
   - 	$500 for travel costs for staff, depending on location, and any meeting materials.

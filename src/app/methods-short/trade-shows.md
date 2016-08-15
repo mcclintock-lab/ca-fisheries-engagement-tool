@@ -7,7 +7,7 @@
 
 #### Question 1: What level of resources, both in terms of staffing and funding, are required for this strategy?
 -	Staffing: Low
-  - 	2-10% staff FTE to plan and attend trade shows, depending on frequency.
+  - 	2-10% staff PY to plan and attend trade shows, depending on frequency.
 -	Budget: Low
   - 	$500-3,000 for travel costs for staff, depending on location, and any communication materials for dissemination and booth banners.
 

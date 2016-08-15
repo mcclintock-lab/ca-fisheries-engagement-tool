@@ -358,10 +358,10 @@ const Results = React.createClass({
           <Card>
             <CardText>
               <p>
-                These stakeholder engagement strategies are recommended based on your responses. Click or tap on strategies to see further description including required resources and evaluation criteria.
-                Be sure to refer back to the <a target="blank" href="#principles">“Best Practices”</a> listed in the user manual when assessing your results and providing a rationale for your selection. 
+                These stakeholder engagement strategies are recommended based on your Step 1 responses. NOTE: It is unlikely that you could achieve your engagement goals using just a single strategy. To ensure all of your high priority goals are addressed, it may be necessary to “mix and match” two or more strategies based on the table below (for example, you may need to implement Key Communicators, public workshops, and Social Media to meet all of your goals). Be sure to refer back to the <a target="blank" href="#principles">“Best Practices”</a> listed in the user manual when assessing your results and providing a rationale for your selection.   
+              
+                
               </p>
-            
             </CardText>
             <span style={{textAlign:'center', marginLeft:'15px', fontSize:'150%', display:'block', width:'100%'}}>
             <span style={{verticalAlign:'middle', textAlign:'center'}}>Number of Recommended Strategies To Show:</span>
@@ -375,9 +375,21 @@ const Results = React.createClass({
               </span>
             </span>
             <div style={gridStyles.root}>
+
               <Card key={"comparisonMatrix"} initiallyExpanded={true}>
                 <CardTitle title="Strategy Effectiveness:" style={{textAlign:'center', paddingBottom:'0px'}} actAsExpanded={true} showExpandableButton={true}/>
-                <CardText expandable={true}>        
+
+                <CardText expandable={true}>
+                <p>
+                  Below you will find a matrix of the most highly ranked strategies and your high priority goals. 
+                  Beside each strategy is a Score based on all of the questions you answered in Step 1. Strategies 
+                  with higher scores will likely be more effective given your goals, timing, and resource/stakeholder 
+                  characteristics. The icons in the matrix represent how effective a given strategy is in achieving a given 
+                  goal, with a green star representing “Highly effective, high priority”; a gray circle representing 
+                  “Less effective, Lower priority”; and a red dash representing “Not effective, not a priority.”
+                  The list below the matrix shows the strategies in greater detail -- click or tap on strategies to see 
+                  further description including required resources and evaluation criteria. 
+                </p>        
                 {(this._getGoalsForRecommendations(this.state.recommendations))}
                 </CardText>
               </Card>

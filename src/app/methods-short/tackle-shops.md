@@ -7,7 +7,7 @@
 
 #### Question 1: What level of resources, both in terms of staffing and funding, are required for this strategy?
 -   Staffing: Low
-  -   1-5% staff FTE to develop, vet and distribute flyers.
+  -   1-5% staff PY to develop, vet and distribute flyers.
 -   Budget: Low
   -   $100-1,000 to print flyers.
 

@@ -11,7 +11,7 @@
 
 #### Question 1: What level of resources, both in terms of staffing and funding, are required for this strategy?
 -	Staffing: Low
-  -  5% staff FTE.  
+  -  5% staff PY.  
   -  3-15 staff to participate in the event itself, including their travel costs.
 -	Budget: Low
   -  $1,000 for materials.

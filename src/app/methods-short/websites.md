@@ -9,7 +9,7 @@
 
 #### Question 1: What level of resources, both in terms of staffing and funding, are required for this strategy?
 -	Staffing: Medium
-  - 	25-75% staff FTE to maintain the website, generate material, and solicit material from agency staff. 
+  - 	25-75% staff PY to maintain the website, generate material, and solicit material from agency staff. 
 -	Budget: Low
   - 	$20,000-100,000 for accessible, tailored, user-friendly website design.
 

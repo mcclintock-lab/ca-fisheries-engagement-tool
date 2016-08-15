@@ -7,7 +7,7 @@
 
 #### Question 1: What level of resources, both in terms of staffing and funding, are required for this strategy?
 -	Staffing: Low
-  -	 5% staff FTE to design and implement.
+  -	 5% staff PY to design and implement.
   -  1-3 additional staff to participate in the event itself (1-2 hours per session).
 -	Budget: Low
   -  $2,000 for facilitation materials and travel costs for staff.

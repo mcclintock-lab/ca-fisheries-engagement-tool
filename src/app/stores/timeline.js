@@ -22,6 +22,10 @@ class TimelineStore extends Store {
   getAll() {
     return _timeline;
   }
+  getSelectedTiming(){
+    let timing = _timeline.find( (time) => time.chosen );
+    return timing;
+  }
 
   __onDispatch = function(action) {
     switch(action.actionType) {

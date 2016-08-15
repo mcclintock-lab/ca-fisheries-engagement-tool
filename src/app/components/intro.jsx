@@ -35,7 +35,7 @@ const Intro = React.createClass({
 
           <h3>Engaging with Stakeholders</h3>
             <p>
-              Meaningful and effective stakeholder engagement is essential for the sustainable management of fisheries throughout California. Given the number and diversity of stakeholders involved, engaging fishermen and other groups affected by fisheries management can be challenging. Fortunately, many different stakeholder engagement strategies exist to enable communication and collaboration between fisheries managers and stakeholders. Although these strategies may not be able to address all of the challenges in fisheries management, they can be designed to allow a free flow of information between fisheries stakeholders and managers, assisting in the decision-making process and creating more effective, long-lasting solutions to management issues.
+              Meaningful and effective stakeholder engagement is essential for the sustainable management of resources throughout California. Given the number and diversity of stakeholders involved, engaging fishermen and other groups affected by resource management can be challenging. Fortunately, many different stakeholder engagement strategies exist to enable communication and collaboration between resource managers and stakeholders. Although these strategies may not be able to address all of the challenges in resource management, they can be designed to allow a free flow of information between resource stakeholders and managers, assisting in the decision-making process and creating more effective, long-lasting solutions to management issues.
             </p>
           <h3>What Does This Decision Support Tool Do?</h3>
             
@@ -43,17 +43,23 @@ const Intro = React.createClass({
                 This decision support tool leads the user through a three-step process to best determine which stakeholder engagement strategies are most appropriate for your management process.
               </hX>
                 <ul>
-                  <li><b>Step 1: (Quantitative analysis)</b> Identify the most appropriate stakeholder engagement strategies, given:</li>
+                  <li><b>Step 1: (Quantitative analysis)</b> On the following pages, you’ll be asked questions related to:</li>
                     <ol type="A">
                       <li>Your priority stakeholder engagement goals</li>
                       <li>The timing of your current management process</li>
                       <li>The characteristics of your target stakeholders</li>
                     </ol>
+                    <p>
+                      At the conclusion of Step 1 you will be provided with a suite of engagement strategies. 
+                      These strategies will be closely tied to the stakeholder engagement goals and characteristics most applicable to your 
+                      fishery or resource management effort based on the answers you provide. 
+                      At this point you will be asked to review the suite of strategies and select which options best suite your engagement needs. Please be as specific as possible in your responses in Step 1 to ensure the most effective strategies are presented in Step 2.
+                    </p>
                   <li> <b>Step 2: (Qualitative analysis)</b> Weigh the top scoring engagement strategies against additional opportunities and constraints, taking into consideration such factors as:</li>
                     <ul>
                       <li>Whether the resources (funding, staff availability, and necessary skills) are available to implement the project.</li>
                       <li>Whether the legal and regulatory landscape affecting the process may place some constraints on which strategies are appropriate.</li>
-                      <li>The history of past experiences associated with the use of specific engagement strategies in the fishery; it the strategy was used in previous efforts and resisted by stakeholders, it may not be appropriate for this management process.</li> 
+                      <li>The history of past experiences associated with the use of specific engagement strategies in the fishery or resource management area; it the strategy was used in previous efforts and resisted by stakeholders, it may not be appropriate for this management process.</li> 
                     </ul>
                   <li><b>Step 3: (Decision)</b> Select your engagement strategy(ies), and prepare a report with rationale.</li>
                   

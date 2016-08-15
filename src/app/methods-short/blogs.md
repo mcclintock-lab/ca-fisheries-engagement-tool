@@ -9,7 +9,7 @@
 
 #### Question 1: What level of resources, both in terms of staffing and funding, are required for this strategy?
 -	Staffing: Low
-  -	 5% staff FTE to write blog posts and respond to comments on a monthly basis.
+  -	 5% staff PY to write blog posts and respond to comments on a monthly basis.
 -	Budget: Low
 
 #### Question 2: What skills are required by staff to effectively implement this strategy?

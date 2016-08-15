@@ -11,7 +11,7 @@
 
 #### Question 1: What level of resources, both in terms of staffing and funding, are required for this strategy?
 -   Staffing: High
-  -  More than 1 full-time staff member to help design and manage the research collaboration. 30% staff FTE to analyze, translate, and communicate the research results.
+  -  More than 1 full-time staff member to help design and manage the research collaboration. 30% staff PY to analyze, translate, and communicate the research results.
 -   Budget: High
   -   Likely will require use of external contractors.
   -   More than $500 for research supplies, depending on the research question and design.

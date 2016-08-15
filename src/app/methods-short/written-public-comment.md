@@ -9,7 +9,7 @@
 
 #### Question 1: What level of resources, both in terms of staffing and funding, are required for this strategy?
 -	Staffing: Low to Medium
-  - 	Staff time for written public comment is entirely dependent on the number of comments received and on whether fisheries managers plan to or are required to respond to the comments (this acknowledges that agencies cannot always respond to all comments). For large scale or contentious processes, consider dedicating at least 10% FTE. This includes development and maintenance of a comment catalogue system database. 
+  - 	Staff time for written public comment is entirely dependent on the number of comments received and on whether fisheries managers plan to or are required to respond to the comments (this acknowledges that agencies cannot always respond to all comments). For large scale or contentious processes, consider dedicating at least 10% PY. This includes development and maintenance of a comment catalogue system database. 
   - 	At a minimum, one staffer or project/regulatory lead and one support staff or consultant to manage, catalogue, and respond to public comments as they come in. Resource managers often contract these services out to an outside consulting firm. 
 -	Budget: Medium (assuming work is contracted out)
   - 	For larger projects, likely will require use of external consultant.
