@@ -18,7 +18,11 @@ function setAnswer(id, answer) {
 
   characteristic.answer = answer;
 }
+function setNotes(id, notes) {
+  let characteristic = _characteristics.find((char) => char.id === id);
 
+  characteristic.notes = notes;
+}
 function _getAlternative(id){
   let characteristic = _all_characteristics.find((char) => char.id === id);
   return characteristic;
@@ -27,6 +31,7 @@ function _getOriginal(id){
   let characteristic = _characteristics.find((char) => char.id === id);
   return characteristic;
 }
+
 
 class CharacteristicStore extends Store {
 
@@ -103,13 +108,16 @@ class CharacteristicStore extends Store {
   }
 
   __onDispatch = function(action) {
-
+    let notes_key = ".note";
     switch(action.actionType) {
       case CharacteristicActions.SET_ANSWER:
         setAnswer(action.id, action.answer);
         this.__emitChange();
         break;
-
+      case CharacteristicActions.SET_NOTES:
+        setNotes(action.id, action.notes);
+        this.__emitChange();
+        break;
       case 'URL_UPDATE':
         let id = action.id;
         if(id){
@@ -117,7 +125,6 @@ class CharacteristicStore extends Store {
             char.active = char.id === id;
           }          
         }
-
         this.__emitChange();
         break;
 
@@ -126,8 +133,12 @@ class CharacteristicStore extends Store {
         for (let char of _characteristics) {
           if (answers[char.id] && answers[char.id] !== 'undefined') {
             char.answer = answers[char.id];  
-            
           }
+          let notes = answers[char.id+notes_key];
+          if(notes === undefined){
+            notes = "";
+          }
+          char.notes = notes;
         }
         this.__emitChange();
         break;

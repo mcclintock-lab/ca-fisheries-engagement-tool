@@ -284,8 +284,6 @@ const Main = React.createClass({
         } else {
           let activeNotThere = true;
           for(let ch of completed){
-            console.log("ch:::", ch);
-            console.log("ac.id::", ac.id);
             if(ch.payload === ac.id){
               activeNotThere = false;
             }

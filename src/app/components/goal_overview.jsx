@@ -41,7 +41,7 @@ const GoalOverview = React.createClass({
           <hX>
             Selecting the appropriate stakeholder engagement strategy depends on the engagement goals you are trying to achieve. 
             Over the next several pages, you will be asked to provide input on how important the following goals are to your process/decision.
-            <em>Note that you may select multiple goals as your priorities!</em>
+            <em> Note that you may select multiple goals as your priorities!</em>
           </hX>
             <ol>
               <li>Building trust between resource stakeholders and resource managers</li>

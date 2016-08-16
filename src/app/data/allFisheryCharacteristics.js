@@ -56,7 +56,7 @@ module.exports = [
 
   {
     id: "existing-leaders",
-    heading: "Existing leaders within the fishery",
+    heading: "Existing leaders within the marine resource",
     description: "Are there key individuals who are viewed by others in the resource as having participated in and/or legitimately represented the resource in past stakeholder engagement efforts or professional associations?"
   },
 

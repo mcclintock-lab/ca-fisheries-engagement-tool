@@ -72,6 +72,7 @@ let WorkflowActions = {
   },
 
   serializeResultsToUrl(history, location) {
+    let note_key = ".note"
     let GoalStore = require('../stores/goals');
     let CharacteristicStore = require('../stores/characteristics');
     let TimelineStore = require('../stores/timeline');
@@ -79,12 +80,27 @@ let WorkflowActions = {
     let answers = {};
     for (let goal of GoalStore.getAll()) {
       answers[goal.id] = goal.priority;
+      let notes = goal.notes;
+      if(notes === undefined){
+        notes = "";
+      }
+      answers[goal.id+note_key] = encodeURIComponent(notes);
     }
     for (let timeline of TimelineStore.getAll()) {
       answers[timeline.id] = timeline.chosen;
+      let notes = timeline.notes;
+      if(notes === undefined){
+        notes = "";
+      }
+      answers[timeline.id+note_key] = encodeURIComponent(notes);
     }
     for (let char of CharacteristicStore.getAllSettable()) {
       answers[char.id] = char.answer;
+      let notes = char.notes;
+      if(notes === undefined){
+        notes = "";
+      }
+      answers[char.id+note_key] = encodeURIComponent(notes);
     }
     let fishery = encodeURIComponent(DescriptionStore.getFishery());
     if(fishery === undefined || fishery.length === 0){

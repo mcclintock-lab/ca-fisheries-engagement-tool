@@ -27,10 +27,14 @@ import {Component} from 'react';
 import {Container} from 'flux/utils';
 import CharacteristicActions from '../actions/characteristicActions';
 import WorkflowActions from '../actions/workflowActions';
+import TextField from 'material-ui/lib/text-field';
 
 const containerStyle = {
 };
-
+const notesStyle = {
+  textAlign: 'left',
+  width:'100%'
+};
 const textStyle = {
   textAlign: 'left',
   height: '120'
@@ -61,7 +65,10 @@ const CharacteristicForm = React.createClass({
             {this.props.description}
           </div>
           {this._getRadioButtons(CharacteristicStore.getActive())}
-
+          <TextField style={notesStyle} onChange={this._handleNotesChange()} 
+                 name="notesTextField"
+                floatingLabelText="Notes (optional):" defaultValue={this._getNotes()}>
+          </TextField>
         </CardText>
         <CardActions expandable={true}>
           <RaisedButton onTouchTap={this._handlePrevQuestion} label={this.props.index === 1 ? "Back to Characteristics Overview" : "Previous Question"}/>
@@ -122,6 +129,22 @@ const CharacteristicForm = React.createClass({
 
   getAnswer() {
     return this.refs.buttonGroup.getSelectedValue();
+  },
+
+  _getNotes(){
+    let ag = CharacteristicStore.getActive();
+    if(ag){
+      return ag.notes;
+    } else {
+      return "";
+    }
+  },
+  _handleNotesChange(event){
+    return (function(event) {
+      let notes = event.target.value;
+      let ac = CharacteristicStore.getActive();
+      CharacteristicActions.setNotes(ac.id, notes); 
+    }).bind(this);
   },
 
   //we only want to check if *any* option is chosen

@@ -358,9 +358,10 @@ const Results = React.createClass({
           <Card>
             <CardText>
               <p>
-                These stakeholder engagement strategies are recommended based on your Step 1 responses. NOTE: It is unlikely that you could achieve your engagement goals using just a single strategy. To ensure all of your high priority goals are addressed, it may be necessary to “mix and match” two or more strategies based on the table below (for example, you may need to implement Key Communicators, public workshops, and Social Media to meet all of your goals). Be sure to refer back to the <a target="blank" href="#principles">“Best Practices”</a> listed in the user manual when assessing your results and providing a rationale for your selection.   
-              
-                
+                These stakeholder engagement strategies are recommended based on your Step 1 responses. NOTE: It is unlikely that you could achieve your engagement goals using just a single strategy. To ensure all of your high priority goals are addressed, it may be necessary to “mix and match” two or more strategies based on the table below (for example, you may need to implement Key Communicators, public workshops, and Social Media to meet all of your goals).  
+              </p>
+              <p>
+                In addition to selecting those strategies you would like to implement using the “yes/no” function, a text box is provided to give you the option of writing a justification for choosing or not choosing the strategy. Any information you wish to provide will be displayed in a report in Step 3 and can be used to record your thought process for selecting (or not selecting) each strategy. Be sure to refer back to the <a target="blank" href="#principles">“Best Practices”</a> listed in the user manual when assessing your results and providing a rationale for your selection.
               </p>
             </CardText>
             <span style={{textAlign:'center', marginLeft:'15px', fontSize:'150%', display:'block', width:'100%'}}>
@@ -387,8 +388,6 @@ const Results = React.createClass({
                   characteristics. The icons in the matrix represent how effective a given strategy is in achieving a given 
                   goal, with a green star representing “Highly effective, high priority”; a gray circle representing 
                   “Less effective, Lower priority”; and a red dash representing “Not effective, not a priority.”
-                  The list below the matrix shows the strategies in greater detail -- click or tap on strategies to see 
-                  further description including required resources and evaluation criteria. 
                 </p>        
                 {(this._getGoalsForRecommendations(this.state.recommendations))}
                 </CardText>
@@ -406,7 +405,8 @@ const Results = React.createClass({
                       <div><img style={{width:"98%", paddingLeft:"5px", paddingRight:"5px"}} src={rec.img}/></div>
                       <div dangerouslySetInnerHTML={{__html: this._getRecText(rec)}}>
                       </div>
-                      <div style={{textAlign:'left', paddingLeft:"10px"}}><h3>Do you plan to use this strategy?</h3>
+                      <div style={{textAlign:'left', paddingLeft:"10px"}}>
+                        <h3>Do you plan to use this strategy?</h3>
                         <RadioButtonGroup recId={rec.id} defaultSelected={rec.selected ? "1" : "0"}>
                         <RadioButton 
                             value="1"

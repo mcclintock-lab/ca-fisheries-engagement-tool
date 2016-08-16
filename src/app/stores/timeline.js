@@ -6,6 +6,7 @@ import TimelineActions from '../actions/timelineActions';
 import WorkflowActions from '../actions/workflowActions';
 
 import _timeline from '../data/timeliness';
+let _notes = "";
 
 function setTimeliness(id) {
   for (let item of _timeline) {
@@ -15,6 +16,10 @@ function setTimeliness(id) {
       item.chosen = false;
     }
   }
+}
+
+function setTimingNotes(notes) {
+  _notes = notes;
 }
 
 class TimelineStore extends Store {
@@ -27,13 +32,21 @@ class TimelineStore extends Store {
     return timing;
   }
 
+  getNotes(){
+    return _notes;
+  }
+
   __onDispatch = function(action) {
+    let notes_key = ".note";
     switch(action.actionType) {
       case TimelineActions.SET_TIMELINESS:
         setTimeliness(action.settings || {});
         this.__emitChange();
         break;
-
+      case TimelineActions.SET_NOTES:
+        setTimingNotes(action.notes);
+        this.__emitChange();
+        break;
       case TimelineActions.SET_TIMELINESS_AND_ADVANCE:
         setTimeliness(action.settings || {});
         this.history.push(...window.location, {pathname: '/characteristics/undefined-community'});
@@ -50,6 +63,11 @@ class TimelineStore extends Store {
         let answers = action.answers;
         for (let timeline of _timeline) {
           timeline.chosen = (answers[timeline.id] || "false") === "true";
+          let notes = answers[timeline.id+notes_key];
+          if(notes === undefined){
+            notes = "";
+          }
+          timeline.notes = notes;
         }
         this.__emitChange();
         break;

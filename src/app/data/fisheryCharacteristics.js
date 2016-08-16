@@ -23,7 +23,7 @@ module.exports = [
     heading: "Capacity for Engagement",
     yesbutton: "High Capacity for Engagement",
     nobutton: "Low Capacity for Engagement",
-    description: "Are there stakeholders that have the time, money, and knowledge to travel to and participate in stakeholder engagement activities? Indicators of high capacity include meetings that are actively attended or management decisions that reflect a high level of rule compliance."
+    description: "Do stakeholders have the time, money, and knowledge to consistently and actively participate in stakeholder engagement activities? In some cases, various subsets within the same stakeholder community may be able to actively participate, while others do not. In this case, stakeholders can have 'both' a low and high capacity for engagement. "
   },
 
 
@@ -32,7 +32,7 @@ module.exports = [
     heading: "Level of technological literacy",
     yesbutton: "High level of technological literacy",
     nobutton: "Low level of technological literacy",
-    description: "Are there stakeholders that have access to computers and internet connectivity (e.g., could participate in webinars), stakeholders that use email and the internet weekly (e.g., blogs, on-line forums), and/or do stakeholders use social media for communications and information exchange?"
+    description: "Do stakeholders have access to computers and internet connectivity (e.g., could participate in webinars) and have the skills to participate in basic digital engagement strategies such as email, webinars, or social media? In some cases, subsets of stakeholders may not have the requisite equipment, connection, or skills while others within the same community do. In this case, stakeholders can have “both” a high and low degree of technological literacy."
   },
 
   {
@@ -40,15 +40,15 @@ module.exports = [
     heading: "Geographic Size",
     yesbutton: "Large Geographic Size",
     nobutton: "Small Geographic Size",
-    description: "Is the resource and/or resource stakeholders dispersed throughout the state or exist in multiple regions in the state?"
+    description: "Is the marine resource itself and/or are the marine resource stakeholders dispersed throughout the state (i.e., exist in multiple regions in the state), or is it/are they confined to a single, defined location? In some cases, a marine resource may exist throughout the state, but have specific areas of concern requiring special management. In this case, it can be considered 'both' large and small."
   },
 
   {
     id: "existing-leaders",
-    heading: "Leaders within the fishery",
+    heading: "Leaders within the marine resource",
     yesbutton: "Existing leaders within the resource",
     nobutton: "No existing leaders within the resource",
-    description: "Are there  key individuals who are viewed by others in the resource as having participated in and/or legitimately represented the resource in past stakeholder engagement efforts or professional associations?"
+    description: "Are there any individuals associated with the marine resource who are viewed by other stakeholders as being leaders in the community or representative of their interests? In some cases, specific stakeholder constituencies involved in resource management may have leaders, while other subsets do not. In this case, the resource has “both” leaders and no leaders. "
   },
 
 

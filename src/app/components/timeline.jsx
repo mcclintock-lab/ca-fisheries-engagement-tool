@@ -17,12 +17,16 @@ import { Lifecycle, RouteContext } from 'react-router';
 
 import {Component} from 'react';
 import {Container} from 'flux/utils';
-
+import TextField from 'material-ui/lib/text-field';
 
 let radioGroupStyle = {
   paddingTop: '30px',
   color: 'red',
   textAlign: 'left'
+};
+const notesStyle = {
+  textAlign: 'left',
+  width:'100%'
 };
 
 const Timeline = React.createClass({
@@ -35,7 +39,8 @@ const Timeline = React.createClass({
 
   calculateState() {
     return {
-      items: TimelineStore.getAll()
+      items: TimelineStore.getAll(),
+      notes: TimelineStore.getNotes()
     };
   },
 
@@ -61,14 +66,14 @@ const Timeline = React.createClass({
         <CardTitle
           title="Timing"
           avatar={<div />} />
-        <CardText expandable={true} style={{textAlign: 'left', marginLeft: 25}}>
-          <div>
-            Selecting the appropriate stakeholder engagement strategies also depends on the timing of the anticipated engagement in your management process. For example, establishing an Advisory Group with defined membership and a direct role in the decision-making process may be appropriate in the “Early Planning” phase, but would be less appropriate if a decision or final management plan is already before the California Fish and Game Commission for approval. 
-          </div>
-          <br/>
-          <h4>
-            Identify the management phase that most closely aligns to the stage in which you will implement your engagement strategy:
-          </h4>
+        <CardText expandable={true} style={{textAlign: 'left', marginLeft: '25px', padding:'0px'}}>
+            <div>
+              Selecting the appropriate stakeholder engagement strategies also depends on the timing of the anticipated engagement in your management process. For example, establishing an Advisory Group with defined membership and a direct role in the decision-making process may be appropriate in the “Early Planning” phase, but would be less appropriate if a decision or final management plan is already before the California Fish and Game Commission for approval.
+              <br/><br/>NOTE: although marine resource management has been ongoing for decades in some cases, this DST is designed to assist in selecting engagement strategies to support a specific marine resource management effort (e.g., developing a new FMP, sharing information about a new Departmental policy or regulation). When you are considering the timing, consider it for this specific effort as opposed to  previous, ongoing, or related engagement events.
+
+              <br/><br/><b>Identify the management phase that most closely aligns to the stage in which you will implement your engagement strategy:</b>
+
+            </div>
 
             <RadioButtonGroup style={radioGroupStyle} onChange={this._handleOptionChange} name="timing" ref="buttonGroup">
               <RadioButton
@@ -92,7 +97,10 @@ const Timeline = React.createClass({
                 id="ongoing-engagement"
                 style={{marginBottom:16}}/>       
             </RadioButtonGroup>
-
+          <TextField style={notesStyle} onChange={this._handleNotesChange()} 
+                 name="notesTextField"
+                floatingLabelText="Notes (optional):" defaultValue={this.state.notes}>
+          </TextField>
         </CardText>
         <CardActions expandable={true}>
           <RaisedButton onTouchTap={this._handlePrev} label="Back to Goals"/>
@@ -100,6 +108,13 @@ const Timeline = React.createClass({
         </CardActions>
       </Card>
     );
+  },
+
+  _handleNotesChange(event){
+    return (function(event) {
+      let notes = event.target.value;
+      TimelineActions.setNotes(notes); 
+    }).bind(this);
   },
 
   _handleOptionChange(event){

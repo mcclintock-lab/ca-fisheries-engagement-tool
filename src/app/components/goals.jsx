@@ -20,7 +20,7 @@ import Avatar from 'material-ui/lib/avatar';
 import FlatButton from 'material-ui/lib/flat-button';
 import { Lifecycle, RouteContext } from 'react-router';
 import reactMixin from 'react-mixin';
-
+import TextField from 'material-ui/lib/text-field';
 
 import GoalStore from '../stores/goals';
 import {Component} from 'react';
@@ -33,9 +33,12 @@ const containerStyle = {
 
 const textStyle = {
   textAlign: 'left',
-  height: '120'
+  height: '100px'
 };
-
+const notesStyle = {
+  textAlign: 'left',
+  width:'100%'
+};
 const goalItemStyle = {
   textAlign: 'left'
 };
@@ -77,7 +80,7 @@ const GoalForm = React.createClass({
           subtitle={"Question " + this.props.index + " of " + this.props.goalsLength}
           avatar={<div />} />
         <CardText expandable={true}>
-          <div style={textStyle}>
+          <div style={{height:'80px', textAlign:'left'}}>
           {this.props.description}
           </div>
           <RadioButtonGroup style={radioGroupStyle} onChange={this._handleOptionChange} name="ranking" ref="buttonGroup" defaultSelected={this.props.priority}>
@@ -94,6 +97,11 @@ const GoalForm = React.createClass({
               label="High Priority"
               style={{marginBottom:16}}/>
           </RadioButtonGroup>
+          <TextField style={notesStyle} onChange={this._handleNotesChange()} 
+                 name="notesTextField"
+                floatingLabelText="Notes (optional):" defaultValue={this.props.notes}>
+          </TextField>
+          
         </CardText>
         <CardActions expandable={true}>
           <RaisedButton  onTouchTap={this._handlePrevQuestion} label={this.props.index === 1 ? "Back to Goal Overview" :"Previous Question"}/>
@@ -117,6 +125,14 @@ const GoalForm = React.createClass({
     } else {
       return false;
     }
+  },
+
+  _handleNotesChange(event){
+    return (function(event) {
+      let notes = event.target.value;
+      let ag = GoalStore.getActiveGoal();
+      GoalActions.setNotes(ag.id, notes); 
+    }).bind(this);
   },
 
   _handleOptionChange(event){
@@ -160,9 +176,11 @@ const Goals = React.createClass({
   calculateState() {
     return {
       goals: GoalStore.getAll(),
-      activeGoal: GoalStore.getActiveGoal()
+      activeGoal: GoalStore.getActiveGoal(),
+      goal_notes: GoalStore.getActiveGoalNotes()
     };
   },
+
 
   getInitialState() {
     return this.calculateState();

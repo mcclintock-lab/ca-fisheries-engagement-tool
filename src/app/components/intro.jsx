@@ -61,8 +61,16 @@ const Intro = React.createClass({
                       <li>Whether the legal and regulatory landscape affecting the process may place some constraints on which strategies are appropriate.</li>
                       <li>The history of past experiences associated with the use of specific engagement strategies in the fishery or resource management area; it the strategy was used in previous efforts and resisted by stakeholders, it may not be appropriate for this management process.</li> 
                     </ul>
-                  <li><b>Step 3: (Decision)</b> Select your engagement strategy(ies), and prepare a report with rationale.</li>
-                  
+                  <li><b>Step 3: (Decision)</b> Select your engagement strategy(ies), and prepare a report with rationale. Example strategies include: </li>
+                    <ul>
+                      <li>Stakeholder Advisory Groups</li>
+                      <li>Online Fishing Forums (proactive participation on informal message boards and blogs)</li>
+                      <li>Key Communicators</li>
+                      <li>Open House meetings</li>
+                      <li>Webinar meetings</li>
+                      <li>Websites</li>
+                      <li>A full list of strategies is available online <a href="" target="_blank">here</a>.</li>
+                    </ul>
                 </ul>
           <h3>Before you start using the decision support tool:</h3>
             <ul>

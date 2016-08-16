@@ -16,6 +16,12 @@ function setPriority(id, priority) {
     goal.priority = priority;
   }
 }
+function setNotes(id, notes){
+  let goal = _goals.find((goal) => goal.id === id);
+  if (goal) {
+    goal.notes = notes;
+  }
+}
 
 class GoalStore extends Store {
 
@@ -40,6 +46,7 @@ class GoalStore extends Store {
     //this doesn't set a default -- its used in the tab header
     return _goals.find( (goal) => goal.active );
   }
+
   getActiveGoal() {
     let active_goal = _goals.find( (goal) => goal.active );
     
@@ -50,7 +57,16 @@ class GoalStore extends Store {
     } else{
       return active_goal;
     }
-    
+  }
+
+  getActiveGoalNotes() {
+
+    let active_goal = _goals.find( (goal) => goal.active );
+    if(active_goal === undefined){
+      return "";
+    } else {
+      return active_goal.notes;
+    }
   }
 
   canProceedToGoal(goalID) {
@@ -77,12 +93,16 @@ class GoalStore extends Store {
   }
 
   __onDispatch = function(action) {
-
+    let notes_key = ".note";
     switch(action.actionType) {
       case GoalActions.SET_PRIORITY:
         setPriority(action.id, action.priority || 1);
         this.__emitChange();
         break;
+      case GoalActions.SET_NOTES:
+        setNotes(action.id, action.notes);
+        this.__emitChange();
+        break;  
 
       case GoalActions.SET_PRIORITY_AND_ADVANCE:
         setPriority(action.id, action.priority || 1);
@@ -108,6 +128,11 @@ class GoalStore extends Store {
         let answers = action.answers;
         for (let goal of _goals) {
           goal.priority = answers[goal.id] || 1;
+          let notes = answers[goal.id+notes_key];
+          if(notes === undefined){
+            notes = "";
+          }
+          goal.notes = notes;
         }
         this.__emitChange();
         break;
