@@ -1,8 +1,17 @@
 import pathInfo from '../pathInfo';
 import Dispatcher from '../dispatcher';
 
+let _isComplete = false;
 let WorkflowActions = {
   
+  isComplete(){
+    return _isComplete;
+  },
+
+  setComplete(complete){
+    _isComplete = complete;
+  },
+
   nextStep(location, history) {
     let GoalStore = require('../stores/goals');
     let info = pathInfo(location);
@@ -29,6 +38,7 @@ let WorkflowActions = {
           ...location, {pathname: "/characteristics/" + next.id}
         );      
       } else {
+        this.setComplete(true);
         history.push(
           ...location, {pathname: "/results/"}
         );              
@@ -70,7 +80,9 @@ let WorkflowActions = {
       );  
     }
   },
-
+  goToStep2(){
+    this.history.push(...window.location, {pathname: '/results/'}); 
+  },
   serializeResultsToUrl(history, location) {
     let note_key = ".note"
     let GoalStore = require('../stores/goals');

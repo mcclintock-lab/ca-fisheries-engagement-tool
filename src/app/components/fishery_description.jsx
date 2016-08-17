@@ -1,11 +1,13 @@
 import React from 'react';
 import RaisedButton from 'material-ui/lib/raised-button';
 import { Router, Route, Link } from 'react-router';
+import Card from 'material-ui/lib/card/card'
 import CardText from 'material-ui/lib/card/card-text';
 import CardHeader from 'material-ui/lib/card/card-header';
 import CardTitle from 'material-ui/lib/card/card-title';
 import TextField from 'material-ui/lib/text-field';
 import DescriptionStore from '../stores/description';
+import WorkflowActions from '../actions/workflowActions';
 import DescriptionActions from '../actions/descriptionActions';
 const CardActions = require('material-ui/lib/card/card-actions');
 
@@ -75,13 +77,19 @@ const FisheryDescription = React.createClass({
   _handleNext() {
     this.props.history.push(...this.props.location, "/goal_overview");
   },
-
+  _isComplete(){
+    return WorkflowActions.isComplete();
+  },
+  _goToStep2(event){
+    if(event){
+      WorkflowActions.goToStep2();
+    }
+  },
   render() {
     return (
-
-      <div>
+      <Card style={{paddingBottom:'2px'}} initiallyExpanded={true}>
         <CardTitle
-          title="Resource Description"
+          title="Resource Description" style={{paddingTop:'5px'},{paddingBottom:'0px'}}
           avatar={<div />} />
         <CardText expandable={true}>
         <div style={{textAlign:'left'}}>
@@ -114,8 +122,9 @@ const FisheryDescription = React.createClass({
         <CardActions>
         <RaisedButton label="Back to Intro" onTouchTap={this._handlePrev} />
         <RaisedButton label="Go to Goals Overview" primary={true} onTouchTap={this._handleNext} />
+                  <RaisedButton secondary={true} style={this._isComplete() ? {display:'inline-block'} : {display:'none'}} onTouchTap={this._goToStep2} label="Go to Step 2 (Results)" disabled={!this._isComplete()}/>
         </CardActions>
-      </div>
+      </Card>
     );
   },
 });

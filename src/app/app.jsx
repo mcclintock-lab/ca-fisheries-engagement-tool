@@ -39,6 +39,7 @@ injectTapEventPlugin();
 let history = createHashHistory();
 GoalStore.history = history;
 TimelineStore.history = history;
+WorkflowActions.history = history;
 
 if (window.location.toString().indexOf('/results') !== -1) {
   // Okay, we'll marshal state from the query string

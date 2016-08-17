@@ -4,6 +4,8 @@ import { Router, Route, Link } from 'react-router';
 import CardText from 'material-ui/lib/card/card-text';
 import CardHeader from 'material-ui/lib/card/card-header';
 import CardTitle from 'material-ui/lib/card/card-title';
+import WorkflowActions from '../actions/workflowActions';
+
 const CardActions = require('material-ui/lib/card/card-actions');
 
 const containerStyle = {
@@ -28,7 +30,14 @@ const GoalOverview = React.createClass({
   _handleNext() {
     this.props.history.push(...this.props.location, "/goals/build-trust");
   },
-
+  _isComplete(){
+    return WorkflowActions.isComplete();
+  },
+  _goToStep2(event){
+    if(event){
+      WorkflowActions.goToStep2();
+    }
+  },
 
   render() {
     return (
@@ -61,7 +70,7 @@ const GoalOverview = React.createClass({
         <CardActions>
         <RaisedButton label="Back to Resource Description" onTouchTap={this._handlePrev} />
         <RaisedButton label="Go to Goals" primary={true} onTouchTap={this._handleNext} />
-        </CardActions>
+                  <RaisedButton secondary={true} style={this._isComplete() ? {display:'inline-block'} : {display:'none'}} onTouchTap={this._goToStep2} label="Go to Step 2 (Results)" disabled={!this._isComplete()}/></CardActions>
       </div>
     );
   },

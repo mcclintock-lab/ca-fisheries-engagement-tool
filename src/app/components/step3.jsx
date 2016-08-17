@@ -50,6 +50,10 @@ let avatarStyle = {
   color: 'white',
   backgroundColor:Colors.cyan500
 };
+let descriptionStyle={
+  display:'block',
+  fontSize:'0.9em'
+};
 const gridStyles = {
   nameCol:{
     width:'120px',
@@ -197,27 +201,21 @@ const Step3 = React.createClass({
     return (
       <Tabs>
         <Tab label={"Selected stakeholder engagement strategies"} >
+
           <Card>
-            <CardText>
-              <div>
-                The following strategies were selected by <em>{this.getUserName()}</em> for the <em>{this.getProjectName()}</em> project with the following rationale:<br/>
-                <i>{this.getProjectRationale()}</i>. These strategies are for the <i>{this.getFishery()}</i> fishery with <i>{this.getStakeholders()}</i> stakeholders.
-              </div>
-              <p>
+              <div style={{margin:'10px'}}>
                 The following report includes additional information for the strategies selected during Step 2. In it, you will find keys to successful implementation, and methods for evaluating how effective the strategy has been at achieving desired outcomes. In addition, the report contains user-entered information for why recommended strategies were or were not chosen by the user during Step 2.  
-              </p>
-              <p>
-                <b>{this._hasSelected() ? "To save a copy of this report, choose 'Print' and Save as a PDF." : ''}</b>
-              </p>
-            </CardText>
-            <div style={gridStyles.root}>
+              </div>
               <Card key={"comparisonMatrix"} initiallyExpanded={true}>
                 <CardTitle title="Strategy Effectiveness:" style={{textAlign:'center', paddingBottom:'0px'}} actAsExpanded={true} showExpandableButton={true}/>
                 <CardText expandable={true}>        
                 {this._hasSelected() ? (this._getGoalsForRecommendations(this.state.recommendations)) : <i>You did not select any stakeholder engagement strategies. Please return to step 2 and select a set of strategies to include in the reports.</i>}
                 </CardText>
               </Card>
-            </div>
+            
+              <Card style={this._hasSelected() ? {display:'block'} : {display:'none'}}>
+                <CardTitle title="The following strategies were selected:" style={{textAlign:'center', paddingBottom:'0px'}} actAsExpanded={true} showExpandableButton={false}/>
+              </Card>
               {this.state.recommendations.map(function(rec) {
                 return (
                   <Card key={rec.heading} initiallyExpanded={false}>
@@ -239,12 +237,10 @@ const Step3 = React.createClass({
                   </Card>
                 )
               }, this)}
-              <br/>
-              <div style={{paddingLeft:"10px", paddingRight:"10px"}}>
-              <h3>
-                {this._hasNoAnswersSelected() ? 'The following strategies were not selected' : '' }
-              </h3>
-               </div>
+              <Card style={this._hasNoAnswersSelected() ? {display:'block'} : {display:'none'}}>
+                <CardTitle title="The following strategies were not selected:" style={{textAlign:'center', paddingBottom:'0px'}} actAsExpanded={true} showExpandableButton={false}/>
+              </Card>
+ 
               {this.state.recs_not_picked.map(function(rec) {
                 return (
                   <Card key={rec.heading} initiallyExpanded={false}>
@@ -258,7 +254,17 @@ const Step3 = React.createClass({
                   </Card>
                 )
               }, this)}
+            <Card>
+              <CardTitle title="Resource Description:" style={{textAlign:'center', paddingBottom:'0px'}} actAsExpanded={true} showExpandableButton={true}/>
+              <CardText>
+                  <span style={descriptionStyle}>Your name: {this.getUserName()}</span>
+                  <span style={descriptionStyle}>Marine resource: {this.getProjectName()}</span>
+                  <span style={descriptionStyle}>Marine resource management effort: {this.getProjectRationale()}</span>
+                  <span style={descriptionStyle}>Stakeholders: {this.getStakeholders()}</span>
+                  <span style={descriptionStyle}>Your name: {this.getFishery()}</span>
 
+              </CardText>
+            </Card>
               <Card key={"yourAnswers"} initiallyExpanded={true}>
                 <CardTitle title="Your Answers:" style={{textAlign:'center', paddingBottom:'0px'}} actAsExpanded={true} showExpandableButton={true}/>
                 <CardText expandable={true}>        
@@ -291,15 +297,20 @@ const Step3 = React.createClass({
 
               
               <CardActions style={{textAlign:'center'}}>
-                <RaisedButton onTouchTap={this._handleStep2} label="Return to Step 2 (Results)" />
                 <RaisedButton onTouchTap={this._handleTakeAgain} label="Retake Survey" />
+                <RaisedButton onTouchTap={this._handleStep2} label="Return to Step 2 (Results)" />
+                <RaisedButton primary={true} onTouchTap={this._print} label="Print" />
               </CardActions>
           </Card>
         </Tab>
       </Tabs>
     );
   },
-
+  _print(event){
+    if(event){
+      window.print();
+    }
+  },
   _hasNotes(){
     return true
   },

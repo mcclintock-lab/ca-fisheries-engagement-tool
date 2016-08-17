@@ -36,7 +36,7 @@ import {Container} from 'flux/utils';
 
 const containerStyle = {
   textAlign: 'center',
-  paddingTop: 20,
+  paddingTop: 10,
 };
 
 const cardStyle = {
@@ -406,8 +406,9 @@ const Main = React.createClass({
     let isCharOverview = this.props.location.pathname.indexOf('char_overview') !== -1;
     let isStep3 = this.props.location.pathname.indexOf('step3') !== -1;
     let headerContent = (
-      <div>
-        <h3 style={{width:'100%'}, {marginTop:"0px"},{textAlign:"center"}}>Step 1 (Quantitative)</h3>
+      <div style={{marginTop:'5px'}}>
+        <h3 style={{width:'100%'}, {textAlign:"center"}, {display:"inline"}}>Step 1 (Quantitative)</h3>
+
         <span style={{width:'100%'}}>
           <List className="navHeader">
             <ListItem style={stepListStyle} leftAvatar={<Avatar style={(isGoals || isGoalsOverview) ? selAvatarStyle : deselAvatarStyle}>A</Avatar>}>
@@ -421,6 +422,7 @@ const Main = React.createClass({
             </ListItem>  
           </List>
         </span>
+
         <span style={dropDownSpanStyle}>
           <SelectField disabled={this.state.disableGoals} style={dropDownStyleVisible} 
             floatingLabelText="Go to:" valueMember="payload" displayMember="text" 

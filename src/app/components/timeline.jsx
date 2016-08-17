@@ -105,11 +105,19 @@ const Timeline = React.createClass({
         <CardActions expandable={true}>
           <RaisedButton onTouchTap={this._handlePrev} label="Back to Goals"/>
           <RaisedButton primary={true} disabled={!this._optionIsChosen()} onTouchTap={this._handleNext} label="Go to Characteristics Overview"/>
+                    <RaisedButton secondary={true} style={this._isComplete() ? {display:'inline-block'} : {display:'none'}} onTouchTap={this._goToStep2} label="Go to Step 2 (Results)" disabled={!this._isComplete()}/>
         </CardActions>
       </Card>
     );
   },
-
+  _isComplete(){
+    return WorkflowActions.isComplete();
+  },
+  _goToStep2(event){
+    if(event){
+      WorkflowActions.goToStep2();
+    }
+  },
   _handleNotesChange(event){
     return (function(event) {
       let notes = event.target.value;

@@ -321,7 +321,7 @@ const Results = React.createClass({
       }
       final_methods.push(method);
     }
-
+    WorkflowActions.setComplete(true);
     return final_methods;
 
   },

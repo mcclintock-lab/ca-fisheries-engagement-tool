@@ -106,12 +106,20 @@ const GoalForm = React.createClass({
         <CardActions expandable={true}>
           <RaisedButton  onTouchTap={this._handlePrevQuestion} label={this.props.index === 1 ? "Back to Goal Overview" :"Previous Question"}/>
           <RaisedButton  primary={true} onTouchTap={this._handleNextQuestion} disabled={!this._optionIsChosen()} label={this.props.index === this.props.goalsLength ? "Go to Timing" : "Next Question"}/>
-          
+          <RaisedButton secondary={true} style={this._isComplete() ? {display:'inline-block'} : {display:'none'}} onTouchTap={this._goToStep2} label="Go to Step 2 (Results)" disabled={!this._isComplete()}/>
         </CardActions>
       </Card>
     )
   },
 
+  _isComplete(){
+    return WorkflowActions.isComplete();
+  },
+  _goToStep2(event){
+    if(event){
+      WorkflowActions.goToStep2();
+    }
+  },
 
   getPriority() {
     return this.refs.buttonGroup.getSelectedValue();
