@@ -20,8 +20,9 @@ function setAnswer(id, answer) {
 }
 function setNotes(id, notes) {
   let characteristic = _characteristics.find((char) => char.id === id);
-
   characteristic.notes = notes;
+  let allc = _all_characteristics.find((char) => char.id === id);
+  allc.notes = notes;
 }
 function _getAlternative(id){
   let characteristic = _all_characteristics.find((char) => char.id === id);
@@ -66,6 +67,13 @@ class CharacteristicStore extends Store {
             char.answer = original_char.answer
           }
         }
+      let orig = _getOriginal(char.id);
+      if(orig){
+
+        char.notes = orig.notes;
+        console.log("char notes are now, ", char.notes);
+      }
+      
     }
     
     return _all_characteristics;

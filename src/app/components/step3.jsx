@@ -37,10 +37,10 @@ import OKStrategy from 'material-ui/lib/svg-icons/image/brightness-1';
 import BadStrategy from 'material-ui/lib/svg-icons/navigation/arrow-drop-down';
 
 let size = 18;
-const goal_text_values = {1:"Not a Priority", 2: "Somewhat of a Priority", 3: "High Priority"};
-const characteristic_text_values = {0:"Unknown", 1: "No", 2: "Yes"};
-const goal_color_values = {1: "#ffcdd2", 2: "#FFECB3", 3: "#80CBC4"};
 
+const goal_text_values = {1:"Not a Priority", 2: "Somewhat of a Priority", 3: "High Priority"};
+const characteristic_text_values = {0:"Unknown", 1: "No", 2: "Yes", 3: "Both"};
+const goal_color_values = {1: "#ffcdd2", 2: "#FFECB3", 3: "#80CBC4"};
 let avatarStyle = {
   height: size - 2,
   width: size - 2,
@@ -116,7 +116,12 @@ const gridStyles = {
     verticalAlign:'top'
   }
 };
-
+const noteStyle = {
+  color:'lightBlack',
+  fontSize:'0.8em',
+  paddingLeft:'10px',
+  fontStyle:'italic'
+};
 const Step3 = React.createClass({
   
   calculateRecommendedMethods() {
@@ -180,6 +185,13 @@ const Step3 = React.createClass({
       return "No rationale given";
     }
     return rationale;
+  },
+  _getNoteText(notes){
+    if(notes !== undefined){
+      return <span style={noteStyle}>{notes}</span>
+    } else {
+      return ""
+    }
   },
   render() {
     return (
@@ -246,6 +258,38 @@ const Step3 = React.createClass({
                   </Card>
                 )
               }, this)}
+
+              <Card key={"yourAnswers"} initiallyExpanded={true}>
+                <CardTitle title="Your Answers:" style={{textAlign:'center', paddingBottom:'0px'}} actAsExpanded={true} showExpandableButton={true}/>
+                <CardText expandable={true}>        
+                  <List subheader="Goals">
+                    {this.state.goals.map(function(goal) {
+                      return (
+                        <ListItem onTouchTap={this._handleGoalTap(goal)} key={goal.id} primaryText={goal.header} secondaryText={this._getNoteText(goal.notes)} ><div style={{float:"right", fontSize:'11', color:'gray', textAlign:'left'}}>{this._getGoalText(goal.priority)}</div></ListItem>
+                      )
+                    }, this)}
+                  </List>
+                  <ListDivider />
+                  <List subheader="Timeliness">
+                    {this.state.timeliness.map(function(timeline) {
+                      return (
+                        <ListItem onTouchTap={this._handleTimeTap(timeline)} key={timeline.id} primaryText={timeline.heading} rightIcon={timeline.chosen ? <Avatar style={avatarStyle}>✓</Avatar> : null} />
+                      )
+                    }, this)}
+                    <ListItem secondaryText={this._getNoteText(TimelineStore.getNotes())}/>
+                  </List>
+                  <ListDivider />
+                  <List subheader="Fishery Characteristics">
+                    {this.state.characteristics.map(function(characteristic) {
+                      return (
+                        <ListItem onTouchTap={this._handleCharTap(characteristic)} key={characteristic.id} primaryText={characteristic.heading} secondaryText={this._getNoteText(characteristic.notes)} ><div style={{float:"right", fontSize:'11', color:'gray', textAlign:'left'}}>{this._getCharacteristicText(characteristic)}</div></ListItem>
+                      )
+                    }, this)}
+                  </List>                
+                </CardText>
+              </Card>
+
+              
               <CardActions style={{textAlign:'center'}}>
                 <RaisedButton onTouchTap={this._handleStep2} label="Return to Step 2 (Results)" />
                 <RaisedButton onTouchTap={this._handleTakeAgain} label="Retake Survey" />
@@ -254,6 +298,14 @@ const Step3 = React.createClass({
         </Tab>
       </Tabs>
     );
+  },
+
+  _hasNotes(){
+    return true
+  },
+  _getNotes(){
+    let recs = this.state.recommendations;
+
   },
 
   _getRecText(rec){
@@ -307,7 +359,44 @@ const Step3 = React.createClass({
     let tbody = <TableBody  displayRowCheckbox={false} children={all_rows}></TableBody>
     let table = <Table>{tbody}</Table>
   },
-
+  _getCharacteristicText(characteristic){
+    let val = characteristic.answer;
+    let char_id = characteristic.id;
+    if(char_id === "high-capacity-for-engagement" || char_id === "high-tech-literacy"){
+      if(val === "3"){
+        return "High and Low";
+      } else if(val === "2"){
+        return "High";
+      } else if(val === "1"){
+        return "Low";
+      } else {
+        return "Unknown";
+      }
+    } else if(char_id === "large-geographic-size"){
+      if(val === "3"){
+        return "Large and Small";
+      } else if(val === "2"){
+        return "Large";
+      } else if(val === "1"){
+        return "Small";
+      } else {
+        return "Unknown";
+      }
+    } else if(char_id === "existing-leaders"){
+      if(val === "3"){
+        return "Both";
+      } else if(val === "2"){
+        return "Existing";
+      } else if(val === "1"){
+        return "No Existing";
+      } else {
+        return "Unknown";
+      }
+    } else {
+      return characteristic_text_values[val]
+    }
+    
+  },
   _getGoalsForRecommendations(recs){
 
     let good_color = "#388E3C";
@@ -376,16 +465,12 @@ const Step3 = React.createClass({
     return (sel_methods !== undefined && sel_methods.length > 0);
   },
   _getGoalText(val){
-    
     return goal_text_values[val];
   },
   _getGoalColor(val){
     return goal_color_values[val];
   },
 
-  _getCharacteristicText(val){
-    return characteristic_text_values[val]
-  },
   _getAvatarStyle(val){
     let height = 18;
     let color_val = goal_color_values[val];

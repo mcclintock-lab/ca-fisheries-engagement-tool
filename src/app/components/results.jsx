@@ -54,7 +54,12 @@ let avatarStyle = {
   color: 'white',
   backgroundColor:Colors.cyan500
 };
-
+const noteStyle = {
+  color:'lightBlack',
+  fontSize:'0.8em',
+  paddingLeft:'10px',
+  fontStyle:'italic'
+};
 const gridStyles = {
   nameCol:{
     width:'120px',
@@ -442,7 +447,7 @@ const Results = React.createClass({
           <List subheader="Goals">
             {this.state.goals.map(function(goal) {
               return (
-                <ListItem onTouchTap={this._handleGoalTap(goal)} key={goal.id} primaryText={goal.header} ><div style={{float:"right", fontSize:'11', color:'gray', textAlign:'left'}}>{this._getGoalText(goal.priority)}</div></ListItem>
+                <ListItem onTouchTap={this._handleGoalTap(goal)} key={goal.id} primaryText={goal.header} secondaryText={this._getNoteText(goal.notes)} ><div style={{float:"right", fontSize:'11', color:'gray', textAlign:'left'}}>{this._getGoalText(goal.priority)}</div></ListItem>
               )
             }, this)}
           </List>
@@ -453,12 +458,13 @@ const Results = React.createClass({
                 <ListItem onTouchTap={this._handleTimeTap(timeline)} key={timeline.id} primaryText={timeline.heading} rightIcon={timeline.chosen ? <Avatar style={avatarStyle}>✓</Avatar> : null} />
               )
             }, this)}
+            <ListItem secondaryText={this._getNoteText(TimelineStore.getNotes())}/>
           </List>
           <ListDivider />
           <List subheader="Fishery Characteristics">
             {this.state.characteristics.map(function(characteristic) {
               return (
-                <ListItem onTouchTap={this._handleCharTap(characteristic)} key={characteristic.id} primaryText={characteristic.heading} ><div style={{float:"right", fontSize:'11', color:'gray', textAlign:'left'}}>{this._getCharacteristicText(characteristic)}</div></ListItem>
+                <ListItem onTouchTap={this._handleCharTap(characteristic)} key={characteristic.id} primaryText={characteristic.heading} secondaryText={this._getNoteText(characteristic.notes)} ><div style={{float:"right", fontSize:'11', color:'gray', textAlign:'left'}}>{this._getCharacteristicText(characteristic)}</div></ListItem>
               )
             }, this)}
           </List>
@@ -467,6 +473,14 @@ const Results = React.createClass({
         </Tab>
       </Tabs>
     );
+  },
+
+  _getNoteText(notes){
+    if(notes !== undefined){
+      return <span style={noteStyle}>{notes}</span>
+    } else {
+      return ""
+    }
   },
 
   _getGoalHeaders(recs){
