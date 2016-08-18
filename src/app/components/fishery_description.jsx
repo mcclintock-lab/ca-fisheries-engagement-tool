@@ -47,7 +47,6 @@ const FisheryDescription = React.createClass({
   _handleTextChange(event){
     return (function(event) {
       let name = event.target.name;
-      console.log("handling text change with name ", name)
       if(name === "fisheryTextField"){
         let fishery = this.refs.fisheryTextField.getValue();
         DescriptionActions.setFishery(fishery);       

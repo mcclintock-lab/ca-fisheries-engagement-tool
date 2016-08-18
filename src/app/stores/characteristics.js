@@ -69,9 +69,7 @@ class CharacteristicStore extends Store {
         }
       let orig = _getOriginal(char.id);
       if(orig){
-
         char.notes = orig.notes;
-        console.log("char notes are now, ", char.notes);
       }
       
     }

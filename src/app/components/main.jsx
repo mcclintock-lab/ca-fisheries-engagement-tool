@@ -375,7 +375,7 @@ const Main = React.createClass({
     if(completed === undefined || completed.length === 0){
       return;
     }
-    console.log("event: ", event, "target:", event.target, "value:", event.target.value);
+    
     if(event !== undefined && event.target !== undefined && event.target.value !== undefined){
       let item_id = event.target.value;
       this.props.history.push(...this.props.location, {pathname: "/timeline"});  
