@@ -19,4 +19,5 @@
 -   In-depth understanding of the scientific, regulatory, management, and economic background of the process question.
 -   Ability to reach out to and interact with groups whose interests may not align with the agency.
 
-
+#### Question 3: How effective has this strategy been in previous marine resource management efforts? 
+#### Question 4: Are any stakeholder engagement strategies required by statute (consult with CDFW legal as needed)? 

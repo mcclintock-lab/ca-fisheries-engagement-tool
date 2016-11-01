@@ -17,3 +17,5 @@
 #### Question 2: What skills are required by staff to effectively implement this strategy?
 -	Personable, written communication skills and the ability to answer questions or concerns clearly and concisely. 
 
+#### Question 3: How effective has this strategy been in previous marine resource management efforts? 
+#### Question 4: Are any stakeholder engagement strategies required by statute (consult with CDFW legal as needed)? 

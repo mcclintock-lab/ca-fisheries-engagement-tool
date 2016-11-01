@@ -38,7 +38,7 @@ module.exports = [
 
   {
     id: "inform",
-    header: "Inform",
+    header: "Levels of Engagement",
     description: "Inform stakeholders by providing them with information, but no expectation exists that a two-way flow of input occurs between stakeholders and decisionmakers."
   },
 

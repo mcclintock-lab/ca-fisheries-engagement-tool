@@ -60,6 +60,9 @@ let unlisten = history.listen(location => {
   if (location.pathname.indexOf('goals') !== -1) {
     if (!Dispatcher.isDispatching()) {
       let id = location.pathname.split('/goals/')[1];
+      if(id === "solicit-input" || id === "involve" || id === "collaborate"){
+        id = "inform";
+      }
       if (GoalStore.canProceedToGoal(id)) {
         Dispatcher.dispatch({
           actionType: 'URL_UPDATE',

@@ -32,9 +32,9 @@ import {knuthShuffle} from 'knuth-shuffle';
 import WorkflowActions from '../actions/workflowActions';
 import MethodStore from '../stores/methods';
 import DescriptionStore from '../stores/description';
-import GoodStrategy from 'material-ui/lib/svg-icons/action/grade';
-import OKStrategy from 'material-ui/lib/svg-icons/image/brightness-1';
-import BadStrategy from 'material-ui/lib/svg-icons/navigation/arrow-drop-down';
+import GoodStrategy from 'material-ui/lib/svg-icons/toggle/star';
+import OKStrategy from 'material-ui/lib/svg-icons/toggle/star-half';
+import BadStrategy from 'material-ui/lib/svg-icons/toggle/star-border';
 
 let size = 18;
 
@@ -201,8 +201,18 @@ const Step3 = React.createClass({
     return (
       <Tabs>
         <Tab label={"Selected stakeholder engagement strategies"} >
+              <Card>
+              <CardTitle title="Resource Description:" style={{textAlign:'center', paddingBottom:'0px'}} actAsExpanded={true} showExpandableButton={true}/>
+              <CardText>
+                  <span style={descriptionStyle}><i>Your name:</i> {this.getUserName()}</span>
+                  <span style={descriptionStyle}><i>Marine resource:</i> {this.getProjectName()}</span>
+                  <span style={descriptionStyle}><i>Marine resource management effort:</i> {this.getProjectRationale()}</span>
+                  <span style={descriptionStyle}><i>Stakeholders:</i> {this.getFishery()}</span>
+                  <span style={descriptionStyle}><i>Why is stakeholder engagement important for this effort?</i> {this.getStakeholders()}</span>
 
-          <Card>
+              </CardText>
+            </Card>
+              <Card>
               <div style={{margin:'10px'}}>
                 The following report includes additional information for the strategies selected during Step 2. In it, you will find keys to successful implementation, and methods for evaluating how effective the strategy has been at achieving desired outcomes. In addition, the report contains user-entered information for why recommended strategies were or were not chosen by the user during Step 2.  
               </div>
@@ -254,17 +264,7 @@ const Step3 = React.createClass({
                   </Card>
                 )
               }, this)}
-            <Card>
-              <CardTitle title="Resource Description:" style={{textAlign:'center', paddingBottom:'0px'}} actAsExpanded={true} showExpandableButton={true}/>
-              <CardText>
-                  <span style={descriptionStyle}>Your name: {this.getUserName()}</span>
-                  <span style={descriptionStyle}>Marine resource: {this.getProjectName()}</span>
-                  <span style={descriptionStyle}>Marine resource management effort: {this.getProjectRationale()}</span>
-                  <span style={descriptionStyle}>Stakeholders: {this.getStakeholders()}</span>
-                  <span style={descriptionStyle}>Your name: {this.getFishery()}</span>
 
-              </CardText>
-            </Card>
               <Card key={"yourAnswers"} initiallyExpanded={true}>
                 <CardTitle title="Your Answers:" style={{textAlign:'center', paddingBottom:'0px'}} actAsExpanded={true} showExpandableButton={true}/>
                 <CardText expandable={true}>        
@@ -327,11 +327,11 @@ const Step3 = React.createClass({
     let full_details = "";
     
     let t = "";
-    if(rec.hasImg){
-      t = subsections[0].outerHTML+lists[0].outerHTML+subsections[1].outerHTML+lists[1].outerHTML;
-    } else {
-      t = rec.text
-    }
+    //if(rec.hasImg){
+    //  t = subsections[0].outerHTML+lists[0].outerHTML+subsections[1].outerHTML+lists[1].outerHTML;
+    //} else {
+    t = rec.text
+    //}
     t = t+rec.details;
     return t
   },
@@ -345,13 +345,18 @@ const Step3 = React.createClass({
       vals.push(scoreCol);
 
       for(let score of rec.goal_scores){
-        let short_name = score.name.split(" ");
-        let disp_name = short_name[0];
-        if(short_name.length > 1){
-          disp_name = short_name[0]+" "+short_name[1];
-        }
-        if(short_name.length > 2){
-          disp_name = disp_name+"..."
+        let disp_name = score.name;
+        if(score.name === "Levels of Engagement"){
+          disp_name = "Inform"
+        } else {
+          let short_name = score.name.split(" ");
+          disp_name = short_name[0];
+          if(short_name.length > 1){
+            disp_name = short_name[0]+" "+short_name[1];
+          }
+          if(short_name.length > 2){
+            disp_name = disp_name+"..."
+          }          
         }
         let curr = <TableHeaderColumn  style={gridStyles.goalHeader} key={score.goal_id}><span style={{ display:'inline-block', wordWrap:"break-word", width:'100px', textAlign:'left'}} >{disp_name}</span></TableHeaderColumn>
         vals.push(curr);
@@ -408,25 +413,42 @@ const Step3 = React.createClass({
     }
     
   },
+    _getScoreIds(goal_scores){
+    let ids = []
+    for(let score of goal_scores){
+      ids.push(score.goal_id);
+    }
+    return ids;
+  },
+  _getGoalForId(id, goal_score){
+    for(let score of goal_score){
+      if(score.goal_id === id){
+        return score;
+      }
+    }
+  },
   _getGoalsForRecommendations(recs){
-
     let good_color = "#388E3C";
-    let bad_color = "#e57373";
-    let ok_color = "#BDBDBD";
+    let bad_color = "#e1c9bf";
+    let ok_color = "#dbdb07";
     let all_rows = [];
+    let all_goals = null;
     for(let rec of recs){
       let cols = [];
       let nameCol = <TableRowColumn style={gridStyles.nameCol} key={rec.id+"_name"}> {rec.heading}</TableRowColumn>
       let scoreCol = <TableRowColumn style={gridStyles.scoreCol} key={rec.id+"_score"}> {rec.normalized_final_score}</TableRowColumn>
       cols.push(nameCol);
       cols.push(scoreCol);
-      for(let score of rec.goal_scores){
+
+      if(all_goals === null){
+        all_goals = this._getScoreIds(rec.goal_scores)
+      }
+      for(let score_id of all_goals){
         let svg = null;
+        let score = this._getGoalForId(score_id, rec.goal_scores)
         if(score.is_max){
-          let color=
           svg = <GoodStrategy color={good_color}></GoodStrategy>
         } else if(score.is_min){
-          let color=
           svg = <BadStrategy color={bad_color}></BadStrategy>
         } else {
           svg = <OKStrategy color={ok_color}></OKStrategy>
@@ -439,7 +461,6 @@ const Step3 = React.createClass({
     } 
 
     let tbody = <TableBody  displayRowCheckbox={false} children={all_rows}></TableBody>
-    
     let thead = <TableHeader style={{height:"80px"}} displaySelectAll={false} adjustForCheckbox={false} children = {this._getGoalHeaders(recs)}></TableHeader>
     let tfoot = this._getMatrixLegend(good_color, ok_color, bad_color);
     let table = <Table>{thead}{tbody}{tfoot}</Table>

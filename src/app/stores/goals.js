@@ -29,6 +29,21 @@ class GoalStore extends Store {
     return _goals;
   }
 
+  getPriority(id){
+    let goal = _goals.find((goal) => goal.id === id);
+    return goal;
+  }
+  
+  getLevelsOfEngagement(){
+   let loes = [];
+   for (let goal of _goals){
+      if(this.isLevelsOfEngagement(goal.id)){
+        loes.push(goal);
+      }
+   }
+   return loes;
+  }
+
   setActiveGoal(goalID) {
     for (let goal of _goals) {
       goal.active = goal.id === goalID;
@@ -36,7 +51,7 @@ class GoalStore extends Store {
   }
 
   getCompletedGoals() {
-    return _goals.filter( (goal) => goal.priority);
+    return _goals.filter( (goal) => (goal.priority && goal.id !== "solicit-input" && goal.id !== "involve" && goal.id !== "collaborate"));
   }
 
   getIncompleteGoals() {
@@ -47,18 +62,34 @@ class GoalStore extends Store {
     return _goals.find( (goal) => goal.active );
   }
 
+  isLevelsOfEngagement(goalID){
+    let isEngagement =  (goalID === "inform" || goalID === "solicit-input" || goalID === "involve" || goalID === "collaborate");
+    return isEngagement;
+  }
+
   getActiveGoal() {
     let active_goal = _goals.find( (goal) => goal.active );
     
     if(active_goal === undefined){
-      let activeId = _goals[_goals.length - 1].id;
+      let activeId = "inform"
       this.setActiveGoal(activeId);
       return activeId;
     } else{
-      return active_goal;
+      if(this.isLevelsOfEngagement(active_goal.id)){
+        return _goals.find( (goal) => "inform" );
+      } else {
+        return active_goal;
+      }
+      
     }
   }
-
+  getNumGoals(){
+    return _goals.length - 3;
+  }
+  getActiveGoalIndex(){
+    let goalID = this.getActiveGoal();
+    return _goals.indexOf(goalID);
+  }
   getActiveGoalNotes() {
 
     let active_goal = _goals.find( (goal) => goal.active );
@@ -105,13 +136,17 @@ class GoalStore extends Store {
         break;  
 
       case GoalActions.SET_PRIORITY_AND_ADVANCE:
-        setPriority(action.id, action.priority || 1);
-        let nextGoal = this.getIncompleteGoals()[0];
-        if (nextGoal) {
-          this.setActiveGoal(nextGoal.id);
-          this.history.push(...window.location, {pathname: '/goals/' + nextGoal.id});
-        } else {
+        if(this.isLevelsOfEngagement(action.id)){
+
           this.history.push(...window.location, {pathname: '/timeline/'});
+        } else {
+          let nextGoal = this.getIncompleteGoals()[0];
+          if(nextGoal) {
+            this.setActiveGoal(nextGoal.id);
+            this.history.push(...window.location, {pathname: '/goals/' + nextGoal.id});
+          } else {
+            this.history.push(...window.location, {pathname: '/timeline/'});
+          }
         }
         this.__emitChange();
         break;

@@ -35,7 +35,7 @@ const Intro = React.createClass({
 
           <h3>Engaging with Stakeholders</h3>
             <p>
-              Meaningful and effective stakeholder engagement is essential for the sustainable management of resources throughout California. Given the number and diversity of stakeholders involved, engaging fishermen and other groups affected by resource management can be challenging. Fortunately, many different stakeholder engagement strategies exist to enable communication and collaboration between resource managers and stakeholders. Although these strategies may not be able to address all of the challenges in resource management, they can be designed to allow a free flow of information between resource stakeholders and managers, assisting in the decision-making process and creating more effective, long-lasting solutions to management issues.
+              Meaningful and effective stakeholder engagement is essential for the sustainable management of resources throughout California. Given the number and diversity of stakeholders involved, engaging fishermen and other groups affected by resource management can be challenging. Fortunately, many different stakeholder engagement strategies exist to enable communication and collaboration between resource managers and stakeholders, such as utilizing stakeholder advisory groups, working with recognized key communicators, and sharing information through online fishing forums, websites, and webinars. Although these strategies may not be able to address all of the challenges in resource management, they can be designed to allow a free flow of information between resource stakeholders and managers, assisting in the decision-making process and creating more effective, long-lasting solutions to management issues.
             </p>
           <h3>What Does This Decision Support Tool Do?</h3>
             
@@ -61,16 +61,7 @@ const Intro = React.createClass({
                       <li>Whether the legal and regulatory landscape affecting the process may place some constraints on which strategies are appropriate.</li>
                       <li>The history of past experiences associated with the use of specific engagement strategies in the fishery or resource management area; it the strategy was used in previous efforts and resisted by stakeholders, it may not be appropriate for this management process.</li> 
                     </ul>
-                  <li><b>Step 3: (Decision)</b> Select your engagement strategy(ies), and prepare a report with rationale. Example strategies include: </li>
-                    <ul>
-                      <li>Stakeholder Advisory Groups</li>
-                      <li>Online Fishing Forums (proactive participation on informal message boards and blogs)</li>
-                      <li>Key Communicators</li>
-                      <li>Open House meetings</li>
-                      <li>Webinar meetings</li>
-                      <li>Websites</li>
-                      <li>A full list of strategies is available online <a href="" target="_blank">here</a>.</li>
-                    </ul>
+                  <li><b>Step 3: (Decision)</b> Select your engagement strategy(ies), and prepare a report with rationale. A full list of strategies is available online <a href="" target="_blank">here</a>.</li>
                 </ul>
           <h3>Before you start using the decision support tool:</h3>
             <ul>

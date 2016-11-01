@@ -17,4 +17,6 @@
 -	Knowledge of the current rulemaking processes by participating staff.
 -	Oral communication and interpersonal skills.
 
+#### Question 3: How effective has this strategy been in previous marine resource management efforts? 
 
+#### Question 4: Are any stakeholder engagement strategies required by statute (consult with CDFW legal as needed)? 

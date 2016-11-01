@@ -16,4 +16,6 @@
 -	Expertise in crafting appropriate (e.g., non-leading) survey questions.
 -	Familiarity with survey design tools like SurveyMonkey (for online surveys).
 
+#### Question 3: How effective has this strategy been in previous marine resource management efforts? 
 
+#### Question 4: Are any stakeholder engagement strategies required by statute (consult with CDFW legal as needed)? 

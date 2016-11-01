@@ -68,7 +68,7 @@ const GoalOverview = React.createClass({
         </div>
         </CardText>
         <CardActions>
-        <RaisedButton label="Back to Resource Description" onTouchTap={this._handlePrev} />
+        <RaisedButton label="Back to Overview" onTouchTap={this._handlePrev} />
         <RaisedButton label="Go to Goals" primary={true} onTouchTap={this._handleNext} />
                   <RaisedButton secondary={true} style={this._isComplete() ? {display:'inline-block'} : {display:'none'}} onTouchTap={this._goToStep2} label="Go to Step 2 (Results)" disabled={!this._isComplete()}/></CardActions>
       </div>

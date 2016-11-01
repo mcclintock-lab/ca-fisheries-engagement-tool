@@ -36,14 +36,14 @@ import CharacteristicStore from '../stores/characteristics';
 import MethodStore from '../stores/methods';
 import WorkflowActions from '../actions/workflowActions';
 import MethodActions from '../actions/methodActions';
-import GoodStrategy from 'material-ui/lib/svg-icons/action/grade';
-import OKStrategy from 'material-ui/lib/svg-icons/image/brightness-1';
-import BadStrategy from 'material-ui/lib/svg-icons/navigation/arrow-drop-down';
+import GoodStrategy from 'material-ui/lib/svg-icons/toggle/star';
+import OKStrategy from 'material-ui/lib/svg-icons/toggle/star-half';
+import BadStrategy from 'material-ui/lib/svg-icons/toggle/star-border';
 
 let size = 18;
 const goal_text_values = {1:"Not a Priority", 2: "Somewhat of a Priority", 3: "High Priority"};
 const characteristic_text_values = {0:"Unknown", 1: "No", 2: "Yes", 3: "Both"};
-const goal_color_values = {1: "#ffcdd2", 2: "#FFECB3", 3: "#80CBC4"};
+const goal_color_values = {1: "#ffcdd2", 2: "#dfdf74", 3: "#80CBC4"};
 
 let avatarStyle = {
   height: size - 2,
@@ -246,7 +246,6 @@ const Results = React.createClass({
     }
     let score_values = scores.map(function(key) {return Number(key.final_score);});
 
-
     //calculate the max score for normalization
     let max_score = this.getMaxOfArray(score_values);
 
@@ -260,7 +259,6 @@ const Results = React.createClass({
       } else {
         score_val.normalized_final_score = (fscore/max_score)*100;
       }
-      
     }
 
     //sort, and return top 10 for now
@@ -387,12 +385,8 @@ const Results = React.createClass({
 
                 <CardText expandable={true}>
                 <p>
-                  Below you will find a matrix of the most highly ranked strategies and your high priority goals. 
-                  Beside each strategy is a Score based on all of the questions you answered in Step 1. Strategies 
-                  with higher scores will likely be more effective given your goals, timing, and resource/stakeholder 
-                  characteristics. The icons in the matrix represent how effective a given strategy is in achieving a given 
-                  goal, with a green star representing “Highly effective, high priority”; a gray circle representing 
-                  “Less effective, Lower priority”; and a red dash representing “Not effective, not a priority.”
+                  Below you will find a matrix of the most highly ranked strategies and your high priority goals. Beside each strategy is a Score based on all of the questions you answered in Step 1 (goals, time, and resource/stakeholder characteristics). The Scores are relative to one another, and range from 0-100, with a score of 100 being the most closely matched strategy given all of your responses.<br/><br/>
+                  The icons in the matrix represent how effective a given strategy is in achieving a given goal, with a green star representing “Highly effective, high priority”; a gray circle representing “Less effective, Lower priority”; and a red dash representing “Not effective, not a priority.” The icons are based solely on goal priorities and strategy effectiveness for the goals. For this reason, it is important that you take both the relative Score and goal effectiveness into account
                 </p>        
                 {(this._getGoalsForRecommendations(this.state.recommendations))}
                 </CardText>
@@ -492,14 +486,20 @@ const Results = React.createClass({
       vals.push(scoreCol);
 
       for(let score of rec.goal_scores){
-        let short_name = score.name.split(" ");
-        let disp_name = short_name[0];
-        if(short_name.length > 1){
-          disp_name = short_name[0]+" "+short_name[1];
+        let disp_name = score.name
+        if(score.name === "Levels of Engagement"){
+          disp_name = "Inform"
+        } else {
+          let short_name = score.name.split(" ");
+          disp_name = short_name[0];
+          if(short_name.length > 1){
+            disp_name = short_name[0]+" "+short_name[1];
+          }
+          if(short_name.length > 2){
+            disp_name = disp_name+"..."
+          }          
         }
-        if(short_name.length > 2){
-          disp_name = disp_name+"..."
-        }
+
         let curr = <TableHeaderColumn  style={gridStyles.goalHeader} key={score.goal_id}><span style={{ display:'inline-block', wordWrap:"break-word", width:'100px', textAlign:'left'}} >{disp_name}</span></TableHeaderColumn>
         vals.push(curr);
       }
@@ -509,24 +509,45 @@ const Results = React.createClass({
     }
   },
 
+  _getScoreIds(goal_scores){
+    let ids = []
+    for(let score of goal_scores){
+      ids.push(score.goal_id);
+    }
+    return ids;
+  },
+
+  _getGoalForId(id, goal_score){
+    for(let score of goal_score){
+      if(score.goal_id === id){
+        return score;
+      }
+    }
+  },
   _getGoalsForRecommendations(recs){
     let good_color = "#388E3C";
-    let bad_color = "#e57373";
-    let ok_color = "#BDBDBD";
+    let bad_color = "#e1c9bf";
+    let ok_color = "#dbdb07";
     let all_rows = [];
+    let all_goals = null;
     for(let rec of recs){
       let cols = [];
       let nameCol = <TableRowColumn style={gridStyles.nameCol} key={rec.id+"_name"}> {rec.heading}</TableRowColumn>
       let scoreCol = <TableRowColumn style={gridStyles.scoreCol} key={rec.id+"_score"}> {rec.normalized_final_score}</TableRowColumn>
       cols.push(nameCol);
       cols.push(scoreCol);
-      for(let score of rec.goal_scores){
+
+      if(all_goals === null){
+        all_goals = this._getScoreIds(rec.goal_scores)
+      }
+
+      for(let score_id of all_goals){
         let svg = null;
+        let score = this._getGoalForId(score_id, rec.goal_scores)
+
         if(score.is_max){
-          let color=
           svg = <GoodStrategy color={good_color}></GoodStrategy>
         } else if(score.is_min){
-          let color=
           svg = <BadStrategy color={bad_color}></BadStrategy>
         } else {
           svg = <OKStrategy color={ok_color}></OKStrategy>
@@ -539,7 +560,6 @@ const Results = React.createClass({
     } 
 
     let tbody = <TableBody  displayRowCheckbox={false} children={all_rows}></TableBody>
-    
     let thead = <TableHeader style={{height:"80px"}} displaySelectAll={false} adjustForCheckbox={false} children = {this._getGoalHeaders(recs)}></TableHeader>
     let tfoot = this._getMatrixLegend(good_color, ok_color, bad_color);
     let table = <Table>{thead}{tbody}{tfoot}</Table>
@@ -565,11 +585,12 @@ const Results = React.createClass({
     let lists = el.getElementsByTagName("ul")
     let full_details = "";
     
-    if(rec.hasImg){
-      return subsections[0].outerHTML+lists[0].outerHTML+subsections[1].outerHTML+lists[1].outerHTML;
-    } else {
-      return rec.text
-    }
+    
+    //if(rec.hasImg){
+    //  return subsections[0].outerHTML+lists[0].outerHTML+subsections[1].outerHTML+lists[1].outerHTML;
+    //} else {
+    return rec.text
+    //}
   },
 
   _getSubtitleText(rec){

@@ -21,3 +21,6 @@
 -	Significant large and small group facilitation skills are preferable.
 -	Logistics and event planning expertise is beneficial. 
 -	Collaborative and joint problem-solving skills.
+
+#### Question 3: How effective has this strategy been in previous marine resource management efforts? 
+#### Question 4: Are any stakeholder engagement strategies required by statute (consult with CDFW legal as needed)? 

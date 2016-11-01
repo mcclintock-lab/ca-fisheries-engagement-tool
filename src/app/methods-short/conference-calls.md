@@ -18,3 +18,5 @@
 #### Question 2: What skills are required by staff to effectively implement this strategy?
 -	Large group facilitation skills are desired, but not required
 
+#### Question 3: How effective has this strategy been in previous marine resource management efforts? 
+#### Question 4: Are any stakeholder engagement strategies required by statute (consult with CDFW legal as needed)? 

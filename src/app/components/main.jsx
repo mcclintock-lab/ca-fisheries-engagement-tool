@@ -184,8 +184,9 @@ const Main = React.createClass({
     let active = GoalStore.getActiveGoal();
     let active_goal = 'none';
     let completed_goals = GoalStore.getCompletedGoals();
+    
     if(active !== undefined){
-      if(active.id === 'collaborate' && completed_goals.length === 0){
+      if(active.id === 'inform' && completed_goals.length === 0){
         active_goal = 'none';
       } else{
         active_goal = active.id; 
@@ -243,7 +244,8 @@ const Main = React.createClass({
       if(!activeIncluded){
         let ag = GoalStore.getActiveGoal();
         if(ag){
-          if(completed.length === 0 && ag.id === 'collaborate'){
+          if(completed.length === 0 && ag.id === 'inform'){
+
             completed = [{payload:'none',text:'No Goals Completed'}];
           } else {
             completed.push({payload:ag.id, text:this.getTrimmedHeader(ag.header)})
@@ -346,6 +348,7 @@ const Main = React.createClass({
       return 2;
     } else if (path.indexOf('goals') !== -1) {
       let activeGoal = GoalStore.getActiveGoal();
+
       let fraction = all.indexOf(activeGoal) / all.length;
       return (33 * fraction) + 2;
     } else if (path.indexOf('timeline') !== -1) {

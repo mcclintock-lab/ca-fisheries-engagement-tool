@@ -157,6 +157,7 @@ const CharacteristicForm = React.createClass({
 
   //we only want to check if *any* option is chosen
   _optionIsChosen(){
+    
     let ag = CharacteristicStore.getActive();
     if(ag){
       return (ag.answer !== undefined);

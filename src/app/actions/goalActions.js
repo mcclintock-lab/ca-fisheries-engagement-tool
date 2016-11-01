@@ -21,21 +21,19 @@ let GoalActions = {
     });
   },
 
-  setPriorityAndAdvance(id, priority) {
+  setPriorityAndAdvance(id) {
     Dispatcher.dispatch({
       actionType: GoalActions.SET_PRIORITY_AND_ADVANCE,
-      id: id,
-      priority: priority
+      id: id
     });
   },
 
   
 
-  setPriorityAndGoBack(id, priority) {
+  setPriorityAndGoBack(id) {
     Dispatcher.dispatch({
       actionType: GoalActions.SET_PRIORITY_AND_GOBACK,
-      id: id,
-      priority: priority
+      id: id
     });
   }
 }

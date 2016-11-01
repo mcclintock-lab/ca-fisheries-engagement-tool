@@ -15,3 +15,5 @@
 #### Question 2: What skills are required by staff to effectively implement this strategy?
 -	Comfort engaging with individuals who may not agree with or be outwardly hostile towards a particular management or regulatory decision.
 
+#### Question 3: How effective has this strategy been in previous marine resource management efforts? 
+#### Question 4: Are any stakeholder engagement strategies required by statute (consult with CDFW legal as needed)? 

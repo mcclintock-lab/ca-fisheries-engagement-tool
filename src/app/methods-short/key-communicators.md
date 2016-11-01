@@ -25,4 +25,5 @@ pants within their fisheries about management processes, and providing critical 
 
 -  Management-level responsibilities are beneficial, as communicators will likely want to know if the staff they speak to can make decisions based on the feedback they receive.
 
-
+#### Question 3: How effective has this strategy been in previous marine resource management efforts? 
+#### Question 4: Are any stakeholder engagement strategies required by statute (consult with CDFW legal as needed)? 

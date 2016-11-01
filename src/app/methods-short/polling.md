@@ -15,5 +15,7 @@
 -	Knowledge of the process in question by participating staff.
 -	Familiarity with survey design tools like SurveyMonkey (online) or mobile polling applications.
 
+#### Question 3: How effective has this strategy been in previous marine resource management efforts? 
 
+#### Question 4: Are any stakeholder engagement strategies required by statute (consult with CDFW legal as needed)? 
     

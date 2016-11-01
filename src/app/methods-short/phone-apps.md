@@ -18,3 +18,5 @@
 -	Clear and concise written messaging and timely communication skills.
 -	Significant computer programming skills to develop the app or adapt a template from other state resource agencies
 
+#### Question 3: How effective has this strategy been in previous marine resource management efforts? 
+#### Question 4: Are any stakeholder engagement strategies required by statute (consult with CDFW legal as needed)? 

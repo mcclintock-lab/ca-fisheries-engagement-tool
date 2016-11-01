@@ -14,5 +14,6 @@
 -	The ability to design and post timely messages that reflect agency perspectives and values. 
 -	Reading and effectively responding to the ongoing dialogue online, which involves making stakeholders feel heard, managing their expectations, and being transparent. 
 
-
+#### Question 3: How effective has this strategy been in previous marine resource management efforts? 
+#### Question 4: Are any stakeholder engagement strategies required by statute (consult with CDFW legal as needed)? 
 

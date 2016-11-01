@@ -15,3 +15,5 @@
 -   Clear and articulate verbal communication skills. 
 
 
+#### Question 3: How effective has this strategy been in previous marine resource management efforts? 
+#### Question 4: Are any stakeholder engagement strategies required by statute (consult with CDFW legal as needed)? 

@@ -17,17 +17,23 @@ let WorkflowActions = {
     let info = pathInfo(location);
     
     if (info.inGoals) {
-
-      let nextGoal = GoalStore.getNextGoal();
-      if (nextGoal) {
-        history.push(
-          ...location, {pathname: "/goals/" + nextGoal.id}
-        );      
-      } else {
+      if(info.id === 'inform' || info.id === 'solicit-input' || info.id === 'involve' || info.id === 'collaborate'){
         history.push(
           ...location, {pathname: "/timeline/"}
-        );              
+        ); 
+      } else {
+        let nextGoal = GoalStore.getNextGoal();
+        if (nextGoal) {
+          history.push(
+            ...location, {pathname: "/goals/" + nextGoal.id}
+          );      
+        } else {
+          history.push(
+            ...location, {pathname: "/timeline/"}
+          );              
+        }    
       }
+
     } else if (info.inTimeline) {
       history.push(...location, {pathname: "/char_overview"});
     } else if (info.inCharacteristics) {
@@ -50,16 +56,24 @@ let WorkflowActions = {
     let GoalStore = require('../stores/goals');
     let info = pathInfo(location);
     if (info.inGoals) {
-      let prevGoal = GoalStore.getPrevGoal()
-      if (prevGoal) {
+      if(info.id === "inform"){
+        let prevGoal = GoalStore.getPrevGoal();
         history.push(
-          ...location, {pathname: "/goals/" + prevGoal.id}
-        );      
-      } else { 
-        history.push(
-          ...location, {pathname: "/goal_overview"}
+          ...location, {pathname: "/goals/social-research-on-fishery"}
         );   
+      } else {
+        let prevGoal = GoalStore.getPrevGoal()
+        if (prevGoal) {
+          history.push(
+            ...location, {pathname: "/goals/" + prevGoal.id}
+          );      
+        } else { 
+          history.push(
+            ...location, {pathname: "/goal_overview"}
+          );   
+        }        
       }
+
     } else if (info.inTimeline) {
       history.push(...location, {pathname: "/goals/empower"})
     } else if (info.inCharacteristics) {

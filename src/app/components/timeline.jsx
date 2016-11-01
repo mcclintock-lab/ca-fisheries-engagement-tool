@@ -171,7 +171,7 @@ const Timeline = React.createClass({
   },
 
   _handlePrev() {
-    this.props.history.push(...this.props.location, "/goals/empower");
+    this.props.history.push(...this.props.location, "/goals/inform");
   },
 
   routerWillLeave() {
