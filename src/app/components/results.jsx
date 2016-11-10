@@ -343,7 +343,7 @@ const Results = React.createClass({
     return {
       goals: GoalStore.getAll(),
       timeliness: TimelineStore.getAll(),
-      characteristics: CharacteristicStore.getAllSettable(),
+      characteristics:  CharacteristicStore.getAllSettable(),
       recommendations: this.calculateRecommendedMethods()
     }
   },
@@ -355,6 +355,7 @@ const Results = React.createClass({
   },
 
   render() {
+
     return (
       <Tabs>
         <Tab label="Recommendations" style={{textAlign:"left", verticalAlign: "middle", paddingLeft:"15px"}}>

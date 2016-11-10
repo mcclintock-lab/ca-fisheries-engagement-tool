@@ -143,7 +143,7 @@ const Step3 = React.createClass({
     return {
       goals: GoalStore.getAll(),
       timeliness: TimelineStore.getAll(),
-      characteristics: CharacteristicStore.getAllWithSpecialCases(),
+      characteristics:  CharacteristicStore.getAllSettable(),
       recommendations: this.calculateRecommendedMethods(),
       recs_not_picked: this.calculateMethodsNotChosen()
     }
@@ -199,6 +199,7 @@ const Step3 = React.createClass({
   },
   render() {
     return (
+
       <Tabs>
         <Tab label={"Selected stakeholder engagement strategies"} >
               <Card>
@@ -236,10 +237,6 @@ const Step3 = React.createClass({
                         <div style={{ paddingLeft:"15px", paddingRight:"5px", width:"90%", paddingBottom:'10px', paddingTop:'5px'}}>{rec.reason === undefined ? "No reason was given": rec.reason}</div>
                       </div>
 
-                      <div style={{lineHeight:'12px', paddingTop: '5px', paddingLeft:'5px', paddingBottom:'10px', fontSize:'1.1em'}}>User Priorities and Expert Rankings:</div>
-                      <div style={{paddingLeft:"15px", paddingRight:"10px"}}>
-                          The following table shows how you prioritized each engagement goals and how experts ranked this strategy's efficacy in achieving that goal. Highlighted rows are goals that are a priority for you and are effectively achieved with this engagement strategy, as ranked by experts.
-                      </div>
                       <div><img style={{width:"98%", paddingLeft:"5px", paddingRight:"5px"}} src={rec.img}/></div>
                       <div dangerouslySetInnerHTML={{__html: this._getRecText(rec)}}>
                       </div>
@@ -376,40 +373,42 @@ const Step3 = React.createClass({
     let table = <Table>{tbody}</Table>
   },
   _getCharacteristicText(characteristic){
-    let val = characteristic.answer;
+
     let char_id = characteristic.id;
+    let answer_int = characteristic.answer;
+    let answer = answer_int+"";
     if(char_id === "high-capacity-for-engagement" || char_id === "high-tech-literacy"){
-      if(val === "3"){
+      if(answer === "3"){
         return "High and Low";
-      } else if(val === "2"){
+      } else if(answer === "2"){
         return "High";
-      } else if(val === "1"){
+      } else if(answer === "1"){
         return "Low";
       } else {
         return "Unknown";
       }
     } else if(char_id === "large-geographic-size"){
-      if(val === "3"){
+      if(answer === "3"){
         return "Large and Small";
-      } else if(val === "2"){
+      } else if(answer === "2"){
         return "Large";
-      } else if(val === "1"){
+      } else if(answer === "1"){
         return "Small";
       } else {
         return "Unknown";
       }
     } else if(char_id === "existing-leaders"){
-      if(val === "3"){
+      if(answer === "3"){
         return "Both";
-      } else if(val === "2"){
+      } else if(answer === "2"){
         return "Existing";
-      } else if(val === "1"){
+      } else if(answer === "1"){
         return "No Existing";
       } else {
         return "Unknown";
       }
     } else {
-      return characteristic_text_values[val]
+      return characteristic_text_values[answer_int]
     }
     
   },

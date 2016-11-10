@@ -15,7 +15,6 @@ const _alternatives = {"high-capacity-for-engagement":"low-capacity-for-engageme
                       
 function setAnswer(id, answer) {
   let characteristic = _characteristics.find((char) => char.id === id);
-
   characteristic.answer = answer;
 }
 function setNotes(id, notes) {
