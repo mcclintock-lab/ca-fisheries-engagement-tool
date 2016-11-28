@@ -81,7 +81,14 @@ const gridStyles = {
     width:'32px',
     height:'32px',
     textAlign:'center',
-    padding:'2px 1px 0px 0px'
+    padding:'2px 1px 0px 0px',
+    borderRight: '1px solid #ddd'
+  },
+  starCol:{
+    width:'32px',
+    height:'32px',
+    textAlign:'center',
+    padding:'2px 1px 0px 0px',
   },
 
   goalHeader:{
@@ -452,7 +459,7 @@ const Step3 = React.createClass({
         } else {
           svg = <OKStrategy color={ok_color}></OKStrategy>
         }
-        let curr = <TableRowColumn style={gridStyles.scoreCol} key={rec.id+"_"+score.goal_id}> {svg}</TableRowColumn>
+        let curr = <TableRowColumn style={gridStyles.starCol} key={rec.id+"_"+score.goal_id}> {svg}</TableRowColumn>
         cols.push(curr);
       }
       let trow = <TableRow style={{width:'100%'}} children={cols}></TableRow>

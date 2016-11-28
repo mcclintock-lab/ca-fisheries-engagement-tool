@@ -71,7 +71,16 @@ const gridStyles = {
     whiteSpace:'normal',
     textAlign:'left'
   },
-
+  goalsAndLevelsCol:{
+    width:'100%',
+    paddingLeft:5,
+    paddingTop:0,
+    paddingRight:5,
+    paddingBottom:0,
+    fontSize:'14px',
+    whiteSpace:'normal',
+    textAlign:'left'
+  },
   headerNameCol:{
     width:'120px',
     height:'90px',
@@ -87,7 +96,14 @@ const gridStyles = {
     width:'32px',
     height:'32px',
     textAlign:'center',
-    padding:'2px 1px 0px 0px'
+    padding:'2px 1px 0px 0px',
+    borderRight: '1px solid #ddd'
+  },
+  starCol:{
+    width:'32px',
+    height:'32px',
+    textAlign:'center',
+    padding:'2px 1px 0px 0px',
   },
 
   goalHeader:{
@@ -100,10 +116,22 @@ const gridStyles = {
     whiteSpace:'normal',
     lineHeight:'11px',
     transform:'rotate(270deg)',
-    height:'80px',
+    height:'88px',
     fontWeight:500
   },
-
+  goalScoreHeader:{
+    fontSize:'12px',
+    padding:'4px 0px 2px 0px',
+    textAlign:'left',
+    verticalAlign:'middle',
+    color:'black',
+    width:'34px',
+    whiteSpace:'normal',
+    lineHeight:'14px',
+    transform:'rotate(270deg)',
+    height:'80px',
+    fontWeight:500,
+  },
   tooltipStyles: {
     whitespace: 'normal',
     wordWrap: 'break-word',
@@ -362,10 +390,13 @@ const Results = React.createClass({
           <Card>
             <CardText>
               <p>
-                These stakeholder engagement strategies are recommended based on your Step 1 responses. NOTE: It is unlikely that you could achieve your engagement goals using just a single strategy. To ensure all of your high priority goals are addressed, it may be necessary to “mix and match” two or more strategies based on the table below (for example, you may need to implement Key Communicators, public workshops, and Social Media to meet all of your goals).  
+                These stakeholder engagement strategies listed below are recommended for further consideration based on your Step 1 responses. In Step 2, you will select specific strategies (using the “yes/no” function) by considering key contextual factors.
               </p>
               <p>
-                In addition to selecting those strategies you would like to implement using the “yes/no” function, a text box is provided to give you the option of writing a justification for choosing or not choosing the strategy. Any information you wish to provide will be displayed in a report in Step 3 and can be used to record your thought process for selecting (or not selecting) each strategy. Be sure to refer back to the <a target="blank" href="#principles">“Best Practices”</a> listed in the user manual when assessing your results and providing a rationale for your selection.
+                As you select your strategies, a text box at the bottom of each description provides you with the option of writing a justification for choosing or not choosing the strategy. Any information you wish to provide will be displayed in a report in Step 3 and can be used to record your thought process for selecting (or not selecting) each strategy. Be sure to refer back to the “Best Practices” listed in the user manual when assessing your results and providing a rationale for your selection. To implement these stakeholder engagement strategies effectively, it may be necessary to engage with your agency’s communications and/or public outreach personnel.
+              </p>
+              <p>
+                NOTE: It is unlikely that you could achieve your engagement goals using just a single strategy. To ensure all of your high priority goals are addressed, it may be necessary to “mix and match” two or more strategies based on the table below (for example, you may need to implement Key Communicators, public workshops, and Social Media to meet all of your goals).
               </p>
             </CardText>
             <span style={{textAlign:'center', marginLeft:'15px', fontSize:'150%', display:'block', width:'100%'}}>
@@ -386,8 +417,10 @@ const Results = React.createClass({
 
                 <CardText expandable={true}>
                 <p>
-                  Below you will find a matrix of the most highly ranked strategies and your high priority goals. Beside each strategy is a Score based on all of the questions you answered in Step 1 (goals, time, and resource/stakeholder characteristics). The Scores are relative to one another, and range from 0-100, with a score of 100 being the most closely matched strategy given all of your responses.<br/><br/>
-                  The icons in the matrix represent how effective a given strategy is in achieving a given goal, with a green star representing “Highly effective, high priority”; a gray circle representing “Less effective, Lower priority”; and a red dash representing “Not effective, not a priority.” The icons are based solely on goal priorities and strategy effectiveness for the goals. For this reason, it is important that you take both the relative Score and goal effectiveness into account
+                  Below you will find a table showing the most highly scoring strategies and your high priority goals. Beside each strategy is a score based on all of the questions you answered in Step 1 (<i>goals, time, and resource/stakeholder characteristics</i>). The scores are relative to one another, and range from 0-100, with a score of 100 being the most closely matched strategy given all of your responses.
+                </p>
+                <p>
+                  The icons in the table represent how effective a given strategy is in achieving a given goal, with a green star representing “Highly effective, high priority”; a half-filled yellow star representing “Less effective, Lower priority”; and an unfilled star representing “Not effective, not a priority.” The icons are based solely on goal priorities and strategy effectiveness for the goals. <i>For this reason, it is important that you take both the relative score and goal effectiveness into account</i>.
                 </p>        
                 {(this._getGoalsForRecommendations(this.state.recommendations))}
                 </CardText>
@@ -406,7 +439,7 @@ const Results = React.createClass({
                       <div dangerouslySetInnerHTML={{__html: this._getRecText(rec)}}>
                       </div>
                       <div style={{textAlign:'left', paddingLeft:"10px"}}>
-                        <h3>Do you plan to use this strategy?</h3>
+                        <h3>Do you plan to use this strategy? </h3>
                         <RadioButtonGroup recId={rec.id} defaultSelected={rec.selected ? "1" : "0"}>
                         <RadioButton 
                             value="1"
@@ -417,7 +450,7 @@ const Results = React.createClass({
                             label="No"
                             style={{marginBottom:4}} onTouchTap={this._handleUnselected(rec.id)}/>
                         </RadioButtonGroup>
-                        <TextField style={{width:"80%", paddingLeft:"40px"}} onChange={this._handleReasonChange(rec.id)} hintText={rec.reason !== undefined ? rec.reason : "Please enter the reason you -will- or -will not- use the strategy. "}></TextField>
+                        <TextField style={{width:"80%", paddingLeft:"40px", paddingTop:'9px'}} onChange={this._handleReasonChange(rec.id)} hintText={rec.reason !== undefined ? rec.reason : "Based on your responses to the above questions, please describe the primary benefits and/or barriers to using this engagement strategy."}></TextField>
                       </div>
                     </CardText>
                   </Card>
@@ -482,7 +515,7 @@ const Results = React.createClass({
     let vals = [];
     for(let rec of recs){
       let nameCol = <TableHeaderColumn style={gridStyles.headerNameCol} tooltip={"Strategy Name"} key={"namecol"}>Name</TableHeaderColumn>
-      let scoreCol = <TableHeaderColumn style={gridStyles.goalHeader} tooltip={"Strategy Score"} key={"scorecol"}>Score</TableHeaderColumn>
+      let scoreCol = <TableHeaderColumn style={gridStyles.goalScoreHeader} tooltip={"Strategy Score"} key={"scorecol"}>Score</TableHeaderColumn>
       vals.push(nameCol);
       vals.push(scoreCol);
 
@@ -504,9 +537,13 @@ const Results = React.createClass({
         let curr = <TableHeaderColumn  style={gridStyles.goalHeader} key={score.goal_id}><span style={{ display:'inline-block', wordWrap:"break-word", width:'100px', textAlign:'left'}} >{disp_name}</span></TableHeaderColumn>
         vals.push(curr);
       }
+
+      let blankCol = <TableHeaderColumn style={{width:'180px'}} colSpan={2}></TableHeaderColumn>
+      let goalCol = <TableHeaderColumn  colspan={10} style={{textAlign:'center', width:'800px'}}>Goals and Levels of Engagement</TableHeaderColumn>
+
       
-      let row = <TableRow style={gridStyles.headerRow} children={vals}></TableRow>
-      return row;
+      let row1 = <TableRow style={gridStyles.headerRow} children={vals}></TableRow>
+      return row1;
     }
   },
 
@@ -535,6 +572,7 @@ const Results = React.createClass({
       let cols = [];
       let nameCol = <TableRowColumn style={gridStyles.nameCol} key={rec.id+"_name"}> {rec.heading}</TableRowColumn>
       let scoreCol = <TableRowColumn style={gridStyles.scoreCol} key={rec.id+"_score"}> {rec.normalized_final_score}</TableRowColumn>
+
       cols.push(nameCol);
       cols.push(scoreCol);
 
@@ -553,7 +591,7 @@ const Results = React.createClass({
         } else {
           svg = <OKStrategy color={ok_color}></OKStrategy>
         }
-        let curr = <TableRowColumn style={gridStyles.scoreCol} key={rec.id+"_"+score.goal_id}> {svg}</TableRowColumn>
+        let curr = <TableRowColumn style={gridStyles.starCol} key={rec.id+"_"+score.goal_id}> {svg}</TableRowColumn>
         cols.push(curr);
       }
       let trow = <TableRow style={{width:'100%'}} children={cols}></TableRow>

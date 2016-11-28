@@ -8,8 +8,8 @@ module.exports = [
 
   {
     id: "efficient",
-    header: "Engage Stakeholders Efficiently",
-    description: "If the resource is geographically diverse, or if resource managers and the affected community have limited resources to participate in a stakeholder process, a variety of engagement strategies can be employed to ensure stakeholders are kept informed of and engaged in the process in an efficient manner."
+    header: "Work within Stakeholder Constraints",
+    description: "Are the affected community’s resources (e.g., availability to participate in stakeholder engagement activities or the financial resources to participate) limited? If any of these are true, then addressing limitations in stakeholder participation capabilities may be especially important, and this goal should be considered a high priority."
   },
 
   {
@@ -32,8 +32,8 @@ module.exports = [
 
   {
     id: "social-research-on-fishery",
-    header: "Support Social Research on the Resource",
-    description: "New and emerging resources develop with regularity in California. In some cases, particularly with respect to small fisheries, little information on resource users may be available. Likewise, even for established resources, resource managers may not have the information necessary to conduct effective outreach. Conducting social research through direct engagement can produce essential resource information such as stakeholder definition, market value of a resource, and user trends."
+    header: "Socioeconomic Research on the Resource",
+    description: "Often, little information is available on marine resource user communities. This can limit resource managers’ abilities to conduct effective outreach. Conducting socioeconomic research in conjunction with preferred stakeholder engagement strategies can produce essential information such as stakeholder definition, market value of the fishery, and user trends. Do you have sufficient information on the socioeconomic aspects of the marine resource stakeholders to effectively conduct outreach? If not, socioeconomic research may be a high priority goal."
   },
 
   {
