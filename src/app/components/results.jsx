@@ -327,24 +327,11 @@ const Results = React.createClass({
 
       let imgs = [, , "", "social-media", ""];
       //gross. get rid of this when you get real images
-      if(method.id === "key-communicators"){
-        method.img = require('./key-communicators.png');
-        method.hasImg = true;
-      } else if(method.id === "fishery-association-meetings"){
-        method.img = require('./fishery-association-meetings.png');
-        method.hasImg = true;
-      } else if(method.id === "informal-meetings"){
-        method.img = require('./informal-meetings.png');
-        method.hasImg = true;
-      } else if(method.id === "social-media"){
-        method.img = require('./social-media.png');
-        method.hasImg = true;
-      } else if(method.id === "stakeholder-advisory-groups"){
-        method.img = require('./stakeholder-advisory-groups.png');
-        method.hasImg = true;
-      } else {
-        method.hasImg = false;
-      }
+      let img_name = method.id+".png"
+      method.img = require("./"+img_name);
+      console.log("-->>>>> ", method.img);
+      method.hasImg = true;
+
       final_methods.push(method);
     }
     WorkflowActions.setComplete(true);
