@@ -437,7 +437,7 @@ const Results = React.createClass({
                             label="No"
                             style={{marginBottom:4}} onTouchTap={this._handleUnselected(rec.id)}/>
                         </RadioButtonGroup>
-                        <TextField style={{width:"80%", paddingLeft:"40px", paddingTop:'9px'}} onChange={this._handleReasonChange(rec.id)} hintText={rec.reason !== undefined ? rec.reason : "Based on your responses to the above questions, please describe the primary benefits and/or barriers to using this engagement strategy."}></TextField>
+                        <TextField style={{width:"80%", paddingLeft:"40px", paddingTop:'9px'}} onChange={this._handleReasonChange(rec.id)} value={(rec.reason !== undefined && rec.reason.length > 0) ? rec.reason : ''} hintText={(rec.reason !== undefined && rec.reason.length > 0) ? rec.reason : "Based on your responses to the above questions, please describe the primary benefits and/or barriers to using this engagement strategy."}></TextField>
                       </div>
                     </CardText>
                   </Card>

@@ -99,10 +99,13 @@ let WorkflowActions = {
   },
   serializeResultsToUrl(history, location) {
     let note_key = ".note"
+    let reason_key = ".reason"
     let GoalStore = require('../stores/goals');
     let CharacteristicStore = require('../stores/characteristics');
     let TimelineStore = require('../stores/timeline');
     let DescriptionStore = require('../stores/description');
+    let MethodStore = require('../stores/methods');
+
     let answers = {};
     for (let goal of GoalStore.getAll()) {
       answers[goal.id] = goal.priority;
@@ -128,6 +131,17 @@ let WorkflowActions = {
       }
       answers[char.id+note_key] = encodeURIComponent(notes);
     }
+    
+    for (let meth of MethodStore.getSelectedMethods()) {
+      answers[meth.id] = meth.selected;
+      let reason = meth.reason;
+      if(reason === undefined){
+        reason = "";
+      }
+      answers[meth.id+reason_key] = encodeURIComponent(reason);
+    }
+
+
     let fishery = encodeURIComponent(DescriptionStore.getFishery());
     if(fishery === undefined || fishery.length === 0){
       fishery = "Unnamed";

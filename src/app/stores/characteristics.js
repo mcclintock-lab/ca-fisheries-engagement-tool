@@ -135,6 +135,7 @@ class CharacteristicStore extends Store {
 
       case WorkflowActions.MARSHAL_ANSWERS:
         let answers = action.answers;
+        
         for (let char of _characteristics) {
           if (answers[char.id] && answers[char.id] !== 'undefined') {
             char.answer = answers[char.id];  

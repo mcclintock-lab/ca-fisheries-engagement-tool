@@ -3,6 +3,7 @@ import {EventEmitter} from 'events';
 import {Store} from 'flux/utils';
 import assign from 'object-assign';
 import MethodActions from '../actions/methodActions';
+import WorkflowActions from '../actions/workflowActions';
 
 require("babel-polyfill");
 
@@ -69,6 +70,7 @@ class MethodStore extends Store {
   }
 
   __onDispatch = function(action) {
+    let reason_key = ".reason";
     switch(action.actionType) {
       case MethodActions.SET_SELECTED:
         setSelected(action.id, action.selected || 0);
@@ -76,6 +78,21 @@ class MethodStore extends Store {
         break;
       case MethodActions.SET_REASON:
         setReason(action.id, action.reason || 0);
+        this.__emitChange();
+        break;
+      case WorkflowActions.MARSHAL_ANSWERS:
+        let answers = action.answers;
+        for (let method_key in _methods) {
+          let meth = _methods[method_key];
+          if (answers[meth.id] && answers[meth.id] !== 'undefined') {
+            meth.selected = true;  
+          }
+          let reason = answers[meth.id+reason_key];
+          if(reason === undefined){
+            reason = "";
+          }
+          meth.reason = reason;
+        }
         this.__emitChange();
         break;
       default:
