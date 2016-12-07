@@ -163,6 +163,7 @@ class GoalStore extends Store {
         let answers = action.answers;
         for (let goal of _goals) {
           goal.priority = answers[goal.id] || 1;
+          
           let notes = answers[goal.id+notes_key];
           if(notes === undefined){
             notes = "";

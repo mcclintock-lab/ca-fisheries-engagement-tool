@@ -32,7 +32,7 @@ class MethodStore extends Store {
       let curr_method = _methods[meth_id];
 
       
-      if(curr_method.selected){
+      if(curr_method.selected !== undefined && (curr_method.selected === true || curr_method.selected.toString() === "true")) {
         let details = _method_details[meth_id];
         if(details.id === meth_id){
           curr_method.details = details.text;
@@ -52,7 +52,8 @@ class MethodStore extends Store {
     for(let meth_id of keys){
       let curr_method = _methods[meth_id];
 
-      if(!curr_method.selected && curr_method.reason !== undefined){
+      if((curr_method.selected === false || curr_method.selected.toString() === "false") && (curr_method.reason !== undefined && curr_method.reason.length > 0)){
+
         let details = _method_details[meth_id];
         if(details.id === meth_id){
           curr_method.details = details.heading+"<br/>"+details.text+"<br/>";
@@ -85,7 +86,7 @@ class MethodStore extends Store {
         for (let method_key in _methods) {
           let meth = _methods[method_key];
           if (answers[meth.id] && answers[meth.id] !== 'undefined') {
-            meth.selected = true;  
+            meth.selected = answers[meth.id];  
           }
           let reason = answers[meth.id+reason_key];
           if(reason === undefined){

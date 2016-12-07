@@ -134,7 +134,7 @@ const GoalForm = React.createClass({
   },
 
   _selectLevelOfEngagement(event, value){
-
+    console.log("value is ", value);
     if(value === 0){
       GoalActions.setPriority(inform, 3);
       GoalActions.setPriority(solicit, 1);
@@ -178,18 +178,18 @@ const GoalForm = React.createClass({
   },
 
   _getSelectedLevelOfEngagement(){
-    let inform_priority = GoalStore.getPriority(inform);
-    let solicit_priority = GoalStore.getPriority(solicit);
-    let involve_priority = GoalStore.getPriority(involve);
-    let collaborate_priority = GoalStore.getPriority(collaborate);
-
-    if(collaborate_priority.priority === 3){
+    let ip = GoalStore.getPriority(inform);
+    let sp = GoalStore.getPriority(solicit);
+    let ivp = GoalStore.getPriority(involve);
+    let cp = GoalStore.getPriority(collaborate);
+    
+    if(cp.priority !== undefined && cp.priority.toString() === "3"){
       return 3;
     }
-    if(involve_priority.priority === 3){
+    if(ivp.priority !== undefined && ivp.priority.toString() === "3"){
       return 2;
     }
-    if(solicit_priority.priority === 3){
+    if(sp.priority !== undefined && sp.priority.toString() === "3"){
       return 1;
     }
     return 0;

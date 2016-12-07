@@ -131,7 +131,7 @@ let WorkflowActions = {
       }
       answers[char.id+note_key] = encodeURIComponent(notes);
     }
-    
+
     for (let meth of MethodStore.getSelectedMethods()) {
       answers[meth.id] = meth.selected;
       let reason = meth.reason;
@@ -141,6 +141,14 @@ let WorkflowActions = {
       answers[meth.id+reason_key] = encodeURIComponent(reason);
     }
 
+    for (let meth of MethodStore.getMethodsNotChosen()) {
+      answers[meth.id] = meth.selected;
+      let reason = meth.reason;
+      if(reason === undefined){
+        reason = "";
+      }
+      answers[meth.id+reason_key] = encodeURIComponent(reason);
+    }
 
     let fishery = encodeURIComponent(DescriptionStore.getFishery());
     if(fishery === undefined || fishery.length === 0){

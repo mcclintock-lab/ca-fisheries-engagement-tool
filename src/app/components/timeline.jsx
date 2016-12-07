@@ -146,6 +146,7 @@ const Timeline = React.createClass({
   },
 
   _getSelectedTiming(){
+    console.log('trying to get selected timing...')
     let chosen = [];
     let timings = TimelineStore.getAll()
     for(let item of timings){
@@ -153,6 +154,7 @@ const Timeline = React.createClass({
         return item.id;
       }
     }
+    console.log("none found...")
     return undefined;
   },
 
