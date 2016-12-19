@@ -2,8 +2,8 @@ module.exports = [
   
   {
     id: "undefined-community",
-    heading: "Undefined Stakeholder Community",
-    description: "Does agency staff know the stakeholders within the geographic range of the resource? Indicators of an undefined stakeholder community include staff not being able to identify individuals or institutions that have a stake in the management of the resource."
+    heading: "Defined Stakeholder Community",
+    description: "Does agency staff know the stakeholders within the geographic range of the resource? Indicators of a defined stakeholder community include staff readily being able to identify individuals or institutions affected by the management of the resource."
   },
 
   {
@@ -40,7 +40,7 @@ module.exports = [
     heading: "Geographic Size",
     yesbutton: "Large Geographic Size",
     nobutton: "Small Geographic Size",
-    description: "Is the marine resource itself and/or are the marine resource stakeholders dispersed throughout the state (i.e., exist in multiple regions in the state), or is it/are they confined to a single, defined location? In some cases, a marine resource may exist throughout the state, but have specific areas of concern requiring special management. In this case, it can be considered 'both' large and small."
+    description: "Are the stakeholders dispersed throughout the state (i.e., exist in multiple regions in the state), or is are they confined to a single, defined location? In some cases, the stakeholders are dispersed throughout the state, but have specific areas of concern requiring special management. In this case, it can be considered 'both' large and small."
   },
 
   {

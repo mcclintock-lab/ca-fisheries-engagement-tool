@@ -110,14 +110,14 @@ const GoalForm = React.createClass({
     let activeGoal = this._getActiveGoal();
     if(this._isLevelsOfEngagement(activeGoal.id)){
       descDiv = <div style={{textAlign:'left'}}>
-          Not all marine resource management efforts or decisions require the same level of stakeholder 
-          engagement. In some cases, simply informing stakeholders of minor updates to management areas
-          through one-way communications such as an email listserv or newsletter may be sufficient. In other
-          cases, it may be important to solicit input directly from stakeholders to gauge opinion on a specific set
-          of questions. Involving stakeholders in a management decision requires a two-way exchange of 
-          information and an assurance on the part of the manager that input will help shape management 
-          alternatives, and collaborating with stakeholders compels managers and stakeholders to work closely
-          together to jointly develop alternatives on a marine resource.
+          Not all marine resource management efforts or decisions require the same level of stakeholder engagement:
+          <ul>
+            <li><b>Informing</b> stakeholders involves one-way communication, typically from the resource manager to the resource users without a request for input in return (e.g., sending out information via an email listserv to keep stakeholders up-to-date on a management process).</li>
+            <li><b>Soliciting</b> input involves gauging opinion and asking for specific feedback from stakeholders without an expectation of in-depth, collaborative dialogue between stakeholders and resource managers.</li>
+            <li><b>Involving</b> stakeholders in a management decision requires a two-way exchange of information and assurances from the resource manager that input will help shape management alternatives and decisions.</li>
+            <li><b>Collaborating</b> with stakeholders compels managers and stakeholders to work closely together to jointly develop alternatives for marine resource management.</li>  
+          </ul>
+          
           <br/><br/>These four levels can be thought of as a “spectrum” of engagement involving progressively higher
           amounts of input and cooperation between stakeholders and marine resource managers (where
           “informing” requires the lowest level of interaction and “collaborating” requires the highest level).

@@ -27,7 +27,7 @@ module.exports = [
   {
     id: "engage-under-represented",
     header: "Engage Under-Represented Groups",
-    description: "In some instances, the stakeholders and communities significantly impacted by a management decision may be underrepresented in the decision-making process or reluctant to participate in formal engagement activities. Working directly with these stakeholders, particularly when they are affected by management of a specific resource (such as subsistence fishers) is critical."
+    description: "Stakeholder involvement in the decision-making process may vary significantly across resources and communities. Some user groups regularly engage with managers, while others are less involved or are reluctant to participate in formal engagement activities. In these cases, stakeholders and communities significantly impacted by a management decision may be under-represented in the decision-making process. Working directly with these stakeholders, particularly when they are affected by management of a specific resource (such as subsistence fishers), is critical."
   },
 
   {
