@@ -40,7 +40,7 @@ module.exports = [
     heading: "Geographic Size",
     yesbutton: "Large Geographic Size",
     nobutton: "Small Geographic Size",
-    description: "Are the stakeholders dispersed throughout the state (i.e., exist in multiple regions in the state), or is are they confined to a single, defined location? In some cases, the stakeholders are dispersed throughout the state, but have specific areas of concern requiring special management. In this case, it can be considered 'both' large and small."
+    description: "Are the stakeholders dispersed throughout the state (i.e., exist in multiple regions in the state), or are they confined to a single, defined location? In some cases, the stakeholders are dispersed throughout the state, but have specific areas of concern requiring special management. In this case, it can be considered 'both' large and small."
   },
 
   {
